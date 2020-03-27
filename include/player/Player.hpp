@@ -48,6 +48,18 @@ public:
 	virtual void gender(u8 v) = 0;
 	virtual u16 tan() = 0;
 	virtual void tan(u16 v) = 0;
+	virtual u8 hairstyle() = 0;
+	virtual void hairstyle(u8 v) = 0;
+	virtual u8 haircolor() = 0;
+	virtual void haircolor(u8 v) = 0;
+	virtual u8 eyecolor() = 0;
+	virtual void eyecolor(u8 v) = 0;
+	virtual u8 badge(int badge) = 0;
+	virtual void badge(int badge, u8 v) = 0;
+	virtual u16 playerid() = 0;
+	virtual void playerid(u16 v) = 0;
+	virtual u16 townid() = 0;
+	virtual void townid(u16 v) = 0;
 };
 
 #endif

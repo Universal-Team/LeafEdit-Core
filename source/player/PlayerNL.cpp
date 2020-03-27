@@ -49,3 +49,51 @@ u8 PlayerNL::gender() {
 void PlayerNL::gender(u8 v) {
 	playerPointer()[0x55BA] = v;
 }
+
+// HairStyle.
+u8 PlayerNL::hairstyle() {
+	return playerPointer()[0x04];
+}
+void PlayerNL::hairstyle(u8 v) {
+	playerPointer()[0x04] = v;
+}
+
+// HairColor.
+u8 PlayerNL::haircolor() {
+	return playerPointer()[0x05];
+}
+void PlayerNL::haircolor(u8 v) {
+	playerPointer()[0x05] = v;
+}
+
+// EyeColor.
+u8 PlayerNL::eyecolor() {
+	return playerPointer()[0x07];
+}
+void PlayerNL::eyecolor(u8 v) {
+	playerPointer()[0x07] = v;
+}
+
+// Badges.
+u8 PlayerNL::badge(int badge) {
+	return playerPointer()[0x569C + badge];
+}
+void PlayerNL::badge(int badge, u8 v) {
+	playerPointer()[0x569C + badge] = v;
+}
+
+// Player ID.
+u16 PlayerNL::playerid() {
+	return playerPointer()[0x55A6];
+}
+void PlayerNL::playerid(u16 v) {
+	playerPointer()[0x55A6] = v;
+}
+
+// Town ID.
+u16 PlayerNL::townid() {
+	return playerPointer()[0x55BC];
+}
+void PlayerNL::townid(u16 v) {
+	playerPointer()[0x55BC] = v;
+}

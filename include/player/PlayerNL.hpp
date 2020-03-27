@@ -47,6 +47,18 @@ public:
 	void gender(u8 v) override;
 	u16 tan() override;
 	void tan(u16 v) override;
+	u8 hairstyle() override;
+	void hairstyle(u8 v) override;
+	u8 haircolor() override;
+	void haircolor(u8 v) override;
+	u8 eyecolor() override;
+	void eyecolor(u8 v) override;
+	u8 badge(int badge) override;
+	void badge(int badge, u8 v) override;
+	u16 playerid() override;
+	void playerid(u16 v) override;
+	u16 townid() override;
+	void townid(u16 v) override;
 
 private:
 	u8* playerPointer() const {

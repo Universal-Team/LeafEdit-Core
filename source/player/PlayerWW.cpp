@@ -26,13 +26,13 @@
 
 #include "PlayerWW.hpp"
 
-// Face.
+// Face. TODO
 u8 PlayerWW::face() {
 	return 0;
 }
 void PlayerWW::face(u8 v) { }
 
-// Tan.
+// Tan. TODO
 u16 PlayerWW::tan() {
 	return 0;
 }
@@ -45,4 +45,44 @@ u8 PlayerWW::gender() {
 }
 void PlayerWW::gender(u8 v) {
 	playerPointer()[0x228A] = v;
+}
+
+// HairStyle. TODO
+u8 PlayerWW::hairstyle() {
+	return 0;
+}
+void PlayerWW::hairstyle(u8 v) { }
+
+// HairColor. TODO
+u8 PlayerWW::haircolor() {
+	return 0;
+}
+void PlayerWW::haircolor(u8 v) { }
+
+// EyeColor. TODO
+u8 PlayerWW::eyecolor() {
+	return 0;
+}
+void PlayerWW::eyecolor(u8 v) { }
+
+// Badges. Does not exist.
+u8 PlayerWW::badge(int badge) {
+	return 0;
+}
+void PlayerWW::badge(int badge, u8 v) { }
+
+// Player ID. Is that right? Check that!
+u16 PlayerWW::playerid() {
+	return playerPointer()[0x2280];
+}
+void PlayerWW::playerid(u16 v) {
+	playerPointer()[0x2280] = v;
+}
+
+// Town ID. Is that right? Check that!
+u16 PlayerWW::townid() {
+	return playerPointer()[0x2276];
+}
+void PlayerWW::townid(u16 v) {
+	playerPointer()[0x2276] = v;
 }
