@@ -24,33 +24,28 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVNL_HPP
-#define SAVNL_HPP
-
-#include "Player.hpp"
 #include "PlayerNL.hpp"
-#include "Sav.hpp"
-#include "types.hpp"
-#include "Villager.hpp"
-#include "VillagerNL.hpp"
 
-#include <string>
+// Face.
+u8 PlayerNL::face() {
+	return playerPointer()[0x06];
+}
+void PlayerNL::face(u8 v) {
+	playerPointer()[0x06] = v;
+}
 
-class Player;
-class PlayerNL;
-class Villager;
-class VillagerNL;
-class SavNL : public Sav {
-protected:
-	std::shared_ptr<u8[]> dataPointer;
-public:
-	SavNL(std::shared_ptr<u8[]> data);
-	virtual ~SavNL() {}
-	void Finish(void) override;
-	std::shared_ptr<Player> player(int player) override;
-	std::shared_ptr<Villager> villager(int villager) override;
+// Tan.
+u16 PlayerNL::tan() {
+	return playerPointer()[0x08];
+}
+void PlayerNL::tan(u16 v) {
+	playerPointer()[0x08] = v;
+}
 
-	SaveType getType() override { return SaveType::NL; }
-};
-
-#endif
+// Gender.
+u8 PlayerNL::gender() {
+	return playerPointer()[0x55BA];
+}
+void PlayerNL::gender(u8 v) {
+	playerPointer()[0x55BA] = v;
+}

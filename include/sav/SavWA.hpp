@@ -27,19 +27,28 @@
 #ifndef SAVWA_HPP
 #define SAVWA_HPP
 
+#include "Player.hpp"
+#include "PlayerWA.hpp"
 #include "Sav.hpp"
 #include "types.hpp"
+#include "Villager.hpp"
+#include "VillagerWA.hpp"
 
 #include <string>
 
+class Player;
+class PlayerWA;
+class Villager;
+class VillagerWA;
 class SavWA : public Sav {
 protected:
-	void initialize();
 	std::shared_ptr<u8[]> dataPointer; // Is that right?
 public:
 	SavWA(std::shared_ptr<u8[]> data);
 	virtual ~SavWA() {}
 	void Finish(void) override;
+	std::shared_ptr<Player> player(int player) override;
+	std::shared_ptr<Villager> villager(int villager) override;
 
 	SaveType getType() override { return SaveType::WA; }
 };

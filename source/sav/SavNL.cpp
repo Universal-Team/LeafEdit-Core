@@ -27,13 +27,14 @@
 #include "SavNL.hpp"
 
 // TODO: Decide what to set. Options: 0x7FA00 | 0x80000.
-SavNL::SavNL(std::shared_ptr<u8[]> dt) : Sav(dt, 0x80000)
-{
-	initialize();
+SavNL::SavNL(std::shared_ptr<u8[]> dt) : Sav(dt, 0x80000), dataPointer(dt) { }
+
+std::shared_ptr<Player> SavNL::player(int player) {
+	return std::make_shared<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10));
 }
 
-void SavNL::initialize(void) {
-	// TODO: Load NL Stuff.
+std::shared_ptr<Villager> SavNL::villager(int villager) {
+	return std::make_shared<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
 }
 
 void SavNL::Finish(void) {

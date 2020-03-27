@@ -24,33 +24,20 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVNL_HPP
-#define SAVNL_HPP
+#include "VillagerWW.hpp"
 
-#include "Player.hpp"
-#include "PlayerNL.hpp"
-#include "Sav.hpp"
-#include "types.hpp"
-#include "Villager.hpp"
-#include "VillagerNL.hpp"
+// ID, It's a u8, TODO.
+u16 VillagerWW::id() {
+	return 0;
+}
 
-#include <string>
+void VillagerWW::id(u16 v) {
+}
 
-class Player;
-class PlayerNL;
-class Villager;
-class VillagerNL;
-class SavNL : public Sav {
-protected:
-	std::shared_ptr<u8[]> dataPointer;
-public:
-	SavNL(std::shared_ptr<u8[]> data);
-	virtual ~SavNL() {}
-	void Finish(void) override;
-	std::shared_ptr<Player> player(int player) override;
-	std::shared_ptr<Villager> villager(int villager) override;
+u8 VillagerWW::personality() {
+	return villagerPointer()[0x6CA];
+}
 
-	SaveType getType() override { return SaveType::NL; }
-};
-
-#endif
+void VillagerWW::personality(u8 v) {
+	villagerPointer()[0x6CA] = v;
+}

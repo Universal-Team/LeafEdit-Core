@@ -27,22 +27,29 @@
 #ifndef SAVWW_HPP
 #define SAVWW_HPP
 
+#include "Player.hpp"
+#include "PlayerWW.hpp"
 #include "Sav.hpp"
 #include "types.hpp"
+#include "Villager.hpp"
+#include "VillagerWW.hpp"
 
 #include <string>
 
+class Player;
+class PlayerWW;
+class Villager;
+class VillagerWW;
 class SavWW : public Sav {
 protected:
 	bool isJapanese; // TODO: Figure out the difference of a Japanese save.
-	void initialize();
-
-	std::shared_ptr<u8[]> dataPointer; // Is that right?
+	std::shared_ptr<u8[]> dataPointer;
 public:
 	SavWW(std::shared_ptr<u8[]> data);
 	virtual ~SavWW() {}
 	void Finish(void) override;
-
+	std::shared_ptr<Player> player(int player) override;
+	std::shared_ptr<Villager> villager(int villager) override;
 	SaveType getType() override { return SaveType::WW; }
 };
 

@@ -26,13 +26,16 @@
 
 #include "SavWW.hpp"
 
-SavWW::SavWW(std::shared_ptr<u8[]> dt) : Sav(dt, 0x40000)
-{
-	initialize();
+SavWW::SavWW(std::shared_ptr<u8[]> dt) : Sav(dt, 0x40000), dataPointer(dt) { }
+
+// Get Player data.
+std::shared_ptr<Player> SavWW::player(int player) {
+	return std::make_shared<PlayerWW>(dataPointer, 0x000C + (player * 0x228C));
 }
 
-void SavWW::initialize(void) {
-	// TODO: Load WW Stuff.
+// Get Villager data.
+std::shared_ptr<Villager> SavWW::villager(int villager) {
+	return std::make_shared<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700));
 }
 
 void SavWW::Finish(void) {

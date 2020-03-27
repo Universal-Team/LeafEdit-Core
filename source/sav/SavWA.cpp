@@ -27,13 +27,14 @@
 #include "SavWA.hpp"
 
 // TODO: Set the actual size.
-SavWA::SavWA(std::shared_ptr<u8[]> dt) : Sav(dt, 0x89B00)
-{
-	initialize();
+SavWA::SavWA(std::shared_ptr<u8[]> dt) : Sav(dt, 0x89B00), dataPointer(dt) { }
+
+std::shared_ptr<Player> SavWA::player(int player) {
+	return std::make_shared<PlayerWA>(dataPointer, 0xA0 + (player * 0xA480));
 }
 
-void SavWA::initialize(void) {
-	// TODO: Load WA Stuff.
+std::shared_ptr<Villager> SavWA::villager(int villager) {
+	return std::make_shared<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
 }
 
 void SavWA::Finish(void) {

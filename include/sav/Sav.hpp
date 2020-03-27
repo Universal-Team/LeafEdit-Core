@@ -27,18 +27,20 @@
 #ifndef SAV_HPP
 #define SAV_HPP
 
+#include "Player.hpp"
 #include "types.hpp"
+#include "Villager.hpp"
 
-//#include <map>
 #include <memory>
-//#include <set>
 #include <vector>
 
+class Player;
+class Villager;
 class Sav {
 protected:
-	// Save stuff.
-	const std::shared_ptr<u8[]> saveData;
-	const u32 saveLength;
+	// Protected stuff.
+	std::shared_ptr<u8[]> saveData;
+	u32 saveLength;
 public:
 	// Constructor, Destructor and stuff.
 	virtual ~Sav() {}
@@ -46,12 +48,16 @@ public:
 	Sav(const Sav& save) = delete;
 	Sav& operator=(const Sav& save) = delete;
 
+	// Get Sav Contents.
+	virtual std::shared_ptr<Player> player(int player) = 0;
+	virtual std::shared_ptr<Villager> villager(int villager) = 0;
+
 	// Call this when finished editing.
 	virtual void Finish(void) = 0;
 	// Call this when getting the SaveType.
 	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, size_t length);
 
-	// return Save stuff.
+	// return Sav stuff.
 	u32 getLength() const { return saveLength; }
 	std::shared_ptr<u8[]> rawData() const { return saveData; }
 	virtual SaveType getType() = 0;

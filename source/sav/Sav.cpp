@@ -39,7 +39,7 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, size_t length) {
 		case 0x8007A:
 			return std::make_unique<SavWW>(dt);
 		case 0x7FA00:
-		//case 0x80000: // Will conflict with AC:WW for now.
+		//case 0x80000: // Will conflict with AC:WW for now. TODO: Find a better way.
 			return std::make_unique<SavNL>(dt);
 		case 0x89B00:
 			return std::make_unique<SavWA>(dt);
