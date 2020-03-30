@@ -86,3 +86,7 @@ u16 PlayerWW::townid() {
 void PlayerWW::townid(u16 v) {
 	playerPointer()[0x2276] = v;
 }
+
+bool PlayerWW::exist() {
+	return (u16)playerPointer()[0x2280] != 0;
+}

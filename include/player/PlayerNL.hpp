@@ -59,7 +59,7 @@ public:
 	void playerid(u16 v) override;
 	u16 townid() override;
 	void townid(u16 v) override;
-
+	bool exist() override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

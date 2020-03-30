@@ -97,3 +97,7 @@ u16 PlayerNL::townid() {
 void PlayerNL::townid(u16 v) {
 	playerPointer()[0x55BC] = v;
 }
+
+bool PlayerNL::exist() {
+	return (u16)playerPointer()[0x55A6] != 0;
+}
