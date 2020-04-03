@@ -60,6 +60,7 @@ public:
 	u16 townid() override;
 	void townid(u16 v) override;
 	bool exist() override;
+	std::u16string name() override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

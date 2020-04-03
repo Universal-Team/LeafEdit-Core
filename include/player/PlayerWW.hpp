@@ -37,10 +37,11 @@ class PlayerWW : public Player {
 protected:
 	std::shared_ptr<u8[]> data;
 	u32 offset; // Offset to the Player.
+	bool isJapanese;
 public:
 	// Constructor, Destructor and stuff.
 	virtual ~PlayerWW() {}
-	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset) : Player(playerData, playerOffset), data(playerData), offset(playerOffset) { }
+	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, bool japanese) : Player(playerData, playerOffset), data(playerData), offset(playerOffset), isJapanese(japanese) { }
 
 	u8 face() override;
 	void face(u8 v) override;
@@ -61,6 +62,7 @@ public:
 	u16 townid() override;
 	void townid(u16 v) override;
 	bool exist() override;
+	std::u16string name() override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

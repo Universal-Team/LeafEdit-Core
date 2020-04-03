@@ -48,7 +48,8 @@ class SavNL : public Sav {
 protected:
 	std::shared_ptr<u8[]> dataPointer;
 public:
-	SavNL(std::shared_ptr<u8[]> data);
+	// TODO: Decide what to set. Options: 0x7FA00 | 0x80000.
+	SavNL(std::shared_ptr<u8[]> dt) : Sav(dt, 0x80000), dataPointer(dt) { }
 	virtual ~SavNL() {}
 	void Finish(void) override;
 	std::shared_ptr<Player> player(int player) override;

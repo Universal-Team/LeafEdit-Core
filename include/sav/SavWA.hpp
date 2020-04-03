@@ -48,7 +48,7 @@ class SavWA : public Sav {
 protected:
 	std::shared_ptr<u8[]> dataPointer; // Is that right?
 public:
-	SavWA(std::shared_ptr<u8[]> data);
+	SavWA(std::shared_ptr<u8[]> dt) : Sav(dt, 0x89B00), dataPointer(dt) { }
 	virtual ~SavWA() {}
 	void Finish(void) override;
 	std::shared_ptr<Player> player(int player) override;

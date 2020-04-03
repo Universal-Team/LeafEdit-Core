@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "stringUtils.hpp"
 #include "TownWW.hpp"
 
 u8 TownWW::grasstype() {
@@ -32,4 +33,8 @@ u8 TownWW::grasstype() {
 
 void TownWW::grasstype(u8 v) {
 	townPointer()[0x2200] = v;
+}
+
+std::u16string TownWW::name() {
+	return StringUtils::ReadWWString(townPointer(), 0x0004, 8, this->japanese);
 }

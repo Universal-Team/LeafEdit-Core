@@ -28,6 +28,7 @@
 #define SAV_HPP
 
 #include "Player.hpp"
+#include "stringUtils.hpp"
 #include "Town.hpp"
 #include "types.hpp"
 #include "Villager.hpp"

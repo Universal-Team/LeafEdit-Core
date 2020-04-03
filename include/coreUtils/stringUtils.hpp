@@ -24,20 +24,28 @@
 *         reasonable ways as different from the original version.
 */
 
-#include "SavWA.hpp"
+#ifndef STRINGUTILS_HPP
+#define STRINGUTILS_HPP
 
-std::shared_ptr<Player> SavWA::player(int player) {
-	return std::make_shared<PlayerWA>(dataPointer, 0xA0 + (player * 0xA480));
+#include "types.hpp"
+#include <string>
+
+namespace StringUtils
+{
+	// Converters.
+	std::u16string UTF8toUTF16(const std::string& src);
+	std::string UTF16toUTF8(const std::u16string& src);
+
+	// Other utilities.
+	std::u16string& toFullWidth(std::u16string& in);
+
+	// New Leaf | Welcome Amiibo.
+	std::u16string ReadNLString(const u8* data, int ofs, int len, char16_t term);
+	
+	// Wild World.
+	std::u16string wwToUnicode(const std::string &input, bool japanese);
+	std::string unicodeToWW(const std::u16string &input, bool japanese);
+	std::u16string ReadWWString(u8 *data, u32 offset, u32 maxSize, bool isJapanese);
 }
 
-std::shared_ptr<Villager> SavWA::villager(int villager) {
-	return std::make_shared<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
-}
-
-std::shared_ptr<Town> SavWA::town() {
-	return std::make_shared<TownWA>(dataPointer);
-}
-
-void SavWA::Finish(void) {
-	// TODO: Write and save all WA Stuff.
-}
+#endif

@@ -26,9 +26,6 @@
 
 #include "SavNL.hpp"
 
-// TODO: Decide what to set. Options: 0x7FA00 | 0x80000.
-SavNL::SavNL(std::shared_ptr<u8[]> dt) : Sav(dt, 0x80000), dataPointer(dt) { }
-
 std::shared_ptr<Player> SavNL::player(int player) {
 	return std::make_shared<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10));
 }
@@ -38,7 +35,7 @@ std::shared_ptr<Villager> SavNL::villager(int villager) {
 }
 
 std::shared_ptr<Town> SavNL::town() {
-	return std::make_shared<TownNL>(dataPointer, 0x495A6); // Is that right? At least Town stuff seems to start here with "TOWN_TREESIZE".
+	return std::make_shared<TownNL>(dataPointer);
 }
 
 void SavNL::Finish(void) {

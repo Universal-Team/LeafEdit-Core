@@ -35,18 +35,19 @@
 
 class TownWW : public Town {
 protected:
+	bool japanese;
 	std::shared_ptr<u8[]> data;
-	u32 offset; // Offset to the Town.
 public:
 	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, u32 townOffset) : Town(townData, townOffset), data(townData), offset(townOffset) {}
+	TownWW(std::shared_ptr<u8[]> townData, bool isJapanese) : Town(townData), japanese(isJapanese), data(townData) {}
 
 	u8 grasstype() override;
 	void grasstype(u8 v) override;
+	std::u16string name() override;
 	
 private:
 	u8* townPointer() const {
-		return data.get() + offset;
+		return data.get();
 	}
 };
 

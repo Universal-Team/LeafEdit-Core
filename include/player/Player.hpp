@@ -61,6 +61,7 @@ public:
 	virtual u16 townid() = 0;
 	virtual void townid(u16 v) = 0;
 	virtual bool exist() = 0;
+	virtual std::u16string name() = 0;
 };
 
 #endif

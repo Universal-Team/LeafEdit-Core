@@ -46,10 +46,10 @@ class Villager;
 class VillagerWW;
 class SavWW : public Sav {
 protected:
-	bool isJapanese; // TODO: Figure out the difference of a Japanese save.
 	std::shared_ptr<u8[]> dataPointer;
+	bool isJapanese; // TODO: Figure out the difference of a Japanese save.
 public:
-	SavWW(std::shared_ptr<u8[]> data);
+	SavWW(std::shared_ptr<u8[]> dt) : Sav(dt, 0x40000), dataPointer(dt), isJapanese(false) { }
 	virtual ~SavWW() {}
 	void Finish(void) override;
 	std::shared_ptr<Player> player(int player) override;

@@ -25,6 +25,7 @@
 */
 
 #include "PlayerWA.hpp"
+#include "stringUtils.hpp"
 
 // Face.
 u8 PlayerWA::face() {
@@ -100,4 +101,8 @@ void PlayerWA::townid(u16 v) {
 
 bool PlayerWA::exist() {
 	return (u16)playerPointer()[0x55A6] != 0;
+}
+
+std::u16string PlayerWA::name() {
+	return StringUtils::ReadNLString(playerPointer(), 0x55A8, 8, u'\uFFFF');
 }

@@ -36,17 +36,17 @@
 class TownNL : public Town {
 protected:
 	std::shared_ptr<u8[]> data;
-	u32 offset; // Offset to the Town.
 public:
 	virtual ~TownNL() {}
-	TownNL(std::shared_ptr<u8[]> townData, u32 townOffset) : Town(townData, townOffset), data(townData), offset(townOffset) {}
+	TownNL(std::shared_ptr<u8[]> townData) : Town(townData), data(townData) {}
 
 	u8 grasstype() override;
 	void grasstype(u8 v) override;
+	std::u16string name() override;
 	
 private:
 	u8* townPointer() const {
-		return data.get() + offset;
+		return data.get();
 	}
 };
 

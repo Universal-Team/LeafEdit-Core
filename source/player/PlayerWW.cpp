@@ -25,6 +25,7 @@
 */
 
 #include "PlayerWW.hpp"
+#include "stringUtils.hpp"
 
 // Face. TODO
 u8 PlayerWW::face() {
@@ -89,4 +90,8 @@ void PlayerWW::townid(u16 v) {
 
 bool PlayerWW::exist() {
 	return (u16)playerPointer()[0x2280] != 0;
+}
+
+std::u16string PlayerWW::name() {
+	return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, this->isJapanese);
 }

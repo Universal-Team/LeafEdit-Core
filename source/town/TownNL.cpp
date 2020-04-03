@@ -24,12 +24,17 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "stringUtils.hpp"
 #include "TownNL.hpp"
 
 u8 TownNL::grasstype() {
-	return townPointer()[0x44DB];
+	return townPointer()[0x80+0x04da01];
 }
 
 void TownNL::grasstype(u8 v) {
-	townPointer()[0x44DB] = v;
+	townPointer()[0x80+0x04da01] = v;
+}
+
+std::u16string TownNL::name() {
+	return StringUtils::ReadNLString(townPointer(), 0x80+0x05c73a, 8, u'\uFFFF');
 }

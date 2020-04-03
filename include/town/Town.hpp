@@ -35,15 +35,15 @@
 class Town {
 protected:
 	std::shared_ptr<u8[]> data;
-	u32 offset; // Offset to the Town.
 public:
 	virtual ~Town() {}
-	Town(std::shared_ptr<u8[]> townData, u32 townOffset) : data(townData), offset(townOffset) {}
+	Town(std::shared_ptr<u8[]> townData) : data(townData) {}
 	Town(const Town& town) = delete;
 	Town& operator=(const Town& town) = delete;
 
 	virtual u8 grasstype() = 0;
 	virtual void grasstype(u8 v) = 0;
+	virtual std::u16string name() = 0;
 };
 
 #endif
