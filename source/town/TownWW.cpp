@@ -27,9 +27,9 @@
 #include "TownWW.hpp"
 
 u8 TownWW::grasstype() {
-	return townPointer()[0xE554];
+	return townPointer()[0x2200];
 }
 
 void TownWW::grasstype(u8 v) {
-	townPointer()[0xE554] = v;
+	townPointer()[0x2200] = v;
 }

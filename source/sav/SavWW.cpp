@@ -39,7 +39,7 @@ std::shared_ptr<Villager> SavWW::villager(int villager) {
 }
 
 std::shared_ptr<Town> SavWW::town() {
-	return std::make_shared<TownWW>(dataPointer, 0); // TODO: Find the "start" offset.
+	return std::make_shared<TownWW>(dataPointer, 0xC354); // Seems to be the startoffset..?
 }
 
 void SavWW::Finish(void) {
