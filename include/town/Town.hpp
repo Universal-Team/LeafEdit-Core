@@ -24,46 +24,26 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAV_HPP
-#define SAV_HPP
+#ifndef TOWN_HPP
+#define TOWN_HPP
 
-#include "Player.hpp"
-#include "Town.hpp"
 #include "types.hpp"
-#include "Villager.hpp"
 
 #include <memory>
 #include <vector>
 
-class Player;
-class Town;
-class Villager;
-class Sav {
+class Town {
 protected:
-	// Protected stuff.
-	std::shared_ptr<u8[]> saveData;
-	u32 saveLength;
+	std::shared_ptr<u8[]> data;
+	u32 offset; // Offset to the Town.
 public:
-	// Constructor, Destructor and stuff.
-	virtual ~Sav() {}
-	Sav(std::shared_ptr<u8[]> data, u32 length) : saveData(data), saveLength(length) {}
-	Sav(const Sav& save) = delete;
-	Sav& operator=(const Sav& save) = delete;
+	virtual ~Town() {}
+	Town(std::shared_ptr<u8[]> townData, u32 townOffset) : data(townData), offset(townOffset) {}
+	Town(const Town& town) = delete;
+	Town& operator=(const Town& town) = delete;
 
-	// Get Sav Contents.
-	virtual std::shared_ptr<Player> player(int player) = 0;
-	virtual std::shared_ptr<Villager> villager(int villager) = 0;
-	virtual std::shared_ptr<Town> town() = 0;
-	
-	// Call this when finished editing.
-	virtual void Finish(void) = 0;
-	// Call this when getting the SaveType.
-	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, size_t length);
-
-	// return Sav stuff.
-	u32 getLength() const { return saveLength; }
-	std::shared_ptr<u8[]> rawData() const { return saveData; }
-	virtual SaveType getType() = 0;
+	virtual u8 grasstype() = 0;
+	virtual void grasstype(u8 v) = 0;
 };
 
 #endif

@@ -30,6 +30,8 @@
 #include "Player.hpp"
 #include "PlayerWW.hpp"
 #include "Sav.hpp"
+#include "Town.hpp"
+#include "TownWW.hpp"
 #include "types.hpp"
 #include "Villager.hpp"
 #include "VillagerWW.hpp"
@@ -38,6 +40,8 @@
 
 class Player;
 class PlayerWW;
+class Town;
+class TownWW;
 class Villager;
 class VillagerWW;
 class SavWW : public Sav {
@@ -50,6 +54,8 @@ public:
 	void Finish(void) override;
 	std::shared_ptr<Player> player(int player) override;
 	std::shared_ptr<Villager> villager(int villager) override;
+	std::shared_ptr<Town> town() override;
+	
 	SaveType getType() override { return SaveType::WW; }
 };
 

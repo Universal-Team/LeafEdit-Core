@@ -37,6 +37,10 @@ std::shared_ptr<Villager> SavWA::villager(int villager) {
 	return std::make_shared<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
 }
 
+std::shared_ptr<Town> SavWA::town() {
+	return std::make_shared<TownWA>(dataPointer, 0x04be86); // Is that right? At least Town stuff seems to start here with "TOWN_TREESIZE".
+}
+
 void SavWA::Finish(void) {
 	// TODO: Write and save all WA Stuff.
 }

@@ -37,6 +37,10 @@ std::shared_ptr<Villager> SavNL::villager(int villager) {
 	return std::make_shared<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
 }
 
+std::shared_ptr<Town> SavNL::town() {
+	return std::make_shared<TownNL>(dataPointer, 0x495A6); // Is that right? At least Town stuff seems to start here with "TOWN_TREESIZE".
+}
+
 void SavNL::Finish(void) {
 	// TODO: Write and save all NL Stuff.
 }

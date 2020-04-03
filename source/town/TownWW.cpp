@@ -24,46 +24,12 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAV_HPP
-#define SAV_HPP
+#include "TownWW.hpp"
 
-#include "Player.hpp"
-#include "Town.hpp"
-#include "types.hpp"
-#include "Villager.hpp"
+u8 TownWW::grasstype() {
+	return townPointer()[0xE554];
+}
 
-#include <memory>
-#include <vector>
-
-class Player;
-class Town;
-class Villager;
-class Sav {
-protected:
-	// Protected stuff.
-	std::shared_ptr<u8[]> saveData;
-	u32 saveLength;
-public:
-	// Constructor, Destructor and stuff.
-	virtual ~Sav() {}
-	Sav(std::shared_ptr<u8[]> data, u32 length) : saveData(data), saveLength(length) {}
-	Sav(const Sav& save) = delete;
-	Sav& operator=(const Sav& save) = delete;
-
-	// Get Sav Contents.
-	virtual std::shared_ptr<Player> player(int player) = 0;
-	virtual std::shared_ptr<Villager> villager(int villager) = 0;
-	virtual std::shared_ptr<Town> town() = 0;
-	
-	// Call this when finished editing.
-	virtual void Finish(void) = 0;
-	// Call this when getting the SaveType.
-	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, size_t length);
-
-	// return Sav stuff.
-	u32 getLength() const { return saveLength; }
-	std::shared_ptr<u8[]> rawData() const { return saveData; }
-	virtual SaveType getType() = 0;
-};
-
-#endif
+void TownWW::grasstype(u8 v) {
+	townPointer()[0xE554] = v;
+}
