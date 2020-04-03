@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "checksum.hpp"
 #include "SavWW.hpp"
 
 // Get Player data.
@@ -41,5 +42,5 @@ std::shared_ptr<Town> SavWW::town() {
 }
 
 void SavWW::Finish(void) {
-	// TODO: Write and save all WW Stuff.
+	Checksum::UpdateWWChecksum(this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
 }

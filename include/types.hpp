@@ -29,6 +29,14 @@
 
 #include <stdint.h>
 
+#ifdef _3DS
+#include <3ds.h>
+#endif
+
+#ifdef ARM9
+#include <nds.h>
+#endif
+
 typedef uint8_t u8;
 typedef uint16_t u16;
 typedef uint32_t u32;

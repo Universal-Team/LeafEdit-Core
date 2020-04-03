@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "checksum.hpp"
 #include "SavNL.hpp"
 
 std::shared_ptr<Player> SavNL::player(int player) {
@@ -39,5 +40,5 @@ std::shared_ptr<Town> SavNL::town() {
 }
 
 void SavNL::Finish(void) {
-	// TODO: Write and save all NL Stuff.
+	Checksum::FixCRC32s(this->savePointer());
 }

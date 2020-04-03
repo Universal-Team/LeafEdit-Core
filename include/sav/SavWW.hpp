@@ -57,6 +57,11 @@ public:
 	std::shared_ptr<Town> town() override;
 	
 	SaveType getType() override { return SaveType::WW; }
+
+private:
+	u8 *savePointer() {
+		return dataPointer.get();
+	}
 };
 
 #endif
