@@ -59,7 +59,8 @@ public:
 	// Call this when finished editing.
 	virtual void Finish(void) = 0;
 	// Call this when getting the SaveType.
-	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, size_t length);
+	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, u32 length);
+	static std::unique_ptr<Sav> check080000(std::shared_ptr<u8[]> dt, u32 length);
 
 	// return Sav stuff.
 	u32 getLength() const { return saveLength; }

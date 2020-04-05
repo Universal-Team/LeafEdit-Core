@@ -28,13 +28,34 @@
 #include "TownWW.hpp"
 
 u8 TownWW::grasstype() {
-	return townPointer()[0x2200];
+	switch(this->region) {
+		case WWRegion::EUR:
+			return townPointer()[0x2200];
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 
 void TownWW::grasstype(u8 v) {
-	townPointer()[0x2200] = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			townPointer()[0x2200] = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 std::u16string TownWW::name() {
-	return StringUtils::ReadWWString(townPointer(), 0x0004, 8, this->japanese);
+	switch(this->region) {
+		case WWRegion::EUR:
+			return StringUtils::ReadWWString(townPointer(), 0x0004, 8, false);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return StringUtils::UTF8toUTF16("?");
+	}
+	return StringUtils::UTF8toUTF16("?");
 }

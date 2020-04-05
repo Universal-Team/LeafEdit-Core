@@ -36,10 +36,11 @@
 class VillagerWW : public Villager {
 protected:
 	std::shared_ptr<u8[]> data;
+	WWRegion region;
 	u32 offset; // Offset to the Villager.
 public:
 	virtual ~VillagerWW() {}
-	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) : Villager(villagerData, villagerOffset), data(villagerData), offset(villagerOffset) { }
+	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset, WWRegion Region) : Villager(villagerData, villagerOffset), data(villagerData), region(Region), offset(villagerOffset) { }
 
 	u16 id() override;
 	void id(u16 v) override;

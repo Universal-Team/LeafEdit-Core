@@ -243,6 +243,16 @@ bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint c
 	else	return false;
 }
 
-void Checksum::UpdateWWChecksum(u8 *saveBuffer, u16 *buffer, u64 size) {
-	*reinterpret_cast<u16*>(saveBuffer + 0x15FDC) = CalculateWW(buffer, size, 0xAFEE);
+void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
+	switch(region) {
+		case WWRegion::EUR: // also USA.
+			*reinterpret_cast<u16*>(saveBuffer + 0x15FDC) = CalculateWW(buffer, size, 0xAFEE);
+			break;
+		case WWRegion::JPN:
+			*reinterpret_cast<u16*>(saveBuffer + 0x12220) = CalculateWW(buffer, size, 0x9110);
+			break;
+		case WWRegion::KOR:
+			*reinterpret_cast<u16*>(saveBuffer + 0x173F8) = CalculateWW(buffer, size, 0xB9FC);
+			break;
+	}
 }

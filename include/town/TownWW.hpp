@@ -35,11 +35,11 @@
 
 class TownWW : public Town {
 protected:
-	bool japanese;
+	WWRegion region;
 	std::shared_ptr<u8[]> data;
 public:
 	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, bool isJapanese) : Town(townData), japanese(isJapanese), data(townData) {}
+	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
 
 	u8 grasstype() override;
 	void grasstype(u8 v) override;

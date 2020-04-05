@@ -29,42 +29,121 @@
 
 // Face. TODO
 u8 PlayerWW::face() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
-void PlayerWW::face(u8 v) { }
+void PlayerWW::face(u8 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 // Tan. TODO
 u16 PlayerWW::tan() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
 
-void PlayerWW::tan(u16 v) { }
+void PlayerWW::tan(u16 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 // Gender.
 u8 PlayerWW::gender() {
-	return playerPointer()[0x228A];
+	switch(this->region) {
+		case WWRegion::EUR:
+			return playerPointer()[0x228A];
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 void PlayerWW::gender(u8 v) {
-	playerPointer()[0x228A] = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			playerPointer()[0x228A] = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 // HairStyle. TODO
 u8 PlayerWW::hairstyle() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
-void PlayerWW::hairstyle(u8 v) { }
+void PlayerWW::hairstyle(u8 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 // HairColor. TODO
 u8 PlayerWW::haircolor() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
-void PlayerWW::haircolor(u8 v) { }
+void PlayerWW::haircolor(u8 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 // EyeColor. TODO
 u8 PlayerWW::eyecolor() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
-void PlayerWW::eyecolor(u8 v) { }
+void PlayerWW::eyecolor(u8 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 // Badges. Does not exist.
 u8 PlayerWW::badge(int badge) {
@@ -74,40 +153,119 @@ void PlayerWW::badge(int badge, u8 v) { }
 
 // Player ID. Is that right? Check that!
 u16 PlayerWW::playerid() {
-	return playerPointer()[0x2280];
+	switch(this->region) {
+		case WWRegion::EUR:
+			return playerPointer()[0x2280];
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 void PlayerWW::playerid(u16 v) {
-	playerPointer()[0x2280] = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			playerPointer()[0x2280] = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 // Town ID. Is that right? Check that!
 u16 PlayerWW::townid() {
-	return playerPointer()[0x2276];
+	switch(this->region) {
+		case WWRegion::EUR:
+			return playerPointer()[0x2276];
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 void PlayerWW::townid(u16 v) {
-	playerPointer()[0x2276] = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			playerPointer()[0x2276] = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 bool PlayerWW::exist() {
-	return (u16)playerPointer()[0x2280] != 0;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return (u16)playerPointer()[0x2280] != 0;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return false;
+	}
+	return false;
 }
 
 std::u16string PlayerWW::name() {
-	return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, this->isJapanese);
+	switch(this->region) {
+		case WWRegion::EUR:
+			return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, false);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return StringUtils::UTF8toUTF16("?");
+	}
+	return StringUtils::UTF8toUTF16("?");
 }
+
 // TODO.
-void PlayerWW::name(std::u16string v) { }
+void PlayerWW::name(std::u16string v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
+}
 
 u32 PlayerWW::wallet() {
-	return *(u32 *)(playerPointer() + 0x1B40);
+	switch(this->region) {
+		case WWRegion::EUR:
+			return *(u32 *)(playerPointer() + 0x1B40);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
+
 void PlayerWW::wallet(u32 v) {
-	*reinterpret_cast<u32*>(playerPointer() + 0x1B40) = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			*reinterpret_cast<u32*>(playerPointer() + 0x1B40) = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 u32 PlayerWW::bank() {
-	return *(u32 *)(playerPointer() + 0x21E4);
+	switch(this->region) {
+		case WWRegion::EUR:
+			return *(u32 *)(playerPointer() + 0x21E4);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 void PlayerWW::bank(u32 v) {
-	*reinterpret_cast<u32*>(playerPointer() + 0x21E4) = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			*reinterpret_cast<u32*>(playerPointer() + 0x21E4) = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }

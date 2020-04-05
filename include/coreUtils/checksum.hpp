@@ -47,7 +47,8 @@ namespace Checksum {
 	// Wild World stuff.
 	u16 CalculateWW(const u16 *buffer, u64 size, uint checksumOffset);
 	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset);
-	void UpdateWWChecksum(u8 *saveBuffer, u16 *buffer, u64 size);
+	// Checksum for EUR | USA ; JPN ; KOR.
+	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size);
 }
 
 

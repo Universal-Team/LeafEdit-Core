@@ -47,9 +47,10 @@ class VillagerWW;
 class SavWW : public Sav {
 protected:
 	std::shared_ptr<u8[]> dataPointer;
-	bool isJapanese; // TODO: Figure out the difference of a Japanese save.
+	WWRegion region;
+	u32 saveSize;
 public:
-	SavWW(std::shared_ptr<u8[]> dt) : Sav(dt, 0x40000), dataPointer(dt), isJapanese(false) { }
+	SavWW(std::shared_ptr<u8[]> dt, WWRegion Region, u32 ssize) : Sav(dt, ssize), dataPointer(dt), region(Region), saveSize(ssize) { }
 	virtual ~SavWW() {}
 	void Finish(void) override;
 	std::shared_ptr<Player> player(int player) override;

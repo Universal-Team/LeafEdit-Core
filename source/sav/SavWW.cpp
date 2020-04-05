@@ -31,19 +31,31 @@
 
 // Get Player data.
 std::shared_ptr<Player> SavWW::player(int player) {
-	return std::make_shared<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->isJapanese);
+	return std::make_shared<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region);
 }
 
 // Get Villager data.
 std::shared_ptr<Villager> SavWW::villager(int villager) {
-	return std::make_shared<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700));
+	return std::make_shared<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
 }
 
 std::shared_ptr<Town> SavWW::town() {
-	return std::make_shared<TownWW>(dataPointer, this->isJapanese);
+	return std::make_shared<TownWW>(dataPointer, this->region);
 }
 
 void SavWW::Finish(void) {
-	Checksum::UpdateWWChecksum(this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
-	memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
+	switch (this->region) {
+		case WWRegion::EUR: // also USA.
+			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
+			memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
+			break;
+		case WWRegion::JPN:
+			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x12224 / sizeof(u16));
+			memcpy(this->savePointer() + 0x12224, this->savePointer(), 0x12224); // Copy SaveData to the second save copy.
+			break;
+		case WWRegion::KOR:
+			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x173FC / sizeof(u16));
+			memcpy(this->savePointer() + 0x173FC, this->savePointer(), 0x173FC); // Copy SaveData to the second save copy.
+			break;
+	}
 }

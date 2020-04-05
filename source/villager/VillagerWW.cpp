@@ -28,16 +28,42 @@
 
 // ID, It's a u8, TODO.
 u16 VillagerWW::id() {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
 	return 0;
 }
 
 void VillagerWW::id(u16 v) {
+	switch(this->region) {
+		case WWRegion::EUR:
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }
 
 u8 VillagerWW::personality() {
-	return villagerPointer()[0x6CA];
+	switch(this->region) {
+		case WWRegion::EUR:
+			return villagerPointer()[0x6CA];
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return 0;
+	}
+	return 0;
 }
 
 void VillagerWW::personality(u8 v) {
-	villagerPointer()[0x6CA] = v;
+	switch(this->region) {
+		case WWRegion::EUR:
+			villagerPointer()[0x6CA] = v;
+			break;
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			break;
+	}
 }

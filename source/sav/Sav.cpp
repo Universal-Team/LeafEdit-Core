@@ -30,19 +30,40 @@
 #include "SavNL.hpp"
 #include "SavWA.hpp"
 
-std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, size_t length) {
+#include <cstring>
+
+std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 	switch (length) {
 		// 4 known cases for AC:WW.
 		case 0x40000:
 		case 0x4007A:
-	//	case 0x80000: // Will conflict with AC:NL for now. TODO: Find a better way.
 		case 0x8007A:
-			return std::make_unique<SavWW>(dt);
+			if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
+				return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
+			} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
+				return std::make_unique<SavWW>(dt, WWRegion::EUR, length);
+			} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
+				return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
+			} else {
+				return nullptr;
+			}
 		case 0x80000:
-			return std::make_unique<SavNL>(dt, length);
+			return check080000(dt, length);
 		case 0x89B00:
-			return std::make_unique<SavWA>(dt);
+			return std::make_unique<SavWA>(dt, length);
 	default:
 		return nullptr;
+	}
+}
+
+std::unique_ptr<Sav> Sav::check080000(std::shared_ptr<u8[]> dt, u32 length) {
+	if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
+		return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
+	} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
+		return std::make_unique<SavWW>(dt, WWRegion::EUR, length);
+	} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
+		return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
+	} else {
+		return std::make_unique<SavNL>(dt, length);
 	}
 }

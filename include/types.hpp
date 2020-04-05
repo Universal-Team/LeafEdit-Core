@@ -55,4 +55,10 @@ enum class SaveType {
 	UNUSED,
 };
 
+enum class WWRegion {
+	EUR,
+	JPN,
+	KOR
+};
+
 #endif
