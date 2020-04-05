@@ -63,6 +63,11 @@ public:
 	void townid(u16 v) override;
 	bool exist() override;
 	std::u16string name() override;
+	void name(std::u16string v) override;
+	u32 wallet() override;
+	void wallet(u32 v) override;
+	u32 bank() override;
+	void bank(u32 v) override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

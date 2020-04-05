@@ -183,6 +183,8 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 	return crc32;
 }
 
+
+
 void Checksum::FixCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); //Save Header
 
@@ -202,6 +204,21 @@ void Checksum::FixCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x5033C, 0x28F0, CRC_NORMAL);	//Unknown3 Checksum
 	UpdateCRC32(data, 0x52C30, 0x7F0, CRC_NORMAL);	//Unknown4 Checksum
 	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL);	//Unknown5 Checksum
+}
+
+void Checksum::FixNLCRC32s(u8 *data) {
+	UpdateCRC32(data, 0x80, 0x1C); // Save Header
+	// Rehash players
+	for (int i = 0; i < 4; i++) {
+		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i), 0x6B64);			// Players Checksum1
+		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i) + 0x6B68, 0x33A4);	// Players Checksum2
+	}
+
+	UpdateCRC32(data, 0x27C60 + 0x80, 0x218B0);	// VillagerData Checksum
+	UpdateCRC32(data, 0x49520 + 0x80, 0x44B8);	// GeneralTownData Checksum
+	UpdateCRC32(data, 0x4D9DC + 0x80, 0x1E420);	// ItemAndAcreData Checksum
+	UpdateCRC32(data, 0x6BE00 + 0x80, 0x20);		// Unknown1 Checksum
+	UpdateCRC32(data, 0x6BE24 + 0x80, 0x13AF8);	// ?
 }
 
 // Wild World.

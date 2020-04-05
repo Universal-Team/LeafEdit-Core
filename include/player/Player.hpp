@@ -62,6 +62,11 @@ public:
 	virtual void townid(u16 v) = 0;
 	virtual bool exist() = 0;
 	virtual std::u16string name() = 0;
+	virtual void name(std::u16string v) = 0;
+	virtual u32 wallet() = 0;
+	virtual void wallet(u32 v) = 0;
+	virtual u32 bank() = 0;
+	virtual void bank(u32 v) = 0;
 };
 
 #endif

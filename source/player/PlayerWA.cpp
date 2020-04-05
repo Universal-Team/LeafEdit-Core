@@ -106,3 +106,29 @@ bool PlayerWA::exist() {
 std::u16string PlayerWA::name() {
 	return StringUtils::ReadNLString(playerPointer(), 0x55A8, 8, u'\uFFFF');
 }
+// TODO.
+void PlayerWA::name(std::u16string v) { }
+
+u32 PlayerWA::wallet() {
+	this->walletValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6F08));
+	return walletValue.value;
+}
+void PlayerWA::wallet(u32 v) {
+	this->walletValue.value = v; // Set Value.
+	u32 encryptedInt = 0, encryptionData = 0;
+	this->walletValue.encrypt(encryptedInt, encryptionData);
+	*reinterpret_cast<u32*>(playerPointer() + 0x6F08) = encryptedInt;
+	*reinterpret_cast<u32*>(playerPointer() + 0x6F0C) = encryptionData;
+}
+
+u32 PlayerWA::bank() {
+	this->bankValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6B8C));
+	return bankValue.value;
+}
+void PlayerWA::bank(u32 v) {
+	this->bankValue.value = v; // Set Value.
+	u32 encryptedInt = 0, encryptionData = 0;
+	this->walletValue.encrypt(encryptedInt, encryptionData);
+	*reinterpret_cast<u32*>(playerPointer() + 0x6B8C) = encryptedInt;
+	*reinterpret_cast<u32*>(playerPointer() + 0x6B90) = encryptionData;
+}

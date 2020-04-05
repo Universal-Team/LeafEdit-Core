@@ -42,7 +42,8 @@ namespace Checksum {
 	bool VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type = CRC_REFLECTED);
 	u32 UpdateCRC32(u8 *data, u32 startOffset, u32 size, ChecksumType type = CRC_REFLECTED);
 	void FixCRC32s(u8 *data);
-
+	void FixNLCRC32s(u8 *data);
+	
 	// Wild World stuff.
 	u16 CalculateWW(const u16 *buffer, u64 size, uint checksumOffset);
 	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset);

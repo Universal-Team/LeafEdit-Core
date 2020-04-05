@@ -95,3 +95,19 @@ bool PlayerWW::exist() {
 std::u16string PlayerWW::name() {
 	return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, this->isJapanese);
 }
+// TODO.
+void PlayerWW::name(std::u16string v) { }
+
+u32 PlayerWW::wallet() {
+	return *(u32 *)(playerPointer() + 0x1B40);
+}
+void PlayerWW::wallet(u32 v) {
+	*reinterpret_cast<u32*>(playerPointer() + 0x1B40) = v;
+}
+
+u32 PlayerWW::bank() {
+	return *(u32 *)(playerPointer() + 0x21E4);
+}
+void PlayerWW::bank(u32 v) {
+	*reinterpret_cast<u32*>(playerPointer() + 0x21E4) = v;
+}

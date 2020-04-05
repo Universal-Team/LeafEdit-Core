@@ -40,5 +40,5 @@ std::shared_ptr<Town> SavNL::town() {
 }
 
 void SavNL::Finish(void) {
-	Checksum::FixCRC32s(this->savePointer());
+	Checksum::FixNLCRC32s(this->savePointer());
 }

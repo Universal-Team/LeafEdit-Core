@@ -27,6 +27,7 @@
 #ifndef PLAYERWA_HPP
 #define PLAYERWA_HPP
 
+#include "encryptedInt32.hpp"
 #include "Player.hpp"
 #include "types.hpp"
 
@@ -60,7 +61,16 @@ public:
 	void townid(u16 v) override;
 	bool exist() override;
 	std::u16string name() override;
+	void name(std::u16string v) override;
+	u32 wallet() override;
+	void wallet(u32 v) override;
+	u32 bank() override;
+	void bank(u32 v) override;
 private:
+	// EncryptedInt32 Variables.
+	EncryptedInt32 walletValue;
+	EncryptedInt32 bankValue;
+
 	u8* playerPointer() const {
 		return data.get() + offset;
 	}

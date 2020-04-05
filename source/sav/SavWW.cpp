@@ -27,6 +27,8 @@
 #include "checksum.hpp"
 #include "SavWW.hpp"
 
+#include <cstring>
+
 // Get Player data.
 std::shared_ptr<Player> SavWW::player(int player) {
 	return std::make_shared<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->isJapanese);
@@ -43,4 +45,5 @@ std::shared_ptr<Town> SavWW::town() {
 
 void SavWW::Finish(void) {
 	Checksum::UpdateWWChecksum(this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
+	memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
 }
