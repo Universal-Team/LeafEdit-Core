@@ -27,12 +27,20 @@
 #ifndef TOWNNL_HPP
 #define TOWNNL_HPP
 
+#include "Acre.hpp"
+#include "AcreNL.hpp"
+#include "Item.hpp"
+#include "ItemNL.hpp"
 #include "Town.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Acre;
+class AcreNL;
+class Item;
+class ItemNL;
 class TownNL : public Town {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -43,7 +51,8 @@ public:
 	u8 grasstype() override;
 	void grasstype(u8 v) override;
 	std::u16string name() override;
-	
+	std::unique_ptr<Acre> acre(int Acre) override;
+	std::unique_ptr<Item> item(u32 index) override;
 private:
 	u8* townPointer() const {
 		return data.get();

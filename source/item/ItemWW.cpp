@@ -24,40 +24,29 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TOWNWW_HPP
-#define TOWNWW_HPP
-
-#include "Acre.hpp"
-#include "AcreWW.hpp"
-#include "Item.hpp"
 #include "ItemWW.hpp"
-#include "Town.hpp"
-#include "types.hpp"
+#include "saveUtils.hpp"
 
-#include <memory>
-#include <vector>
+u16 ItemWW::id() { return SaveUtils::Read<u16>(itemPointer(), 0); }
 
-class Acre;
-class AcreWW;
-class Item;
-class ItemWW;
-class TownWW : public Town {
-protected:
-	WWRegion region;
-	std::shared_ptr<u8[]> data;
-public:
-	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
+void ItemWW::id(u16 v) { SaveUtils::Write<u16>(itemPointer(), 0, v); }
 
-	u8 grasstype() override;
-	void grasstype(u8 v) override;
-	std::u16string name() override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-private:
-	u8* townPointer() const {
-		return data.get();
+u16 ItemWW::flags() { return 0; }
+
+void ItemWW::flags(u16 v) { }
+
+std::string ItemWW::name(bool fromClass, u16 ID) {
+	if (ItemDatabase.empty())	return "???";
+	for (auto const& entry : ItemDatabase) {
+		if (fromClass) {
+			if (entry.first == this->id()) {
+				return entry.second;
+			}
+		} else {
+			if (entry.first == ID) {
+				return entry.second;
+			}
+		}
 	}
-};
-
-#endif
+	return std::string("???");
+}

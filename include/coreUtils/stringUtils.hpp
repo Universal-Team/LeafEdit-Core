@@ -43,9 +43,9 @@ namespace StringUtils
 	std::u16string ReadNLString(const u8* data, int ofs, int len, char16_t term);
 	
 	// Wild World.
-	std::u16string wwToUnicode(const std::string &input, bool japanese);
-	std::string unicodeToWW(const std::u16string &input, bool japanese);
-	std::u16string ReadWWString(u8 *data, u32 offset, u32 maxSize, bool isJapanese);
+	std::u16string wwToUnicode(const std::string &input, WWRegion region);
+	std::string unicodeToWW(const std::u16string &input, WWRegion region);
+	std::u16string ReadWWString(u8 *data, u32 offset, u32 maxSize, WWRegion region);
 }
 
 #endif

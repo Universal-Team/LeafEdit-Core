@@ -24,40 +24,25 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TOWNWW_HPP
-#define TOWNWW_HPP
+#ifndef SAVEUTILS_HPP
+#define SAVEUTILS_HPP
 
-#include "Acre.hpp"
-#include "AcreWW.hpp"
-#include "Item.hpp"
-#include "ItemWW.hpp"
-#include "Town.hpp"
 #include "types.hpp"
+#include <string>
 
-#include <memory>
-#include <vector>
-
-class Acre;
-class AcreWW;
-class Item;
-class ItemWW;
-class TownWW : public Town {
-protected:
-	WWRegion region;
-	std::shared_ptr<u8[]> data;
-public:
-	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
-
-	u8 grasstype() override;
-	void grasstype(u8 v) override;
-	std::u16string name() override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-private:
-	u8* townPointer() const {
-		return data.get();
+namespace SaveUtils
+{
+	// Read.
+	template <typename T>
+	T Read(u8 * Buffer, u32 offset) {
+		return *(T *)(Buffer + offset);
 	}
-};
+
+	// Write.
+	template <typename T>
+	void Write(u8 * Buffer, u32 offset, T data) {
+		*reinterpret_cast<T*>(Buffer + offset) = data;
+	}
+}
 
 #endif

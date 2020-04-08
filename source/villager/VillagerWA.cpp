@@ -24,14 +24,15 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "saveUtils.hpp"
 #include "VillagerWA.hpp"
 
 u16 VillagerWA::id() {
-	return villagerPointer()[0x0];
+	return SaveUtils::Read<u16>(villagerPointer(), 0x0);
 }
 
 void VillagerWA::id(u16 v) {
-	villagerPointer()[0x0] = v;
+	SaveUtils::Write<u16>(villagerPointer(), 0x0, v);
 }
 
 u8 VillagerWA::personality() {

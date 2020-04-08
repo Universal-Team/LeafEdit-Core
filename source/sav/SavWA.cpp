@@ -27,16 +27,22 @@
 #include "checksum.hpp"
 #include "SavWA.hpp"
 
-std::shared_ptr<Player> SavWA::player(int player) {
-	return std::make_shared<PlayerWA>(dataPointer, 0xA0 + (player * 0xA480));
+std::unique_ptr<Player> SavWA::player(int player, int index) {
+	if (player > 3 || index > 3)	return nullptr;
+	return std::make_unique<PlayerWA>(dataPointer, 0xA0 + (player * 0xA480), index);
 }
 
-std::shared_ptr<Villager> SavWA::villager(int villager) {
-	return std::make_shared<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
+std::unique_ptr<Villager> SavWA::villager(int villager) {
+	if (villager > 9)	return nullptr;
+	return std::make_unique<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
 }
 
-std::shared_ptr<Town> SavWA::town() {
-	return std::make_shared<TownWA>(dataPointer);
+std::unique_ptr<Town> SavWA::town() {
+	return std::make_unique<TownWA>(dataPointer);
+}
+
+std::unique_ptr<Island> SavWA::island() {
+	return std::make_unique<IslandWA>(dataPointer);
 }
 
 void SavWA::Finish(void) {

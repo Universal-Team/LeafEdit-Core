@@ -24,40 +24,30 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TOWNWW_HPP
-#define TOWNWW_HPP
+#ifndef ACRE_HPP
+#define ACRE_HPP
 
-#include "Acre.hpp"
-#include "AcreWW.hpp"
-#include "Item.hpp"
-#include "ItemWW.hpp"
-#include "Town.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
-class Acre;
-class AcreWW;
-class Item;
-class ItemWW;
-class TownWW : public Town {
-protected:
-	WWRegion region;
-	std::shared_ptr<u8[]> data;
-public:
-	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
+#define WWACRE_SIZE	1
+#define NLACRE_SIZE	2
 
-	u8 grasstype() override;
-	void grasstype(u8 v) override;
-	std::u16string name() override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-private:
-	u8* townPointer() const {
-		return data.get();
-	}
+class Acre {
+protected:
+	std::shared_ptr<u8[]> data;
+	u32 Offset;
+public:
+	virtual ~Acre() {}
+	Acre(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) {}
+	Acre(const Acre& acre) = delete;
+	Acre& operator=(const Acre& acre) = delete;
+
+	virtual u32 maxAcre() const = 0;
+	virtual u8 id() = 0;
+	virtual void id(u8 v) = 0;
 };
 
 #endif

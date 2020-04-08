@@ -25,6 +25,7 @@
 */
 
 #include "PlayerWW.hpp"
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
 // Face. TODO
@@ -155,7 +156,7 @@ void PlayerWW::badge(int badge, u8 v) { }
 u16 PlayerWW::playerid() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return playerPointer()[0x2280];
+			return SaveUtils::Read<u16>(playerPointer(), 0x2280);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return 0;
@@ -177,7 +178,7 @@ void PlayerWW::playerid(u16 v) {
 u16 PlayerWW::townid() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return playerPointer()[0x2276];
+			return SaveUtils::Read<u16>(playerPointer(), 0x2276);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return 0;
@@ -198,7 +199,7 @@ void PlayerWW::townid(u16 v) {
 bool PlayerWW::exist() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return (u16)playerPointer()[0x2280] != 0;
+			return SaveUtils::Read<u16>(playerPointer(), 0x2280) != 0;
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return false;
@@ -209,7 +210,7 @@ bool PlayerWW::exist() {
 std::u16string PlayerWW::name() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, false);
+			return StringUtils::ReadWWString(playerPointer(), 0x2282, 7, this->region);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return StringUtils::UTF8toUTF16("?");
@@ -230,7 +231,7 @@ void PlayerWW::name(std::u16string v) {
 u32 PlayerWW::wallet() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return *(u32 *)(playerPointer() + 0x1B40);
+			return SaveUtils::Read<u32>(playerPointer(), 0x1B40);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return 0;
@@ -241,7 +242,7 @@ u32 PlayerWW::wallet() {
 void PlayerWW::wallet(u32 v) {
 	switch(this->region) {
 		case WWRegion::EUR:
-			*reinterpret_cast<u32*>(playerPointer() + 0x1B40) = v;
+			SaveUtils::Write<u32>(playerPointer(), 0x1B40, v);
 			break;
 		case WWRegion::JPN:
 		case WWRegion::KOR:
@@ -252,7 +253,7 @@ void PlayerWW::wallet(u32 v) {
 u32 PlayerWW::bank() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return *(u32 *)(playerPointer() + 0x21E4);
+			return SaveUtils::Read<u32>(playerPointer(), 0x21E4);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return 0;
@@ -262,10 +263,33 @@ u32 PlayerWW::bank() {
 void PlayerWW::bank(u32 v) {
 	switch(this->region) {
 		case WWRegion::EUR:
-			*reinterpret_cast<u32*>(playerPointer() + 0x21E4) = v;
+			SaveUtils::Write<u32>(playerPointer(), 0x21E4, v);
 			break;
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			break;
 	}
+}
+
+u32 PlayerWW::islandmedals() {
+	return 0; // Does not exist here.
+}
+void PlayerWW::islandmedals(u32 v) { }
+
+u32 PlayerWW::coupons() {
+	return 0; // Does not exist here.
+}
+void PlayerWW::coupons(u32 v) { }
+
+std::unique_ptr<Item> PlayerWW::pocket(int slot) {
+	return std::make_unique<ItemWW>(data, offset + 0x1B22 + slot * 2);
+}
+
+std::unique_ptr<Item> PlayerWW::dresser(int slot) {
+	return std::make_unique<ItemWW>(data, 0x15430 + 0xB4 * Index + slot * 2);
+}
+
+// TPC.
+u8* PlayerWW::tpcImage() {
+	return nullptr; // TODO.
 }

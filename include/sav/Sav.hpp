@@ -27,6 +27,7 @@
 #ifndef SAV_HPP
 #define SAV_HPP
 
+#include "Island.hpp"
 #include "Player.hpp"
 #include "stringUtils.hpp"
 #include "Town.hpp"
@@ -36,6 +37,7 @@
 #include <memory>
 #include <vector>
 
+class Island;
 class Player;
 class Town;
 class Villager;
@@ -52,9 +54,10 @@ public:
 	Sav& operator=(const Sav& save) = delete;
 
 	// Get Sav Contents.
-	virtual std::shared_ptr<Player> player(int player) = 0;
-	virtual std::shared_ptr<Villager> villager(int villager) = 0;
-	virtual std::shared_ptr<Town> town() = 0;
+	virtual std::unique_ptr<Player> player(int player, int index = 0) = 0;
+	virtual std::unique_ptr<Villager> villager(int villager) = 0;
+	virtual std::unique_ptr<Town> town() = 0;
+	virtual std::unique_ptr<Island> island() = 0;
 	
 	// Call this when finished editing.
 	virtual void Finish(void) = 0;

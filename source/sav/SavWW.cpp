@@ -30,17 +30,23 @@
 #include <cstring>
 
 // Get Player data.
-std::shared_ptr<Player> SavWW::player(int player) {
-	return std::make_shared<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region);
+std::unique_ptr<Player> SavWW::player(int player, int index) {
+	if (player > 3 || index > 3)	return nullptr;
+	return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region, index);
 }
 
 // Get Villager data.
-std::shared_ptr<Villager> SavWW::villager(int villager) {
-	return std::make_shared<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
+std::unique_ptr<Villager> SavWW::villager(int villager) {
+	if (villager > 7)	return nullptr;
+	return std::make_unique<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
 }
 
-std::shared_ptr<Town> SavWW::town() {
-	return std::make_shared<TownWW>(dataPointer, this->region);
+std::unique_ptr<Town> SavWW::town() {
+	return std::make_unique<TownWW>(dataPointer, this->region);
+}
+
+std::unique_ptr<Island> SavWW::island() {
+	return nullptr; // Does not exist.
 }
 
 void SavWW::Finish(void) {

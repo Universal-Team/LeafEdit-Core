@@ -27,11 +27,15 @@
 #ifndef TOWN_HPP
 #define TOWN_HPP
 
+#include "Acre.hpp"
+#include "Item.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Acre;
+class Item;
 class Town {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -44,6 +48,8 @@ public:
 	virtual u8 grasstype() = 0;
 	virtual void grasstype(u8 v) = 0;
 	virtual std::u16string name() = 0;
+	virtual std::unique_ptr<Acre> acre(int Acre) = 0;
+	virtual std::unique_ptr<Item> item(u32 index) = 0;
 };
 
 #endif

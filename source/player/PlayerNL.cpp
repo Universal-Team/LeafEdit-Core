@@ -25,6 +25,7 @@
 */
 
 #include "PlayerNL.hpp"
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
 // Face.
@@ -37,10 +38,10 @@ void PlayerNL::face(u8 v) {
 
 // Tan.
 u16 PlayerNL::tan() {
-	return playerPointer()[0x08];
+	return SaveUtils::Read<u16>(playerPointer(), 0x08);
 }
 void PlayerNL::tan(u16 v) {
-	playerPointer()[0x08] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x08, v);
 }
 
 // Gender.
@@ -75,7 +76,7 @@ void PlayerNL::eyecolor(u8 v) {
 	playerPointer()[0x07] = v;
 }
 
-// Badges.
+// Badges. 
 u8 PlayerNL::badge(int badge) {
 	return playerPointer()[0x569C + badge];
 }
@@ -83,24 +84,24 @@ void PlayerNL::badge(int badge, u8 v) {
 	playerPointer()[0x569C + badge] = v;
 }
 
-// Player ID.
+// Player ID. 
 u16 PlayerNL::playerid() {
-	return playerPointer()[0x55A6];
+	return SaveUtils::Read<u16>(playerPointer(), 0x55A6);
 }
 void PlayerNL::playerid(u16 v) {
-	playerPointer()[0x55A6] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x55A6, v);
 }
 
-// Town ID.
+// Town ID. 
 u16 PlayerNL::townid() {
-	return playerPointer()[0x55BC];
+	return SaveUtils::Read<u16>(playerPointer(), 0x55BC);
 }
 void PlayerNL::townid(u16 v) {
-	playerPointer()[0x55BC] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x55BC, v);
 }
 
 bool PlayerNL::exist() {
-	return (u16)playerPointer()[0x55A6] != 0;
+	return SaveUtils::Read<u16>(playerPointer(), 0x55A6) != 0;
 }
 
 std::u16string PlayerNL::name() {
@@ -110,25 +111,63 @@ std::u16string PlayerNL::name() {
 void PlayerNL::name(std::u16string v) { }
 
 u32 PlayerNL::wallet() {
-	this->walletValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6E38));
+	this->walletValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6E38));
 	return walletValue.value;
 }
 void PlayerNL::wallet(u32 v) {
 	this->walletValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
-	*reinterpret_cast<u32*>(playerPointer() + 0x6E38) = encryptedInt;
-	*reinterpret_cast<u32*>(playerPointer() + 0x6E3C) = encryptionData;
+	SaveUtils::Write<u32>(playerPointer(), 0x6E38, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6E3C, encryptionData);
 }
 
+
 u32 PlayerNL::bank() {
-	this->bankValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6B6C));
+	this->bankValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B6C));
 	return bankValue.value;
 }
 void PlayerNL::bank(u32 v) {
 	this->bankValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
-	*reinterpret_cast<u32*>(playerPointer() + 0x6B6C) = encryptedInt;
-	*reinterpret_cast<u32*>(playerPointer() + 0x6B70) = encryptionData;
+	SaveUtils::Write<u32>(playerPointer(), 0x6B6C, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6B70, encryptionData);
+}
+
+u32 PlayerNL::islandmedals() {
+	this->islandValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B7C));
+	return islandValue.value;
+}
+void PlayerNL::islandmedals(u32 v) {
+	this->islandValue.value = v; // Set Value.
+	u32 encryptedInt = 0, encryptionData = 0;
+	this->islandValue.encrypt(encryptedInt, encryptionData);
+	SaveUtils::Write<u32>(playerPointer(), 0x6B7C, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6B80, encryptionData);
+}
+
+u32 PlayerNL::coupons() {
+	return 0; // Does not exist here.
+}
+void PlayerNL::coupons(u32 v) { }
+
+std::unique_ptr<Item> PlayerNL::pocket(int slot) {
+	if (slot > 15)	return nullptr;
+	return std::make_unique<ItemNL>(data, offset + 0x6BB0 + slot * 4);
+}
+
+std::unique_ptr<Item> PlayerNL::dresser(int slot) {
+	if (slot > 179)	return nullptr;
+	return std::make_unique<ItemNL>(data, offset + 0x8E18 + slot * 4);
+}
+
+std::unique_ptr<Item> PlayerNL::islandbox(int slot) {
+	if (slot > 39)	return nullptr;
+	return std::make_unique<ItemNL>(data, offset + 0x6E40 + slot * 4);
+}
+
+// TPC.
+u8* PlayerNL::tpcImage() {
+	return nullptr;
 }

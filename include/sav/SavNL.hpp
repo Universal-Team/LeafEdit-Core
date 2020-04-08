@@ -27,6 +27,8 @@
 #ifndef SAVNL_HPP
 #define SAVNL_HPP
 
+#include "Island.hpp"
+#include "IslandNL.hpp"
 #include "Player.hpp"
 #include "PlayerNL.hpp"
 #include "Sav.hpp"
@@ -38,6 +40,8 @@
 
 #include <string>
 
+class Island;
+class IslandNL;
 class Player;
 class PlayerNL;
 class Town;
@@ -52,9 +56,10 @@ public:
 	SavNL(std::shared_ptr<u8[]> dt, u32 ssize) : Sav(dt, ssize), dataPointer(dt), saveSize(ssize) { }
 	virtual ~SavNL() {}
 	void Finish(void) override;
-	std::shared_ptr<Player> player(int player) override;
-	std::shared_ptr<Villager> villager(int villager) override;
-	std::shared_ptr<Town> town() override;
+	std::unique_ptr<Player> player(int player, int index = 0) override;
+	std::unique_ptr<Villager> villager(int villager) override;
+	std::unique_ptr<Town> town() override;
+	std::unique_ptr<Island> island() override;
 	
 	SaveType getType() override { return SaveType::NL; }
 

@@ -27,18 +27,22 @@
 #ifndef PLAYER_HPP
 #define PLAYER_HPP
 
+#include "Item.hpp"
+#include "ItemWW.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Item;
+class ItemWW;
 class Player {
 protected:
 	std::shared_ptr<u8[]> data;
 	u32 offset; // Offset to the Player.
 public:
 	virtual ~Player() {}
-	Player(std::shared_ptr<u8[]> playerData, u32 playerOffset) : data(playerData), offset(playerOffset) {}
+	Player(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : data(playerData), offset(playerOffset) {}
 	Player(const Player& player) = delete;
 	Player& operator=(const Player& player) = delete;
 
@@ -67,6 +71,18 @@ public:
 	virtual void wallet(u32 v) = 0;
 	virtual u32 bank() = 0;
 	virtual void bank(u32 v) = 0;
+	virtual u32 islandmedals() = 0;
+	virtual void islandmedals(u32 v) = 0;
+	virtual u32 coupons() = 0;
+	virtual void coupons(u32 v) = 0;
+
+	virtual std::unique_ptr<Item> pocket(int slot) = 0;
+	virtual std::unique_ptr<Item> dresser(int slot) = 0;
+	virtual std::unique_ptr<Item> islandbox(int slot) = 0;
+	virtual std::unique_ptr<Item> storage(int slot) = 0;
+
+	virtual bool hasTPCImage() const = 0;
+	virtual u8* tpcImage() = 0;
 };
 
 #endif

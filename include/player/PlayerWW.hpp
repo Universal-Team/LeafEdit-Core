@@ -38,10 +38,11 @@ protected:
 	std::shared_ptr<u8[]> data;
 	u32 offset; // Offset to the Player.
 	WWRegion region;
+	int Index;
 public:
 	// Constructor, Destructor and stuff.
 	virtual ~PlayerWW() {}
-	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region) : Player(playerData, playerOffset), data(playerData), offset(playerOffset), region(Region) { }
+	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, int index) : Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), region(Region), Index(index) { }
 
 	u8 face() override;
 	void face(u8 v) override;
@@ -68,6 +69,18 @@ public:
 	void wallet(u32 v) override;
 	u32 bank() override;
 	void bank(u32 v) override;
+	u32 islandmedals() override;
+	void islandmedals(u32 v) override;
+	u32 coupons() override;
+	void coupons(u32 v) override;
+	
+	std::unique_ptr<Item> pocket(int slot) override;
+	std::unique_ptr<Item> dresser(int slot) override;
+	std::unique_ptr<Item> islandbox(int slot) override { return nullptr; };
+	std::unique_ptr<Item> storage(int slot) override { return nullptr; };
+
+	bool hasTPCImage() const override { return false; }
+	u8* tpcImage() override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

@@ -28,19 +28,24 @@
 #define PLAYERWA_HPP
 
 #include "encryptedInt32.hpp"
+#include "Item.hpp"
+#include "ItemWA.hpp"
 #include "Player.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Item;
+class ItemWA;
 class PlayerWA : public Player {
 protected:
 	std::shared_ptr<u8[]> data;
 	u32 offset; // Offset to the Player.
+	int Index;
 public:
 	virtual ~PlayerWA() {}
-	PlayerWA(std::shared_ptr<u8[]> playerData, u32 playerOffset) : Player(playerData, playerOffset), data(playerData), offset(playerOffset) { }
+	PlayerWA(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), Index(index) { }
 	u8 face() override;
 	void face(u8 v) override;
 	u8 gender() override;
@@ -66,11 +71,25 @@ public:
 	void wallet(u32 v) override;
 	u32 bank() override;
 	void bank(u32 v) override;
+	u32 islandmedals() override;
+	void islandmedals(u32 v) override;
+	u32 coupons() override;
+	void coupons(u32 v) override;
+
+	std::unique_ptr<Item> pocket(int slot) override;
+	std::unique_ptr<Item> dresser(int slot) override;
+	std::unique_ptr<Item> islandbox(int slot) override;
+	std::unique_ptr<Item> storage(int slot) override;
+
+	bool hasTPCImage() const override { return true; }
+	u8* tpcImage() override;
 private:
 	// EncryptedInt32 Variables.
 	EncryptedInt32 walletValue;
 	EncryptedInt32 bankValue;
-
+	EncryptedInt32 islandValue;
+	EncryptedInt32 couponValue;
+	
 	u8* playerPointer() const {
 		return data.get() + offset;
 	}

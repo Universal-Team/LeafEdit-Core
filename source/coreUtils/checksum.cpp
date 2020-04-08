@@ -25,6 +25,7 @@
 */
 
 #include "checksum.hpp"
+#include "saveUtils.hpp"
 #include "types.hpp"
 
 #include <cstring>
@@ -178,7 +179,7 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 		crc32 = CalculateCRC32Reflected(rawData + startOffset + 4, size);
 	}
 
-	*reinterpret_cast<u32*>(rawData + startOffset) = crc32; // write calculated crc32
+	SaveUtils::Write<u32>(rawData, startOffset, crc32); // write calculated crc32
 
 	return crc32;
 }
@@ -246,13 +247,13 @@ bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint c
 void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
 	switch(region) {
 		case WWRegion::EUR: // also USA.
-			*reinterpret_cast<u16*>(saveBuffer + 0x15FDC) = CalculateWW(buffer, size, 0xAFEE);
+			SaveUtils::Write<u16>(saveBuffer, 0x15FDC, CalculateWW(buffer, size, 0xAFEE));
 			break;
 		case WWRegion::JPN:
-			*reinterpret_cast<u16*>(saveBuffer + 0x12220) = CalculateWW(buffer, size, 0x9110);
+			SaveUtils::Write<u16>(saveBuffer, 0x12220, CalculateWW(buffer, size, 0x9110));
 			break;
 		case WWRegion::KOR:
-			*reinterpret_cast<u16*>(saveBuffer + 0x173F8) = CalculateWW(buffer, size, 0xB9FC);
+			SaveUtils::Write<u16>(saveBuffer, 0x173F8, CalculateWW(buffer, size, 0xB9FC));
 			break;
 	}
 }

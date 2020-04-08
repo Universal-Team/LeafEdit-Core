@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "saveUtils.hpp"
 #include "VillagerWW.hpp"
 
 // ID, It's a u8, TODO.

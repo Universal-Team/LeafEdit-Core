@@ -27,6 +27,8 @@
 #ifndef SAVWA_HPP
 #define SAVWA_HPP
 
+#include "Island.hpp"
+#include "IslandWA.hpp"
 #include "Player.hpp"
 #include "PlayerWA.hpp"
 #include "Sav.hpp"
@@ -38,6 +40,8 @@
 
 #include <string>
 
+class Island;
+class IslandWA;
 class Player;
 class PlayerWA;
 class Town;
@@ -52,9 +56,10 @@ public:
 	SavWA(std::shared_ptr<u8[]> dt, u32 ssize) : Sav(dt, ssize), dataPointer(dt), saveSize(ssize) { }
 	virtual ~SavWA() {}
 	void Finish(void) override;
-	std::shared_ptr<Player> player(int player) override;
-	std::shared_ptr<Villager> villager(int villager) override;
-	std::shared_ptr<Town> town() override;
+	std::unique_ptr<Player> player(int player, int index = 0) override;
+	std::unique_ptr<Villager> villager(int villager) override;
+	std::unique_ptr<Town> town() override;
+	std::unique_ptr<Island> island() override;
 
 	SaveType getType() override { return SaveType::WA; }
 

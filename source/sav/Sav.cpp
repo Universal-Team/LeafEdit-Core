@@ -47,6 +47,8 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 			} else {
 				return nullptr;
 			}
+		case 0x7FA00:
+			return std::make_unique<SavNL>(dt, length);
 		case 0x80000:
 			return check080000(dt, length);
 		case 0x89B00:

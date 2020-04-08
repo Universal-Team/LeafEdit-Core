@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 #include "TownWA.hpp"
 
@@ -37,4 +38,15 @@ void TownWA::grasstype(u8 v) {
 
 std::u16string TownWA::name() {
 	return StringUtils::ReadNLString(townPointer(), 0x0621BA, 8, u'\uFFFF');
+}
+
+std::unique_ptr<Acre> TownWA::acre(int Acre) {
+	if (Acre > 41)	return nullptr;
+	return std::make_unique<AcreWA>(data, 0x053484 + Acre *2);
+}
+
+// 5120
+std::unique_ptr<Item> TownWA::item(u32 index) {
+	if (index > 5119)	return nullptr; // Out of actual size.
+	return std::make_unique<ItemWA>(data, 0x0534D8 + index * 4);
 }

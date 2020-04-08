@@ -24,6 +24,7 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 #include "TownWW.hpp"
 
@@ -52,10 +53,34 @@ void TownWW::grasstype(u8 v) {
 std::u16string TownWW::name() {
 	switch(this->region) {
 		case WWRegion::EUR:
-			return StringUtils::ReadWWString(townPointer(), 0x0004, 8, false);
+			return StringUtils::ReadWWString(townPointer(), 0x0004, 8, this->region);
 		case WWRegion::JPN:
 		case WWRegion::KOR:
 			return StringUtils::UTF8toUTF16("?");
 	}
 	return StringUtils::UTF8toUTF16("?");
+}
+
+std::unique_ptr<Acre> TownWW::acre(int Acre) {
+	if (Acre > 35)	return nullptr;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<AcreWW>(data, 0xC330 + Acre *1);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> TownWW::item(u32 index) {
+	if (index > 4095)	return nullptr;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<ItemWW>(data, 0xC354 + index * 2);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr;
+	}
+	return nullptr;
 }

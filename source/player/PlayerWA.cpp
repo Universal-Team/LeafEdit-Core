@@ -25,6 +25,7 @@
 */
 
 #include "PlayerWA.hpp"
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
 // Face.
@@ -37,10 +38,10 @@ void PlayerWA::face(u8 v) {
 
 // Tan.
 u16 PlayerWA::tan() {
-	return playerPointer()[0x08];
+	return SaveUtils::Read<u16>(playerPointer(), 0x08);
 }
 void PlayerWA::tan(u16 v) {
-	playerPointer()[0x08] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x08, v);
 }
 
 // Gender.
@@ -75,7 +76,7 @@ void PlayerWA::eyecolor(u8 v) {
 	playerPointer()[0x07] = v;
 }
 
-// Badges.
+// Badges. 
 u8 PlayerWA::badge(int badge) {
 	return playerPointer()[0x569C + badge];
 }
@@ -83,24 +84,24 @@ void PlayerWA::badge(int badge, u8 v) {
 	playerPointer()[0x569C + badge] = v;
 }
 
-// Player ID.
+// Player ID. 
 u16 PlayerWA::playerid() {
-	return playerPointer()[0x55A6];
+	return SaveUtils::Read<u16>(playerPointer(), 0x55A6);
 }
 void PlayerWA::playerid(u16 v) {
-	playerPointer()[0x55A6] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x55A6, v);
 }
 
-// Town ID.
+// Town ID. 
 u16 PlayerWA::townid() {
-	return playerPointer()[0x55BC];
+	return SaveUtils::Read<u16>(playerPointer(), 0x55BC);
 }
 void PlayerWA::townid(u16 v) {
-	playerPointer()[0x55BC] = v;
+	SaveUtils::Write<u16>(playerPointer(), 0x55BC, v);
 }
 
 bool PlayerWA::exist() {
-	return (u16)playerPointer()[0x55A6] != 0;
+	return SaveUtils::Read<u16>(playerPointer(), 0x55A6) != 0;
 }
 
 std::u16string PlayerWA::name() {
@@ -110,25 +111,75 @@ std::u16string PlayerWA::name() {
 void PlayerWA::name(std::u16string v) { }
 
 u32 PlayerWA::wallet() {
-	this->walletValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6F08));
+	this->walletValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6F08));
 	return walletValue.value;
 }
 void PlayerWA::wallet(u32 v) {
 	this->walletValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
-	*reinterpret_cast<u32*>(playerPointer() + 0x6F08) = encryptedInt;
-	*reinterpret_cast<u32*>(playerPointer() + 0x6F0C) = encryptionData;
+	SaveUtils::Write<u32>(playerPointer(), 0x6F08, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6F0C, encryptionData);
 }
 
 u32 PlayerWA::bank() {
-	this->bankValue = EncryptedInt32(*(u64 *)(playerPointer() + 0x6B8C));
+	this->bankValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B8C));
 	return bankValue.value;
 }
 void PlayerWA::bank(u32 v) {
 	this->bankValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
-	*reinterpret_cast<u32*>(playerPointer() + 0x6B8C) = encryptedInt;
-	*reinterpret_cast<u32*>(playerPointer() + 0x6B90) = encryptionData;
+	SaveUtils::Write<u32>(playerPointer(), 0x6B8C, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6B90, encryptionData);
+}
+
+u32 PlayerWA::islandmedals() {
+	this->islandValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B9C));
+	return islandValue.value;
+}
+void PlayerWA::islandmedals(u32 v) {
+	this->islandValue.value = v; // Set Value.
+	u32 encryptedInt = 0, encryptionData = 0;
+	this->islandValue.encrypt(encryptedInt, encryptionData);
+	SaveUtils::Write<u32>(playerPointer(), 0x6B9C, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x6BA0, encryptionData);
+}
+
+u32 PlayerWA::coupons() {
+	this->couponValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x8D1C));
+	return couponValue.value;
+}
+void PlayerWA::coupons(u32 v) {
+	this->couponValue.value = v; // Set Value.
+	u32 encryptedInt = 0, encryptionData = 0;
+	this->couponValue.encrypt(encryptedInt, encryptionData);
+	SaveUtils::Write<u32>(playerPointer(), 0x8D1C, encryptedInt);
+	SaveUtils::Write<u32>(playerPointer(), 0x8D20, encryptionData);
+}
+
+
+std::unique_ptr<Item> PlayerWA::pocket(int slot) {
+	if (slot > 15)	return nullptr;
+	return std::make_unique<ItemWA>(data, offset + 0x6BD0 + slot * 4);
+}
+
+std::unique_ptr<Item> PlayerWA::dresser(int slot) {
+	if (slot > 179)	return nullptr;
+	return std::make_unique<ItemWA>(data, offset + 0x92F0 + slot * 4);
+}
+
+std::unique_ptr<Item> PlayerWA::islandbox(int slot) {
+	if (slot > 39)	return nullptr;
+	return std::make_unique<ItemWA>(data, offset + 0x6F10 + slot * 4);
+}
+
+std::unique_ptr<Item> PlayerWA::storage(int slot) {
+	if (slot > 359)	return nullptr;
+	return std::make_unique<ItemWA>(data, (Index*360) + 0x07A778 + slot * 4);
+}
+
+// TPC.
+u8* PlayerWA::tpcImage() {
+	return nullptr;
 }

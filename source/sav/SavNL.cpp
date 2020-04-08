@@ -27,16 +27,22 @@
 #include "checksum.hpp"
 #include "SavNL.hpp"
 
-std::shared_ptr<Player> SavNL::player(int player) {
-	return std::make_shared<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10));
+std::unique_ptr<Player> SavNL::player(int player, int index) {
+	if (player > 3 || index > 3)	return nullptr;
+	return std::make_unique<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10), index);
 }
 
-std::shared_ptr<Villager> SavNL::villager(int villager) {
-	return std::make_shared<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
+std::unique_ptr<Villager> SavNL::villager(int villager) {
+	if (villager > 9)	return nullptr;
+	return std::make_unique<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
 }
 
-std::shared_ptr<Town> SavNL::town() {
-	return std::make_shared<TownNL>(dataPointer);
+std::unique_ptr<Town> SavNL::town() {
+	return std::make_unique<TownNL>(dataPointer);
+}
+
+std::unique_ptr<Island> SavNL::island() {
+	return std::make_unique<IslandNL>(dataPointer);
 }
 
 void SavNL::Finish(void) {

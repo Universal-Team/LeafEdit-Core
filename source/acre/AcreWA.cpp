@@ -24,40 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TOWNWW_HPP
-#define TOWNWW_HPP
+#include "AcreWA.hpp"
+#include "saveUtils.hpp"
 
-#include "Acre.hpp"
-#include "AcreWW.hpp"
-#include "Item.hpp"
-#include "ItemWW.hpp"
-#include "Town.hpp"
-#include "types.hpp"
+// 155 & 165 are part of Welcome Amiibo.
+u8 AcreWA::id() {
+	return acrePointer()[0];
+}
 
-#include <memory>
-#include <vector>
-
-class Acre;
-class AcreWW;
-class Item;
-class ItemWW;
-class TownWW : public Town {
-protected:
-	WWRegion region;
-	std::shared_ptr<u8[]> data;
-public:
-	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
-
-	u8 grasstype() override;
-	void grasstype(u8 v) override;
-	std::u16string name() override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-private:
-	u8* townPointer() const {
-		return data.get();
-	}
-};
-
-#endif
+void AcreWA::id(u8 v) {
+	acrePointer()[0] = v;
+}
