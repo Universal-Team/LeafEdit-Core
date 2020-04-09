@@ -39,7 +39,7 @@ protected:
 public:
 	virtual ~AcreNL() {}
 	AcreNL(std::shared_ptr<u8[]> acreData, u32 offset) : Acre(acreData, offset), Offset(offset), data(acreData) { }
-	u32 maxAcre() const { return 203; };
+	u32 maxAcre() const { return 204; };
 	u8 id() override;
 	void id(u8 v) override;
 private:

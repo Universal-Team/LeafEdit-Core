@@ -179,6 +179,11 @@ std::unique_ptr<Item> PlayerWA::storage(int slot) {
 	return std::make_unique<ItemWA>(data, (Index*360) + 0x07A778 + slot * 4);
 }
 
+std::unique_ptr<Pattern> PlayerWA::pattern(int slot) {
+	if (slot > 9)	return nullptr;
+	return std::make_unique<PatternWA>(data, offset + 0x2C + slot * 0x870);
+}
+
 // TPC.
 u8* PlayerWA::tpcImage() {
 	return nullptr;

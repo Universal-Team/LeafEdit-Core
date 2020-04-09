@@ -27,12 +27,20 @@
 #ifndef PLAYERWW_HPP
 #define PLAYERWW_HPP
 
+#include "Item.hpp"
+#include "ItemWW.hpp"
+#include "Pattern.hpp"
+#include "PatternWW.hpp"
 #include "Player.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Item;
+class ItemWW;
+class Pattern;
+class PatternWW;
 class PlayerWW : public Player {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -78,6 +86,7 @@ public:
 	std::unique_ptr<Item> dresser(int slot) override;
 	std::unique_ptr<Item> islandbox(int slot) override { return nullptr; };
 	std::unique_ptr<Item> storage(int slot) override { return nullptr; };
+	std::unique_ptr<Pattern> pattern(int slot) override;
 
 	bool hasTPCImage() const override { return false; }
 	u8* tpcImage() override;

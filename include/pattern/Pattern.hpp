@@ -24,28 +24,31 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ACREWW_HPP
-#define ACREWW_HPP
+#ifndef PATTERN_HPP
+#define PATTERN_HPP
 
-#include "Acre.hpp"
+#include "types.hpp"
 
 #include <memory>
 #include <vector>
 
-class AcreWW : public Acre {
+class Pattern {
 protected:
-	u32 Offset;
 	std::shared_ptr<u8[]> data;
+	u32 Offset;
 public:
-	virtual ~AcreWW() {}
-	AcreWW(std::shared_ptr<u8[]> acreData, u32 offset) : Acre(acreData, offset), Offset(offset), data(acreData) { }
-	u32 maxAcre() const { return 131; };
-	u8 id() override;
-	void id(u8 v) override;
-private:
-	u8* acrePointer() const {
-		return data.get() + Offset;
-	}
+	virtual ~Pattern() {}
+	Pattern(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) {}
+	Pattern(const Pattern& pattern) = delete;
+	Pattern& operator=(const Pattern& pattern) = delete;
+
+	virtual std::u16string name() = 0;
+	virtual u16 creatorid() = 0;
+	virtual std::u16string creatorname() = 0;
+	virtual u8 creatorGender() = 0;
+	virtual u16 origtownid() = 0;
+	virtual std::u16string origtownname() = 0;
+	virtual u8 designtype() = 0;
 };
 
 #endif

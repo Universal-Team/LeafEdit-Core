@@ -282,11 +282,40 @@ u32 PlayerWW::coupons() {
 void PlayerWW::coupons(u32 v) { }
 
 std::unique_ptr<Item> PlayerWW::pocket(int slot) {
-	return std::make_unique<ItemWW>(data, offset + 0x1B22 + slot * 2);
+	if (slot > 14)	return nullptr;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<ItemWW>(data, offset + 0x1B22 + slot * 2);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr;
+	}
+	return nullptr;
 }
 
 std::unique_ptr<Item> PlayerWW::dresser(int slot) {
-	return std::make_unique<ItemWW>(data, 0x15430 + 0xB4 * Index + slot * 2);
+	if (slot > 89)	return nullptr;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<ItemWW>(data, 0x15430 + 0xB4 * Index + slot * 2);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Pattern> PlayerWW::pattern(int slot) {
+	if (slot > 9)	return nullptr;
+	switch(this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<PatternWW>(data, offset + 0 + slot * 0x228, this->region);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr;
+	}
+	return nullptr;
+	
 }
 
 // TPC.

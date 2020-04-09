@@ -28,14 +28,14 @@
 #define PLAYER_HPP
 
 #include "Item.hpp"
-#include "ItemWW.hpp"
+#include "Pattern.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
 class Item;
-class ItemWW;
+class Pattern;
 class Player {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -80,7 +80,8 @@ public:
 	virtual std::unique_ptr<Item> dresser(int slot) = 0;
 	virtual std::unique_ptr<Item> islandbox(int slot) = 0;
 	virtual std::unique_ptr<Item> storage(int slot) = 0;
-
+	virtual std::unique_ptr<Pattern> pattern(int slot) = 0;
+	
 	virtual bool hasTPCImage() const = 0;
 	virtual u8* tpcImage() = 0;
 };

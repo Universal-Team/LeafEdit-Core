@@ -30,6 +30,8 @@
 #include "encryptedInt32.hpp"
 #include "Item.hpp"
 #include "ItemNL.hpp"
+#include "Pattern.hpp"
+#include "PatternNL.hpp"
 #include "Player.hpp"
 #include "types.hpp"
 
@@ -38,6 +40,8 @@
 
 class Item;
 class ItemNL;
+class Pattern;
+class PatternNL;
 class PlayerNL : public Player {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -81,6 +85,7 @@ public:
 	std::unique_ptr<Item> dresser(int slot) override;
 	std::unique_ptr<Item> islandbox(int slot) override;
 	std::unique_ptr<Item> storage(int slot) override { return nullptr; };
+	std::unique_ptr<Pattern> pattern(int slot) override;
 
 	bool hasTPCImage() const override { return true; }
 	u8* tpcImage() override;

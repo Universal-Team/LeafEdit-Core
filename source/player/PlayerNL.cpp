@@ -167,6 +167,11 @@ std::unique_ptr<Item> PlayerNL::islandbox(int slot) {
 	return std::make_unique<ItemNL>(data, offset + 0x6E40 + slot * 4);
 }
 
+std::unique_ptr<Pattern> PlayerNL::pattern(int slot) {
+	if (slot > 9)	return nullptr;
+	return std::make_unique<PatternNL>(data, offset + 0x2C + slot * 0x870);
+}
+
 // TPC.
 u8* PlayerNL::tpcImage() {
 	return nullptr;
