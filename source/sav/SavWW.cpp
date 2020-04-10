@@ -32,13 +32,28 @@
 // Get Player data.
 std::unique_ptr<Player> SavWW::player(int player, int index) {
 	if (player > 3 || index > 3)	return nullptr;
-	return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region, index);
+	switch (this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region, index);
+		case WWRegion::JPN:
+			return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x1D10), this->region, index);
+		case WWRegion::KOR:
+			return nullptr; // TODO: Research.
+	}
+	return nullptr;
 }
 
 // Get Villager data.
 std::unique_ptr<Villager> SavWW::villager(int villager) {
 	if (villager > 7)	return nullptr;
-	return std::make_unique<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
+	switch (this->region) {
+		case WWRegion::EUR:
+			return std::make_unique<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
+		case WWRegion::JPN:
+		case WWRegion::KOR:
+			return nullptr; // TODO: Research.
+	}
+	return nullptr;
 }
 
 std::unique_ptr<Town> SavWW::town() {

@@ -28,11 +28,13 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
-// Face. TODO
+// Face.
 u8 PlayerWW::face() {
 	switch(this->region) {
 		case WWRegion::EUR:
-		case WWRegion::JPN:
+			return playerPointer()[0x223C]; // That has Face & Hair.
+		case WWRegion::JPN: 
+			return playerPointer()[0x1CC6]; // That has Face & Hair.
 		case WWRegion::KOR:
 			return 0;
 	}
@@ -41,7 +43,11 @@ u8 PlayerWW::face() {
 void PlayerWW::face(u8 v) {
 	switch(this->region) {
 		case WWRegion::EUR:
+			playerPointer()[0x223C] = v;
+			return;
 		case WWRegion::JPN:
+			playerPointer()[0x1CC6] = v;
+			return;
 		case WWRegion::KOR:
 			break;
 	}
@@ -233,6 +239,7 @@ u32 PlayerWW::wallet() {
 		case WWRegion::EUR:
 			return SaveUtils::Read<u32>(playerPointer(), 0x1B40);
 		case WWRegion::JPN:
+			return SaveUtils::Read<u32>(playerPointer(), 0x16C4);
 		case WWRegion::KOR:
 			return 0;
 	}
@@ -245,6 +252,8 @@ void PlayerWW::wallet(u32 v) {
 			SaveUtils::Write<u32>(playerPointer(), 0x1B40, v);
 			break;
 		case WWRegion::JPN:
+			SaveUtils::Write<u32>(playerPointer(), 0x16C4, v);
+			break;
 		case WWRegion::KOR:
 			break;
 	}
@@ -287,6 +296,7 @@ std::unique_ptr<Item> PlayerWW::pocket(int slot) {
 		case WWRegion::EUR:
 			return std::make_unique<ItemWW>(data, offset + 0x1B22 + slot * 2);
 		case WWRegion::JPN:
+			return std::make_unique<ItemWW>(data, offset + 0x16B2 + slot * 2);
 		case WWRegion::KOR:
 			return nullptr;
 	}
@@ -299,6 +309,7 @@ std::unique_ptr<Item> PlayerWW::dresser(int slot) {
 		case WWRegion::EUR:
 			return std::make_unique<ItemWW>(data, 0x15430 + 0xB4 * Index + slot * 2);
 		case WWRegion::JPN:
+			return std::make_unique<ItemWW>(data, 0x11764 + 0xB4 * Index + slot * 2);
 		case WWRegion::KOR:
 			return nullptr;
 	}
