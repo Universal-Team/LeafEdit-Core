@@ -241,6 +241,7 @@ u32 PlayerWW::wallet() {
 		case WWRegion::JPN:
 			return SaveUtils::Read<u32>(playerPointer(), 0x16C4);
 		case WWRegion::KOR:
+			return SaveUtils::Read<u32>(playerPointer(), 0x1C18); // Is right? -- 0x1C24
 			return 0;
 	}
 	return 0;
@@ -298,7 +299,7 @@ std::unique_ptr<Item> PlayerWW::pocket(int slot) {
 		case WWRegion::JPN:
 			return std::make_unique<ItemWW>(data, offset + 0x16B2 + slot * 2);
 		case WWRegion::KOR:
-			return nullptr;
+			return std::make_unique<ItemWW>(data, offset + 0x1BFA + slot * 2);
 	}
 	return nullptr;
 }

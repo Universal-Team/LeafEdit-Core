@@ -69,6 +69,7 @@ public:
 	u32 getLength() const { return saveLength; }
 	std::shared_ptr<u8[]> rawData() const { return saveData; }
 	virtual SaveType getType() = 0;
+	virtual WWRegion getRegion() = 0;
 
 	u8 *savePointer() const {
 		return saveData.get();

@@ -38,7 +38,7 @@ std::unique_ptr<Player> SavWW::player(int player, int index) {
 		case WWRegion::JPN:
 			return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x1D10), this->region, index);
 		case WWRegion::KOR:
-			return nullptr; // TODO: Research.
+			return std::make_unique<PlayerWW>(dataPointer, 0x0014 + (player * 0x249C), this->region, index);
 	}
 	return nullptr;
 }

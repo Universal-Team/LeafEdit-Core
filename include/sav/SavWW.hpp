@@ -61,6 +61,7 @@ public:
 	std::unique_ptr<Island> island() override;
 
 	SaveType getType() override { return SaveType::WW; }
+	WWRegion getRegion() override { return region; }
 
 private:
 	u8 *savePointer() {

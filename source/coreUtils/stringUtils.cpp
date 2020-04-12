@@ -70,26 +70,7 @@ constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	u'>', u'\'', u'\"', u'_', u'+', u'=', u'&', u'@', u':', u';', u'×', u'÷', u'☔', u'★', u'♥', u'♪',
 };
 
-// TODO! I just used the normal one for now.
-constexpr std::array<char16_t, 256> wwCharacterDictionaryKorean = {
-	u'\0', u'A', u'B', u'C', u'D', u'E', u'F', u'G', u'H', u'I', u'J', u'K', u'L', u'M', u'N', u'O',
-	u'P', u'Q', u'R', u'S', u'T', u'U', u'V', u'W', u'X', u'Y', u'Z', u'a', u'b', u'c', u'd', u'e',
-	u'f', u'g', u'h', u'i', u'j', u'k', u'l', u'm', u'n', u'o', u'p', u'q', u'r', u's', u't', u'u',
-	u'v', u'w', u'x', u'y', u'z', u'0', u'1', u'2', u'3', u'4', u'5', u'6', u'7', u'8', u'9', u'⨍',
-	u'ⓢ', u'Œ', u'Ž', u'š', u'œ', u'ž', u'Ÿ', u'À', u'Á', u'Â', u'Ã', u'Ä', u'Å', u'Æ', u'Ç', u'È',
-	u'É', u'Ê', u'Ë', u'Ì', u'Í', u'Î', u'Ï', u'Đ', u'Ñ', u'Ò', u'Ó', u'Ô', u'Õ', u'Ö', u'Ø', u'Ù',
-	u'Ú', u'Û', u'Ü', u'Ý', u'Þ', u'β', u'à', u'á', u'â', u'ã', u'ä', u'å', u'æ', u'ç', u'è', u'é',
-	u'ê', u'ë', u'ì', u'í', u'î', u'ï', u'ð', u'ñ', u'ò', u'ó', u'ô', u'õ', u'ö', u'ø', u'ù', u'ú',
-	u'û', u'ü', u'ý', u'þ', u'ÿ', u' ', u'\n', u'!', u'"', u'#', u'$', u'%', u'&', u'´', u'(', u')',
-	u'*', u'+', u',', u'-', u'.', u'/', u':', u';', u'<', u'=', u'>', u'?', u'@', u'[', u'\\', u']',
-	u'^', u'_', u'´', u'{', u'|', u'}', u'~', u'€', u'‚', u'„', u'…', u'†', u'‡', u'＾', u'‰', u'⟨',
-	u'‘', u'’', u'“', u'”', u'•', u'–', u'—', u'˜', u'™', u'⟩', u' ', u'¡', u'¢', u'£', u'¤', u'¥',
-	u'╎', u'§', u'¨', u'©', u'ª', u'«', u'¬', u'-', u'®', u'‾', u'°', u'±', u'²', u'³', u'⁄', u'µ',
-	u'¶', u'•', u'¸', u'¹', u'º', u'»', u'¼', u'½', u'¾', u'¿', u'×', u'÷', u'☔', u'★', u'❤', u'♪',
-	u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0',
-	u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0',
-};
-
+// Korean is different and uses the NL Strings.
 std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion region) {
 	std::u16string output;
 	std::array<char16_t, 256> characters;
@@ -101,7 +82,6 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 			characters = wwCharacterDictionaryJapanese;
 			break;
 		case WWRegion::KOR:
-			characters = wwCharacterDictionaryKorean;
 			break;
 		default:
 			characters = wwCharacterDictionary;
@@ -117,6 +97,7 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 	return output;
 }
 
+// Korean is different and uses the NL Strings.
 std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion region) {
 	std::string output;
 
@@ -129,7 +110,6 @@ std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion regio
 			characters = wwCharacterDictionaryJapanese;
 			break;
 		case WWRegion::KOR:
-			characters = wwCharacterDictionaryKorean;
 			break;
 		default:
 			characters = wwCharacterDictionary;
