@@ -39,11 +39,11 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 		case 0x4007A:
 		case 0x8007A:
 			if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
+				return std::make_unique<SavWW>(dt, WWRegion::JPN_REV0, length);
 			} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::EUR, length);
+				return std::make_unique<SavWW>(dt, WWRegion::EUR_REV1, length);
 			} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
+				return std::make_unique<SavWW>(dt, WWRegion::KOR_REV1, length);
 			} else {
 				return nullptr;
 			}
@@ -60,11 +60,11 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 
 std::unique_ptr<Sav> Sav::check080000(std::shared_ptr<u8[]> dt, u32 length) {
 	if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
+		return std::make_unique<SavWW>(dt, WWRegion::JPN_REV0, length);
 	} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::EUR, length);
+		return std::make_unique<SavWW>(dt, WWRegion::EUR_REV1, length);
 	} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
+		return std::make_unique<SavWW>(dt, WWRegion::KOR_REV1, length);
 	} else {
 		return std::make_unique<SavNL>(dt, length);
 	}

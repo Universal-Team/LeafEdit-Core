@@ -75,13 +75,17 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 	std::u16string output;
 	std::array<char16_t, 256> characters;
 	switch(region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			characters = wwCharacterDictionary;
 			break;
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			characters = wwCharacterDictionaryJapanese;
 			break;
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
 			break;
 		default:
 			characters = wwCharacterDictionary;
@@ -103,13 +107,17 @@ std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion regio
 
 	std::array<char16_t, 256> characters;
 	switch(region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			characters = wwCharacterDictionary;
 			break;
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			characters = wwCharacterDictionaryJapanese;
 			break;
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
 			break;
 		default:
 			characters = wwCharacterDictionary;

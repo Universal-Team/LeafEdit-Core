@@ -30,10 +30,14 @@
 
 u8 TownWW::grasstype() {
 	switch(this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return townPointer()[0x2200];
-		case WWRegion::JPN:
-		case WWRegion::KOR:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
 			return 0;
 	}
 	return 0;
@@ -41,23 +45,32 @@ u8 TownWW::grasstype() {
 
 void TownWW::grasstype(u8 v) {
 	switch(this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			townPointer()[0x2200] = v;
 			break;
-		case WWRegion::JPN:
-		case WWRegion::KOR:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
 			break;
 	}
 }
 
 std::u16string TownWW::name() {
 	switch(this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return StringUtils::ReadWWString(townPointer(), 0x0004, 8, this->region);
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			return StringUtils::ReadWWString(townPointer(), 0x0004, 7, this->region);
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
 			return StringUtils::ReadNLString(townPointer(), 0x0004, 6, u'\uFFFF');
+		case WWRegion::UNKNOWN:
+			return StringUtils::UTF8toUTF16("?");
 	}
 	return StringUtils::UTF8toUTF16("?");
 }
@@ -65,25 +78,35 @@ std::u16string TownWW::name() {
 std::unique_ptr<Acre> TownWW::acre(int Acre) {
 	if (Acre > 35)	return nullptr;
 	switch(this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return std::make_unique<AcreWW>(data, 0xC330 + Acre *1);
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			return std::make_unique<AcreWW>(data, 0xA32C + Acre *1); // 0xA32C - 0xA34E
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
 			return std::make_unique<AcreWW>(data, 0xD303 + Acre *1); // Is it D303 or D304?
+		case WWRegion::UNKNOWN:
+			return nullptr;
 	}
 	return nullptr;
 }
 
 std::unique_ptr<Item> TownWW::item(u32 index) {
-	if (index > 4095)    return nullptr;
+	if (index > 4095)	return nullptr;
 	switch(this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return std::make_unique<ItemWW>(data, 0xC354 + index * 2);
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			return std::make_unique<ItemWW>(data, 0x50D2 + index * 2);
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
 			return std::make_unique<ItemWW>(data, 0xD329 + index * 2);
+		case WWRegion::UNKNOWN:
+			return nullptr;
 	}
 	return nullptr;
 }

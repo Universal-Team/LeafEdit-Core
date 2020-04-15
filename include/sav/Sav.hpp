@@ -71,16 +71,26 @@ public:
 	
 	// Pass game | version.
 	const u8 version() {
-		if (this->getType() == SaveType::WW)	return 1; // AC:WW.
-		if (this->getType() == SaveType::NL)	return 2; // AC:NL.
-		if (this->getType() == SaveType::WA)	return 3; // AC:WA.
+		switch(this->getType()) {
+			case SaveType::WW:		return 1; // AC:WW.
+			case SaveType::NL:		return 2; // AC:NL.
+			case SaveType::WA:		return 3; // AC:WA.
+			case SaveType::UNUSED:	return 0; // Not Valid / Unused.
+		}
 		return 0; // Should not happen actually.
 	}
+
 	// Pass Region. -> Only needed for AC:WW.
 	const u8 region() {
-		if (this->getRegion() == WWRegion::EUR)	return 1; // EUR | USA.
-		if (this->getRegion() == WWRegion::JPN)	return 2; // JPN.
-		if (this->getRegion() == WWRegion::KOR)	return 3; // KOR.
+		switch(this->getRegion()) {
+			case WWRegion::USA_REV0:	return 1; // USA Revision 0.
+			case WWRegion::USA_REV1:	return 2; // USA Revision 1.
+			case WWRegion::EUR_REV1:	return 3; // EUR Revision 1.
+			case WWRegion::JPN_REV0:	return 4; // JPN Revision 0.
+			case WWRegion::JPN_REV1:	return 5; // JPN Revision 1.
+			case WWRegion::KOR_REV1:	return 6; // KOR Revision 1.
+			case WWRegion::UNKNOWN:		return 0; // Unknown.
+		}
 		return 0; // Should not happen actually.
 	}
 

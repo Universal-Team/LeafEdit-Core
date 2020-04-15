@@ -56,9 +56,13 @@ enum class SaveType {
 };
 
 enum class WWRegion {
-	EUR,
-	JPN,
-	KOR
+	JPN_REV0,
+	JPN_REV1,
+	USA_REV0,
+	USA_REV1,
+	EUR_REV1,
+	KOR_REV1,
+	UNKNOWN
 };
 
 #endif

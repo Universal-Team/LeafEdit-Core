@@ -33,12 +33,17 @@
 std::unique_ptr<Player> SavWW::player(int player, int index) {
 	if (player > 3 || index > 3)	return nullptr;
 	switch (this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x228C), this->region, index);
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			return std::make_unique<PlayerWW>(dataPointer, 0x000C + (player * 0x1D10), this->region, index);
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
 			return std::make_unique<PlayerWW>(dataPointer, 0x0014 + (player * 0x249C), this->region, index);
+		case WWRegion::UNKNOWN:
+			return nullptr;
 	}
 	return nullptr;
 }
@@ -47,10 +52,14 @@ std::unique_ptr<Player> SavWW::player(int player, int index) {
 std::unique_ptr<Villager> SavWW::villager(int villager) {
 	if (villager > 7)	return nullptr;
 	switch (this->region) {
-		case WWRegion::EUR:
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			return std::make_unique<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
-		case WWRegion::JPN:
-		case WWRegion::KOR:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
 			return nullptr; // TODO: Research.
 	}
 	return nullptr;
@@ -66,17 +75,22 @@ std::unique_ptr<Island> SavWW::island() {
 
 void SavWW::Finish(void) {
 	switch (this->region) {
-		case WWRegion::EUR: // also USA.
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
 			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
 			memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
 			break;
-		case WWRegion::JPN:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
 			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x12224 / sizeof(u16));
 			memcpy(this->savePointer() + 0x12224, this->savePointer(), 0x12224); // Copy SaveData to the second save copy.
 			break;
-		case WWRegion::KOR:
+		case WWRegion::KOR_REV1:
 			Checksum::UpdateWWChecksum(this->region, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x173FC / sizeof(u16));
 			memcpy(this->savePointer() + 0x173FC, this->savePointer(), 0x173FC); // Copy SaveData to the second save copy.
+			break;
+		case WWRegion::UNKNOWN:
 			break;
 	}
 }
