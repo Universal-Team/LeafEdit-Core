@@ -68,6 +68,22 @@ public:
 	// return Sav stuff.
 	u32 getLength() const { return saveLength; }
 	std::shared_ptr<u8[]> rawData() const { return saveData; }
+	
+	// Pass game | version.
+	const u8 version() {
+		if (this->getType() == SaveType::WW)	return 1; // AC:WW.
+		if (this->getType() == SaveType::NL)	return 2; // AC:NL.
+		if (this->getType() == SaveType::WA)	return 3; // AC:WA.
+		return 0; // Should not happen actually.
+	}
+	// Pass Region. -> Only needed for AC:WW.
+	const u8 region() {
+		if (this->getRegion() == WWRegion::EUR)	return 1; // EUR | USA.
+		if (this->getRegion() == WWRegion::JPN)	return 2; // JPN.
+		if (this->getRegion() == WWRegion::KOR)	return 3; // KOR.
+		return 0; // Should not happen actually.
+	}
+
 	virtual SaveType getType() = 0;
 	virtual WWRegion getRegion() = 0;
 
