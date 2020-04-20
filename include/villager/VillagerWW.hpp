@@ -27,12 +27,16 @@
 #ifndef VILLAGERWW_HPP
 #define VILLAGERWW_HPP
 
+#include "Item.hpp"
+#include "ItemWW.hpp"
 #include "Villager.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Item;
+class ItemWW;
 class VillagerWW : public Villager {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -47,6 +51,13 @@ public:
 	u8 personality() override;
 	void personality(u8 v) override;
 	
+	// Items.
+	std::unique_ptr<Item> song() override;
+	std::unique_ptr<Item> shirt() override;
+	std::unique_ptr<Item> wallpaper() override;
+	std::unique_ptr<Item> carpet() override;
+	std::unique_ptr<Item> umbrella() override;
+	std::unique_ptr<Item> furniture(int slot) override;
 private:
 	u8* villagerPointer() const {
 		return data.get() + offset;

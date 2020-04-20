@@ -33,6 +33,7 @@ u16 VillagerWW::id() {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
+			return villagerPointer()[0x6CB];
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
 		case WWRegion::KOR_REV1:
@@ -47,6 +48,8 @@ void VillagerWW::id(u16 v) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
+			villagerPointer()[0x6CB] = (u8)v;
+			break;
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
 		case WWRegion::KOR_REV1:
@@ -83,4 +86,94 @@ void VillagerWW::personality(u8 v) {
 		case WWRegion::UNKNOWN:
 			break;
 	}
+}
+
+std::unique_ptr<Item> VillagerWW::song() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6D0);
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> VillagerWW::shirt() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6EC);
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> VillagerWW::wallpaper() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6CC);
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> VillagerWW::carpet() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6CE);
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> VillagerWW::umbrella() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
+}
+
+std::unique_ptr<Item> VillagerWW::furniture(int slot) {
+	if (slot > 9)	return nullptr;
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6AC + slot * 2);
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			return nullptr;
+	}
+	return nullptr;
 }

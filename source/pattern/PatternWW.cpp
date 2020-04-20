@@ -49,29 +49,117 @@ static const u32 PaletteColors[] = {
 };
 
 std::u16string PatternWW::name() {
-	return StringUtils::ReadWWString(patternPointer(), 0x216, 15, this->region);
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return StringUtils::ReadWWString(patternPointer(), 0x216, 15, this->region);
+		case WWRegion::KOR_REV1:
+			return StringUtils::ReadNLString(patternPointer(), 0x21F, 10, u'\uFFFF');
+		case WWRegion::UNKNOWN:
+			return StringUtils::UTF8toUTF16("?");
+	}
+	return StringUtils::UTF8toUTF16("?");
 }
 
 u16 PatternWW::creatorid() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return 0; // TODO.
+		case WWRegion::KOR_REV1:
+			return SaveUtils::Read<u16>(patternPointer(), 0x20F);
+		case WWRegion::UNKNOWN:
+			return 0;
+	}
 	return 0;
 }
 
 std::u16string PatternWW::creatorname() {
-	return StringUtils::ReadWWString(patternPointer(), 0x20C, 7, this->region);
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return StringUtils::ReadWWString(patternPointer(), 0x20C, 7, this->region);
+		case WWRegion::KOR_REV1: // Could be changed cause -> UTF-16.
+			return StringUtils::ReadNLString(patternPointer(), 0x211, 6, u'\uFFFF');
+		case WWRegion::UNKNOWN:
+			return StringUtils::UTF8toUTF16("?");
+	}
+	return StringUtils::UTF8toUTF16("?");
 }
 
+// Is that even used in AC:WW? Is that 0x0?
 u8 PatternWW::creatorGender() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return 0;
+		case WWRegion::KOR_REV1:
+			return patternPointer()[0x0]; // is that right?
+		case WWRegion::UNKNOWN:
+			return 0;
+	}
 	return 0;
 }
 
 u16 PatternWW::origtownid() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return 0; // TODO.
+		case WWRegion::KOR_REV1:
+			return SaveUtils::Read<u16>(patternPointer(), 0x201);
+		case WWRegion::UNKNOWN:
+			return 0;
+	}
 	return 0;
 }
 
 std::u16string PatternWW::origtownname() {
-	return StringUtils::ReadWWString(patternPointer(), 0x202, 7, this->region);
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return StringUtils::ReadWWString(patternPointer(), 0x202, 7, this->region);
+		case WWRegion::KOR_REV1:
+			return StringUtils::ReadNLString(patternPointer(), 0x203, 6, u'\uFFFF');
+		case WWRegion::UNKNOWN:
+			return StringUtils::UTF8toUTF16("?");
+	}
+	return StringUtils::UTF8toUTF16("?");
 }
 
 u8 PatternWW::designtype() {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			return 0;
+		case WWRegion::KOR_REV1:
+			return patternPointer()[0x233]; // Todo: Research.
+		case WWRegion::UNKNOWN:
+			return 0;
+	}
 	return 0;
 }
+
+// Palette array seems to be 0x200, it begins at 0x1 at Korean.
+// Europe | USA | JPN - Research.

@@ -102,7 +102,7 @@ std::unique_ptr<Item> TownWW::item(u32 index) {
 			return std::make_unique<ItemWW>(data, 0xC354 + index * 2);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return std::make_unique<ItemWW>(data, 0x50D2 + index * 2);
+			return std::make_unique<ItemWW>(data, 0xA350 + index * 2);
 		case WWRegion::KOR_REV1:
 			return std::make_unique<ItemWW>(data, 0xD329 + index * 2);
 		case WWRegion::UNKNOWN:

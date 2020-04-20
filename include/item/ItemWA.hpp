@@ -45,7 +45,8 @@ public:
 	void id(u16 v) override;
 	u16 flags() override;
 	void flags(u16 v) override;
-	std::string name(bool fromClass = true, u16 ID = 0) override;
+	std::string name() override;
+	ItemType itemtype() override;
 private:
 	u8* itemPointer() const {
 		return data.get() + Offset;

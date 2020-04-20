@@ -35,6 +35,44 @@
 
 extern std::map<u16, std::string> ItemDatabase;
 
+// Type of the Item.
+enum class ItemType
+{
+	Empty,
+	Furniture,
+	Gyroid,
+	Diary,
+	Clothes,
+	Song,
+	Paper,
+	Trash,
+	Shell,
+	Fruit,
+	Turnip,
+	Catchable,
+	QuestItem,
+	Item,
+	RaffleTicket,
+	WallpaperCarpet,
+	Fossil,
+	Tool,
+	Tree,
+	Weed,
+	Flower,
+	Rock,
+	MoneyRock,
+	Signboard,
+	Money,
+	HouseObject,
+	Building,
+	ParchedFlower,
+	WateredFlower,
+	Pattern,
+	WiltedFlower,
+	Occupied,
+	Invalid
+};
+
 class Item {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -50,7 +88,8 @@ public:
 	virtual void id(u16 v) = 0;
 	virtual u16 flags() = 0; // Return Flags.
 	virtual void flags(u16 v) = 0;
-	virtual std::string name(bool fromClass, u16 ID) = 0;
+	virtual std::string name() = 0;
+	virtual ItemType itemtype() = 0;
 };
 
 #endif

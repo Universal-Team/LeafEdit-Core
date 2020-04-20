@@ -27,11 +27,13 @@
 #ifndef VILLAGER_HPP
 #define VILLAGER_HPP
 
+#include "Item.hpp"
 #include "types.hpp"
 
 #include <memory>
 #include <vector>
 
+class Item;
 class Villager {
 protected:
 	std::shared_ptr<u8[]> data;
@@ -46,6 +48,14 @@ public:
 	virtual void id(u16 v) = 0;
 	virtual u8 personality() = 0;
 	virtual void personality(u8 v) = 0;
+
+	// Items.
+	virtual std::unique_ptr<Item> song() = 0;
+	virtual std::unique_ptr<Item> shirt() = 0;
+	virtual std::unique_ptr<Item> wallpaper() = 0;
+	virtual std::unique_ptr<Item> carpet() = 0;
+	virtual std::unique_ptr<Item> umbrella() = 0;
+	virtual std::unique_ptr<Item> furniture(int slot) = 0;
 };
 
 #endif

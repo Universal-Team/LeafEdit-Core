@@ -42,3 +42,28 @@ u8 VillagerWA::personality() {
 void VillagerWA::personality(u8 v) {
 	villagerPointer()[0x2] = v;
 }
+
+std::unique_ptr<Item> VillagerWA::song() {
+	return std::make_unique<ItemWA>(data, offset + 0x2472);
+}
+
+std::unique_ptr<Item> VillagerWA::shirt() {
+	return std::make_unique<ItemWA>(data, offset + 0x246E);
+}
+
+std::unique_ptr<Item> VillagerWA::wallpaper() {
+	return std::make_unique<ItemWA>(data, offset + 0x2476);
+}
+
+std::unique_ptr<Item> VillagerWA::carpet() {
+	return std::make_unique<ItemWA>(data, offset + 0x247A);
+}
+
+std::unique_ptr<Item> VillagerWA::umbrella() {
+	return std::make_unique<ItemWA>(data, offset + 0x247E);
+}
+
+std::unique_ptr<Item> VillagerWA::furniture(int slot) {
+	if (slot > 15)	return nullptr;
+	return std::make_unique<ItemWA>(data, offset + 0x2482 + slot * 4);
+}

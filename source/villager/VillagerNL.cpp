@@ -42,3 +42,28 @@ u8 VillagerNL::personality() {
 void VillagerNL::personality(u8 v) {
 	villagerPointer()[0x2] = v;
 }
+
+std::unique_ptr<Item> VillagerNL::song() {
+	return std::make_unique<ItemNL>(data, offset + 0x2472);
+}
+
+std::unique_ptr<Item> VillagerNL::shirt() {
+	return std::make_unique<ItemNL>(data, offset + 0x2472);
+}
+
+std::unique_ptr<Item> VillagerNL::wallpaper() {
+	return std::make_unique<ItemNL>(data, offset + 0x2472);
+}
+
+std::unique_ptr<Item> VillagerNL::carpet() {
+	return std::make_unique<ItemNL>(data, offset + 0x2472);
+}
+
+std::unique_ptr<Item> VillagerNL::umbrella() {
+	return std::make_unique<ItemNL>(data, offset + 0x247E);
+}
+
+std::unique_ptr<Item> VillagerNL::furniture(int slot) {
+	if (slot > 15)	return nullptr;
+	return std::make_unique<ItemNL>(data, offset + 0x2472);
+}

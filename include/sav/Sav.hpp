@@ -65,6 +65,9 @@ public:
 	static std::unique_ptr<Sav> getSave(std::shared_ptr<u8[]> dt, u32 length);
 	static std::unique_ptr<Sav> check080000(std::shared_ptr<u8[]> dt, u32 length);
 
+	// Get max Values.
+	virtual int maxVillager() = 0;
+
 	// return Sav stuff.
 	u32 getLength() const { return saveLength; }
 	std::shared_ptr<u8[]> rawData() const { return saveData; }

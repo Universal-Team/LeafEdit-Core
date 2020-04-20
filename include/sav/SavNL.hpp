@@ -64,6 +64,7 @@ public:
 	SaveType getType() override { return SaveType::NL; }
 	WWRegion getRegion() override { return WWRegion::UNKNOWN; } // No need for here.
 
+	int maxVillager() override { return 9; }
 private:
 	u8 *savePointer() {
 		return dataPointer.get();

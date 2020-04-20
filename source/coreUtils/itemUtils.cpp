@@ -93,3 +93,14 @@ void ItemUtils::LoadDatabase(int lang, SaveType save) {
 		itemDatabase.close();
 	}
 }
+
+// Get an Item's name.
+std::string ItemUtils::getName(u16 ID) {
+	if (ItemDatabase.empty())	return "???";
+	for (auto const& entry : ItemDatabase) {
+		if (entry.first == ID) {
+			return entry.second;
+		}
+	}
+	return std::string("???");
+}
