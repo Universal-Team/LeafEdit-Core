@@ -36,6 +36,13 @@ u16 ItemNL::flags() { return SaveUtils::Read<u16>(itemPointer(), 2); }
 
 void ItemNL::flags(u16 v) { SaveUtils::Write<u16>(itemPointer(), 2, v); }
 
+// TODO.
+int ItemNL::rotation() {
+	return 0;
+}
+
+void ItemNL::rotation(int Direction) { } // TODO.
+
 std::string ItemNL::name() {
 	return ItemUtils::getName(this->id());
 }

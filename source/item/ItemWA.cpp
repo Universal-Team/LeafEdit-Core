@@ -40,6 +40,13 @@ std::string ItemWA::name() {
 	return ItemUtils::getName(this->id());
 }
 
+// TODO.
+int ItemWA::rotation() {
+	return 0;
+}
+
+void ItemWA::rotation(int Direction) { } // TODO.
+
 ItemType ItemWA::itemtype() {
 	u16 ID = this->id(); // Only 1 time needed.
 

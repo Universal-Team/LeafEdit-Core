@@ -28,6 +28,9 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
+#include <cstring>
+#include <unistd.h>
+
 // Is that right?
 static const u32 PaletteColors[] = {
 	0xFFFF0000, 0xFFFF7331, 0xFFFFAD00, 0xFFFFFF00, 0xFFADFF00, 0xFF52FF00, 0xFF00FF00, 0xFF00AD52, 0xFF0052AD, 0xFF0000FF, 0xFF5200FF, 0xFFAD00FF, 0xFFFF00FF, 0xFF000000, 0xFFFFFFFF,
@@ -159,6 +162,97 @@ u8 PatternWW::designtype() {
 			return 0;
 	}
 	return 0;
+}
+
+// Needs checking.
+void PatternWW::dumpPattern(const std::string fileName) {
+	// If region == UNKNOWN -> Do NOTHING.
+	if (this->region != WWRegion::UNKNOWN) {
+		u32 size = 0;
+		// Get size.
+		switch(this->region) {
+			case WWRegion::USA_REV0:
+			case WWRegion::USA_REV1:
+			case WWRegion::EUR_REV1:
+			case WWRegion::JPN_REV0:
+			case WWRegion::JPN_REV1:
+				size = 0x228;
+				break;
+			case WWRegion::KOR_REV1:
+				size = 0x234;
+				break;
+			case WWRegion::UNKNOWN:
+				break;
+		}
+	
+		// Open File.
+		FILE* ptrn = fopen(fileName.c_str(), "wb");
+		// Set Buffer.
+		u8 *patternData = new u8[size];
+		// Write Pattern data to Buffer.
+		for(int i = 0; i < (int)size; i++) {
+			patternData[i] = patternPointer()[i];
+		}
+		// Write to file and close.
+		fwrite(patternData, 1, size, ptrn);
+		fclose(ptrn);
+		// Free Buffer.
+		delete(patternData);
+	}
+}
+
+// Needs checking.
+void PatternWW::injectPattern(const std::string fileName) {
+	// If region == UNKNOWN -> Do NOTHING.
+	if (this->region != WWRegion::UNKNOWN) {
+		if ((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
+		bool allowInject = false;
+		u32 size = 0;
+		// Open file and get size.
+		FILE* ptrn = fopen(fileName.c_str(), "rb");
+		fseek(ptrn, 0, SEEK_END);
+		size = ftell(ptrn);
+		fseek(ptrn, 0, SEEK_SET);
+
+		// Get size.
+		switch(this->region) {
+			case WWRegion::USA_REV0:
+			case WWRegion::USA_REV1:
+			case WWRegion::EUR_REV1:
+			case WWRegion::JPN_REV0:
+			case WWRegion::JPN_REV1:
+				if (size == 0x228) {
+					allowInject = true;
+				}
+				break;
+			case WWRegion::KOR_REV1:
+				if (size == 0x234) {
+					allowInject = true;
+				}
+				break;
+			case WWRegion::UNKNOWN:
+				break;
+		}
+
+		if (allowInject) {
+			u8 *patternData = new u8[size];
+			fread(patternData, 1, size, ptrn);
+			// Set Buffer data to save.
+			for(int i = 0; i < (int)size; i++){
+				patternPointer()[i] = patternData[i];
+			}
+			// Free Buffer.
+			delete(patternData);
+		}
+		// Close File, cause we don't need it.
+		fclose(ptrn);
+	}
+}
+
+// TODO.
+std::vector<u8> PatternWW::patternData() {
+	std::vector<u8> patternData(0x400);
+	return patternData;
 }
 
 // Palette array seems to be 0x200, it begins at 0x1 at Korean.

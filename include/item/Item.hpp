@@ -90,6 +90,8 @@ public:
 	virtual void flags(u16 v) = 0;
 	virtual std::string name() = 0;
 	virtual ItemType itemtype() = 0;
+	virtual int rotation() = 0;
+	virtual void rotation(int Direction) = 0;
 };
 
 #endif

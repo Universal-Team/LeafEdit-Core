@@ -187,24 +187,24 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 
 
 void Checksum::FixCRC32s(u8 *data) {
-	UpdateCRC32(data, 0x80, 0x1C); //Save Header
+	UpdateCRC32(data, 0x80, 0x1C); // Save Header
 
 	// Rehash players
 	for (int i = 0; i < 4; i++) {
-		UpdateCRC32(data, 0xA0 + (0xA480 * i), 0x6B84);			//Players Checksum1
-		UpdateCRC32(data, 0xA0 + (0xA480 * i) + 0x6B88, 0x38F4);	//Players Checksum2
+		UpdateCRC32(data, 0xA0 + (0xA480 * i), 0x6B84);				// Players Checksum1
+		UpdateCRC32(data, 0xA0 + (0xA480 * i) + 0x6B88, 0x38F4);	// Players Checksum2
 	}
 
-	UpdateCRC32(data, 0x292A0, 0x22BC8);	//VillagerData Checksum
-	UpdateCRC32(data, 0x4BE80, 0x44B8);	//GeneralTownData Checksum
-	UpdateCRC32(data, 0x53424, 0x1E4D8);	//ItemAndAcreData Checksum
-	UpdateCRC32(data, 0x71900, 0x20);		//Unknown1 Checksum
-	UpdateCRC32(data, 0x71924, 0xBE4);	//Unknown2 Checksum
-	UpdateCRC32(data, 0x73954, 0x16188);	//LetterStorage Checksum
+	UpdateCRC32(data, 0x292A0, 0x22BC8);	// VillagerData Checksum
+	UpdateCRC32(data, 0x4BE80, 0x44B8);		// GeneralTownData Checksum
+	UpdateCRC32(data, 0x53424, 0x1E4D8);	// ItemAndAcreData Checksum
+	UpdateCRC32(data, 0x71900, 0x20);		// Unknown1 Checksum
+	UpdateCRC32(data, 0x71924, 0xBE4);		// Unknown2 Checksum
+	UpdateCRC32(data, 0x73954, 0x16188);	// LetterStorage Checksum
 
-	UpdateCRC32(data, 0x5033C, 0x28F0, CRC_NORMAL);	//Unknown3 Checksum
-	UpdateCRC32(data, 0x52C30, 0x7F0, CRC_NORMAL);	//Unknown4 Checksum
-	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL);	//Unknown5 Checksum
+	UpdateCRC32(data, 0x5033C, 0x28F0, CRC_NORMAL);	// Unknown3 Checksum
+	UpdateCRC32(data, 0x52C30, 0x7F0, CRC_NORMAL);	// Unknown4 Checksum
+	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL);	// Unknown5 Checksum
 }
 
 void Checksum::FixNLCRC32s(u8 *data) {
@@ -218,7 +218,7 @@ void Checksum::FixNLCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x27C60 + 0x80, 0x218B0);	// VillagerData Checksum
 	UpdateCRC32(data, 0x49520 + 0x80, 0x44B8);	// GeneralTownData Checksum
 	UpdateCRC32(data, 0x4D9DC + 0x80, 0x1E420);	// ItemAndAcreData Checksum
-	UpdateCRC32(data, 0x6BE00 + 0x80, 0x20);		// Unknown1 Checksum
+	UpdateCRC32(data, 0x6BE00 + 0x80, 0x20);	// Unknown1 Checksum
 	UpdateCRC32(data, 0x6BE24 + 0x80, 0x13AF8);	// ?
 }
 
@@ -226,7 +226,7 @@ void Checksum::FixNLCRC32s(u8 *data) {
 u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset)
 {
 	if ((checksumOffset & 1) == 1)
-		return 0; // checksumOffset must be 16-bit aligned!");
+		return 0; // checksumOffset must be 16-bit aligned!
 
 	u16 checksum = 0;
 	for (uint i = 0; i < size; i++)

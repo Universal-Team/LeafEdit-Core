@@ -47,6 +47,12 @@ public:
 	u16 origtownid() override;
 	std::u16string origtownname() override;
 	u8 designtype() override;
+
+	// Pattern Misc.
+	void dumpPattern(const std::string fileName) override;
+	void injectPattern(const std::string fileName) override;
+
+	std::vector<u8> patternData() override;
 private:
 	u8* patternPointer() const {
 		return data.get() + Offset;

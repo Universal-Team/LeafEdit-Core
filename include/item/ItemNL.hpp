@@ -47,6 +47,8 @@ public:
 	void flags(u16 v) override;
 	std::string name() override;
 	ItemType itemtype() override;
+	int rotation() override;
+	void rotation(int Direction) override;
 private:
 	u8* itemPointer() const {
 		return data.get() + Offset;

@@ -87,9 +87,6 @@ public:
 	std::unique_ptr<Item> islandbox(int slot) override { return nullptr; };
 	std::unique_ptr<Item> storage(int slot) override { return nullptr; };
 	std::unique_ptr<Pattern> pattern(int slot) override;
-
-	bool hasTPCImage() const override { return false; }
-	u8* tpcImage() override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

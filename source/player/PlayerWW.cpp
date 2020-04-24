@@ -474,11 +474,6 @@ std::unique_ptr<Pattern> PlayerWW::pattern(int slot) {
 	
 }
 
-// TPC.
-u8* PlayerWW::tpcImage() {
-	return nullptr; // Does not exist!
-}
-
 /* Other Offsets:
 Player Bed: playerPointer()[0x1C9E] // JPN.
 */

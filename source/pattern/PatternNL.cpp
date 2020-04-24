@@ -28,6 +28,9 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
+#include <cstring>
+#include <unistd.h>
+
 static const u32 PaletteColors[] = {
 	0xFFEEFFFF, 0xFF99AAFF, 0xEE5599FF, 0xFF66AAFF, 0xFF0066FF, 0xBB4477FF, 0xCC0055FF, 0x990033FF, 0x552233FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF,
 	0xFFBBCCFF, 0xFF7777FF, 0xDD3311FF, 0xFF5544FF, 0xFF0000FF, 0xCC6666FF, 0xBB4444FF, 0xBB0000FF, 0x882222FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xEEEEEEFF,
@@ -75,6 +78,57 @@ std::u16string PatternNL::origtownname() {
 
 u8 PatternNL::designtype() {
 	return (patternPointer()[0x69] & 9);
+}
+
+void PatternNL::dumpPattern(const std::string fileName) {
+	// Get Pattern size?
+	u32 size = 0;
+	if (patternPointer()[0x69] == 0x09){
+		size = 620;
+	} else {
+		size = 2160;
+	}
+
+	// Open File.
+	FILE* ptrn = fopen(fileName.c_str(), "wb");
+	// Set Buffer.
+	u8 *patternData = new u8[size];
+	// Write Pattern data to Buffer.
+	for(int i = 0; i < (int)size; i++) {
+		patternData[i] = patternPointer()[i];
+	}
+	// Write to file and close.
+	fwrite(patternData, 1, size, ptrn);
+	fclose(ptrn);
+	// Free Buffer.
+	delete(patternData);
+}
+
+void PatternNL::injectPattern(const std::string fileName) {
+	if((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
+	u32 size;
+	// Open file and get size.
+	FILE* ptrn = fopen(fileName.c_str(), "rb");
+	fseek(ptrn, 0, SEEK_END);
+	size = ftell(ptrn);
+	fseek(ptrn, 0, SEEK_SET);
+	// Create Buffer with the size and read the file.
+	u8 *patternData = new u8[size];
+	fread(patternData, 1, size, ptrn);
+	// Set Buffer data to save.
+	for(int i = 0; i < (int)size; i++){
+		patternPointer()[i] = patternData[i];
+	}
+	// Close File, cause we don't need it.
+	fclose(ptrn);
+	// Free Buffer.
+	delete(patternData);
+}
+
+// TODO.
+std::vector<u8> PatternNL::patternData() {
+	std::vector<u8> patternData(0x400);
+	return patternData;
 }
 
 // Palette Data Array. offset: 0x6C ; count: 0x800

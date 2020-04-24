@@ -32,12 +32,26 @@
 
 #include <cstring>
 
+// AC:NL Array for the Save Header.
+u8 ACNLArray[28] =
+{
+	0x64, 0xED, 0xD1, 0x98, 0xF8, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+// AC:WA Array for the Save Header.
+u8 ACWAArray[28] =
+{
+	0x33, 0x3A, 0xD0, 0x46, 0x9E, 0x00, 0x02, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
 std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 	switch (length) {
-		// 4 known cases for AC:WW.
 		case 0x40000:
 		case 0x4007A:
 		case 0x8007A:
+			// Check for AC:WW Saves and check their region.
 			if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
 				return std::make_unique<SavWW>(dt, WWRegion::JPN_REV0, length);
 			} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
@@ -48,24 +62,42 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 				return nullptr;
 			}
 		case 0x7FA00:
-			return std::make_unique<SavNL>(dt, length);
+				// Check if save header matches first! We don't want to edit a non-ac save.
+			if (memcmp(dt.get() + 0x80, ACNLArray, 0x1C) == 0) {
+				return std::make_unique<SavNL>(dt, length);
+			} else {
+				return nullptr;
+			}
 		case 0x80000:
 			return check080000(dt, length);
 		case 0x89B00:
-			return std::make_unique<SavWA>(dt, length);
+				// Check if save header matches first! We don't want to edit a non-ac save.
+			if (memcmp(dt.get() + 0x80, ACWAArray, 0x1C) == 0) {
+				return std::make_unique<SavWA>(dt, length);
+			} else {
+				return nullptr;
+			}
 	default:
 		return nullptr;
 	}
 }
 
+// Because 0x80000 can be a AC:NL & AC:WW save, check it here!
 std::unique_ptr<Sav> Sav::check080000(std::shared_ptr<u8[]> dt, u32 length) {
+		// Check for AC:WW Japanese.
 	if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
 		return std::make_unique<SavWW>(dt, WWRegion::JPN_REV0, length);
+		// Check for AC:WW Europe | USA.
 	} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
 		return std::make_unique<SavWW>(dt, WWRegion::EUR_REV1, length);
+		// Check for AC:WW Korean.
 	} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
 		return std::make_unique<SavWW>(dt, WWRegion::KOR_REV1, length);
+		// Check for AC:NL.
+	} else if (memcmp(dt.get() + 0x80, ACNLArray, 0x1C) == 0) {
+			return std::make_unique<SavNL>(dt, length);
 	} else {
-		return std::make_unique<SavNL>(dt, length);
+		// No save checks matches, return nullptr.
+		return nullptr;
 	}
 }
