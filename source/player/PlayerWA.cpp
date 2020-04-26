@@ -28,6 +28,8 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
+#include <cstring>
+
 // Face.
 u8 PlayerWA::face() {
 	return playerPointer()[0x06];
@@ -182,4 +184,16 @@ std::unique_ptr<Item> PlayerWA::storage(int slot) {
 std::unique_ptr<Pattern> PlayerWA::pattern(int slot) {
 	if (slot > 9)	return nullptr;
 	return std::make_unique<PatternWA>(data, offset + 0x2C + slot * 0x870);
+}
+
+u8* PlayerWA::tpcImage() {
+	u8 *TPCBuffer = nullptr;
+	if (SaveUtils::Read<u32>(data.get(), offset + 0x5734) == 1) {
+		if (SaveUtils::Read<u16>(data.get(), offset + 0x5738) == 0xD8FF) { // 0xFFD8 = JPEG File Marker
+			TPCBuffer = new u8[0x1400];
+			// Put the data to buffer.
+			memcpy(TPCBuffer, data.get() + offset + 0x5738, 0x1400);
+		}
+	}
+	return TPCBuffer;
 }

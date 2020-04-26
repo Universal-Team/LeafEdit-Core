@@ -81,6 +81,9 @@ public:
 	virtual std::unique_ptr<Item> islandbox(int slot) = 0;
 	virtual std::unique_ptr<Item> storage(int slot) = 0;
 	virtual std::unique_ptr<Pattern> pattern(int slot) = 0;
+
+	virtual u8 *tpcImage() = 0;
+	virtual bool hasTPC() = 0;
 };
 
 #endif

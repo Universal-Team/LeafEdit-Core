@@ -28,6 +28,8 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
+#include <cstring>
+
 // Face.
 u8 PlayerNL::face() {
 	return playerPointer()[0x06];
@@ -170,4 +172,16 @@ std::unique_ptr<Item> PlayerNL::islandbox(int slot) {
 std::unique_ptr<Pattern> PlayerNL::pattern(int slot) {
 	if (slot > 9)	return nullptr;
 	return std::make_unique<PatternNL>(data, offset + 0x2C + slot * 0x870);
+}
+
+u8* PlayerNL::tpcImage() {
+	u8 *TPCBuffer = nullptr;
+	if (SaveUtils::Read<u32>(data.get(), offset + 0x5720) == 1) {
+		if (SaveUtils::Read<u16>(data.get(), offset + 0x5724) == 0xD8FF) { // 0xFFD8 = JPEG File Marker
+			TPCBuffer = new u8[0x1400];
+			// Put the data to buffer.
+			memcpy(TPCBuffer, data.get() + offset + 0x5724, 0x1400);
+		}
+	}
+	return TPCBuffer;
 }

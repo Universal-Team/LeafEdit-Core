@@ -86,6 +86,9 @@ public:
 	std::unique_ptr<Item> islandbox(int slot) override;
 	std::unique_ptr<Item> storage(int slot) override { return nullptr; };
 	std::unique_ptr<Pattern> pattern(int slot) override;
+
+	u8 *tpcImage() override;
+	bool hasTPC() override { return true; }
 private:
 	// EncryptedInt32 Variables.
 	EncryptedInt32 walletValue;
