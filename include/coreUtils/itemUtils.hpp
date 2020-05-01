@@ -33,7 +33,7 @@
 namespace ItemUtils
 {
 	// Read Database.
-	void LoadDatabase(int lang, SaveType save);
+	void LoadDatabase(SaveType save);
 	std::string getName(u16 ID); // Get an Item's name.
 }
 

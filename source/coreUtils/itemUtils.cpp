@@ -25,6 +25,7 @@
 */
 
 #include "itemUtils.hpp"
+#include "LeafEditCore.h"
 #include "types.hpp"
 
 #include <fstream>
@@ -34,11 +35,6 @@
 #include <unistd.h>
 
 std::map<u16, std::string> ItemDatabase;
-// TODO!
-std::string itemLanguages[] = {"de", "en", "es", "fr", "it", "jp", "lt", "pt"};
-const std::string LANG_FOLDER = "romfs:/lang/";
-const std::string WW_ITEM_FILE = "/wwItems.txt";
-const std::string NL_ITEM_FILE = "/items.txt";
 
 // String to U16. Useful for the Item ID & Name at one. TODO: Maybe move to StringUtils?
 u16 strToU16(const std::string str) {
@@ -50,19 +46,34 @@ u16 strToU16(const std::string str) {
 	return out;
 }
 
-// TODO!
-void ItemUtils::LoadDatabase(int lang, SaveType save) {
+void ItemUtils::LoadDatabase(SaveType save) {
 	ItemDatabase.clear();
 
 	std::string path; // Path.
 	// If SaveType is Wild World -> Check.
 	if (save == SaveType::WW) {
-		if (WW_ITEM_FILE != "")	path = LANG_FOLDER + itemLanguages[lang] + WW_ITEM_FILE;
-		else					return;
-	// If SaveType is New Leaf or Welcome amiibo -> Check.
-	} else if (save == SaveType::NL || save == SaveType::WA) {
-		if (NL_ITEM_FILE != "")	path = LANG_FOLDER + itemLanguages[lang] + NL_ITEM_FILE;
-		else					return;
+		#if defined(WW_ITEM_PATH)
+			path = LANG_FOLDER WW_ITEM_PATH;
+		#else
+			return;
+		#endif
+
+	// If SaveType is New Leaf -> Check.
+	} else if (save == SaveType::NL) {
+		#if defined(NL_ITEM_PATH)
+			path = LANG_FOLDER NL_ITEM_PATH;
+		#else
+			return;
+		#endif
+
+	// If SaveType is Welcome amiibo -> Check.
+	} else if (save == SaveType::WA) {
+		#if defined(WA_ITEM_PATH)
+			path = LANG_FOLDER WA_ITEM_PATH;
+		#else
+			return;
+		#endif
+
 	// Nope sorry. Invalid SaveType.
 	} else { return; }
 	// Check if File even exist!
