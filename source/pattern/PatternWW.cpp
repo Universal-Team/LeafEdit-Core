@@ -51,6 +51,7 @@ static const u32 PaletteColors[] = {
 	0xFFFF8C7B, 0xFFFF0000, 0xFFFF7B00, 0xFFFFFF00, 0xFF008400, 0xFF00FF00, 0xFF0000FF, 0xFF009CFF, 0xFFD600FF, 0xFFFF6BFF, 0xFF9C0000, 0xFFFF9400, 0xFFFFBD94, 0xFF000000, 0xFFFFFFFF
 };
 
+// Pattern Name.
 std::u16string PatternWW::name() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -66,7 +67,24 @@ std::u16string PatternWW::name() {
 	}
 	return StringUtils::UTF8toUTF16("?");
 }
+void PatternWW::name(std::u16string v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			StringUtils::WriteWWString(patternPointer(), v, 0x216, 15, this->region);
+			break;
+		case WWRegion::KOR_REV1:
+			StringUtils::WriteNLString(patternPointer(), v, 0x21F, 10); // No Region param etc cause uses NL's stuff.
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Creator ID.
 u16 PatternWW::creatorid() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -82,7 +100,23 @@ u16 PatternWW::creatorid() {
 	}
 	return 0;
 }
+void PatternWW::creatorid(u16 v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			break;
+		case WWRegion::KOR_REV1:
+			return SaveUtils::Write<u16>(patternPointer(), 0x20F, v);
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Creator Name.
 std::u16string PatternWW::creatorname() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -98,8 +132,24 @@ std::u16string PatternWW::creatorname() {
 	}
 	return StringUtils::UTF8toUTF16("?");
 }
+void PatternWW::creatorname(std::u16string v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			StringUtils::WriteWWString(patternPointer(), v, 0x20C, 7, this->region);
+			break;
+		case WWRegion::KOR_REV1:
+			StringUtils::WriteNLString(patternPointer(), v, 0x211, 6); // No Region param etc cause uses NL's stuff.
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
-// Is that even used in AC:WW? Is that 0x0?
+// Creator Gender.
 u8 PatternWW::creatorGender() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -109,13 +159,26 @@ u8 PatternWW::creatorGender() {
 		case WWRegion::JPN_REV1:
 			return 0;
 		case WWRegion::KOR_REV1:
-			return patternPointer()[0x0]; // is that right?
+			return 0;
 		case WWRegion::UNKNOWN:
 			return 0;
 	}
 	return 0;
 }
+void PatternWW::creatorGender(u8 v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Town ID.
 u16 PatternWW::origtownid() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -131,7 +194,23 @@ u16 PatternWW::origtownid() {
 	}
 	return 0;
 }
+void PatternWW::origtownid(u16 v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			break;
+		case WWRegion::KOR_REV1:
+			return SaveUtils::Write<u16>(patternPointer(), 0x201, v);
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Town Name.
 std::u16string PatternWW::origtownname() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -147,7 +226,35 @@ std::u16string PatternWW::origtownname() {
 	}
 	return StringUtils::UTF8toUTF16("?");
 }
+void PatternWW::origtownname(std::u16string v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			StringUtils::WriteWWString(patternPointer(), v, 0x202, 7, this->region);
+			break;
+		case WWRegion::KOR_REV1:
+			StringUtils::WriteNLString(patternPointer(), v, 0x203, 6); // No Region param etc cause uses NL's stuff.
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Own a Pattern.
+void PatternWW::ownPattern(std::unique_ptr<Player> player) {
+	// Only set if player is not nullptr!
+	if (player != nullptr) {
+		this->creatorid(player->playerid());
+		this->creatorname(player->name());
+		this->origtownid(player->townid());
+		this->origtownname(player->townname());
+	}
+}
+
+// Design Type.
 u8 PatternWW::designtype() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -163,8 +270,20 @@ u8 PatternWW::designtype() {
 	}
 	return 0;
 }
+void PatternWW::designtype(u8 v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+		case WWRegion::KOR_REV1:
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
-// Needs checking.
+// Needs checking. Dump a Pattern to file.
 void PatternWW::dumpPattern(const std::string fileName) {
 	// If region == UNKNOWN -> Do NOTHING.
 	if (this->region != WWRegion::UNKNOWN) {
@@ -201,7 +320,7 @@ void PatternWW::dumpPattern(const std::string fileName) {
 	}
 }
 
-// Needs checking.
+// Needs checking. Inject a Pattern from a file.
 void PatternWW::injectPattern(const std::string fileName) {
 	// If region == UNKNOWN -> Do NOTHING.
 	if (this->region != WWRegion::UNKNOWN) {

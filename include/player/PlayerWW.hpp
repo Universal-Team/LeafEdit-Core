@@ -70,6 +70,8 @@ public:
 	void playerid(u16 v) override;
 	u16 townid() override;
 	void townid(u16 v) override;
+	std::u16string townname() override;
+	void townname(std::u16string v) override;
 	bool exist() override;
 	std::u16string name() override;
 	void name(std::u16string v) override;

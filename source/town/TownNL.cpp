@@ -28,25 +28,35 @@
 #include "stringUtils.hpp"
 #include "TownNL.hpp"
 
+// Grasstype.
 u8 TownNL::grasstype() {
 	return townPointer()[0x80+0x04da01];
 }
-
 void TownNL::grasstype(u8 v) {
 	townPointer()[0x80+0x04da01] = v;
 }
 
+// Town Name.
 std::u16string TownNL::name() {
 	return StringUtils::ReadNLString(townPointer(), 0x80+0x05c73a, 8, u'\uFFFF');
 }
+void TownNL::name(std::u16string v) {
+	StringUtils::WriteNLString(townPointer(), v, 0x80+0x05c73a, 8);
+}
 
+// Town Acre.
 std::unique_ptr<Acre> TownNL::acre(int Acre) {
 	if (Acre > 41)	return nullptr;
 	return std::make_unique<AcreNL>(data, 0x80+0x04da04 + Acre *2);
 }
 
-// 5120
+// Town Item.
 std::unique_ptr<Item> TownNL::item(u32 index) {
 	if (index > 5119)	return nullptr;
 	return std::make_unique<ItemNL>(data, 0x80+0x04da58 + index * 4);
+}
+
+// Return if Town exist.
+bool TownNL::exist() {
+	return true; // TODO?
 }

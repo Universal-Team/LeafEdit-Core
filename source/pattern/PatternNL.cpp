@@ -50,36 +50,75 @@ static const u32 PaletteColors[] = {
 	0xAAFFAAFF, 0x77FF77FF, 0x66DD44FF, 0x00FF00FF, 0x22DD22FF, 0x55BB55FF, 0x00BB00FF, 0x008800FF, 0x224422FF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF, 0xFFFFFFFF
 };
 
+// Pattern Name.
 std::u16string PatternNL::name() {
 	return StringUtils::ReadNLString(patternPointer(), 0, 20, u'\uFFFF');
 }
+void PatternNL::name(std::u16string v) {
+	StringUtils::WriteNLString(patternPointer(), v, 0, 20);
+}
 
+// Creator ID.
 u16 PatternNL::creatorid() {
 	return SaveUtils::Read<u16>(patternPointer(), 0x2A);
 }
+void PatternNL::creatorid(u16 v) {
+	return SaveUtils::Write<u16>(patternPointer(), 0x2A, v);
+}
 
+// Creator Name.
 std::u16string PatternNL::creatorname() {
 	return StringUtils::ReadNLString(patternPointer(), 0x2C, 8, u'\uFFFF');
 }
+void PatternNL::creatorname(std::u16string v) {
+	StringUtils::WriteNLString(patternPointer(), v, 0x2C, 8);
+}
 
+// Creator Gender.
 u8 PatternNL::creatorGender() {
 	return patternPointer()[0x3E];
 }
+void PatternNL::creatorGender(u8 v) {
+	patternPointer()[0x3E] = v;
+}
 
+// Town ID.
 u16 PatternNL::origtownid() {
 	return SaveUtils::Read<u16>(patternPointer(), 0x40);
 }
+void PatternNL::origtownid(u16 v) {
+	return SaveUtils::Write<u16>(patternPointer(), 0x40, v);
+}
 
+// Town Name.
 std::u16string PatternNL::origtownname() {
 	return StringUtils::ReadNLString(patternPointer(), 0x42, 8, u'\uFFFF');
+}
+void PatternNL::origtownname(std::u16string v) {
+	StringUtils::WriteNLString(patternPointer(), v, 0x42, 8);
+}
+
+// Own a Pattern.
+void PatternNL::ownPattern(std::unique_ptr<Player> player) {
+	// Only set if player is not nullptr!
+	if (player != nullptr) {
+		this->creatorid(player->playerid());
+		this->creatorname(player->name());
+		this->origtownid(player->townid());
+		this->origtownname(player->townname());
+		this->creatorGender(player->gender());
+	}
 }
 
 // Palette Array. Offset: 0x58, count: 16
 
+// Design Type.
 u8 PatternNL::designtype() {
 	return (patternPointer()[0x69] & 9);
 }
+void PatternNL::designtype(u8 v) { }
 
+// Dump a Pattern to file.
 void PatternNL::dumpPattern(const std::string fileName) {
 	// Get Pattern size?
 	u32 size = 0;
@@ -104,6 +143,7 @@ void PatternNL::dumpPattern(const std::string fileName) {
 	delete(patternData);
 }
 
+// Inject a Pattern from file.
 void PatternNL::injectPattern(const std::string fileName) {
 	if((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
 	u32 size;

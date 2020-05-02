@@ -27,7 +27,7 @@
 #include "saveUtils.hpp"
 #include "VillagerWW.hpp"
 
-// ID, It's a u8, TODO.
+// Villager ID.
 u16 VillagerWW::id() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -42,7 +42,6 @@ u16 VillagerWW::id() {
 	}
 	return 0;
 }
-
 void VillagerWW::id(u16 v) {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -58,6 +57,7 @@ void VillagerWW::id(u16 v) {
 	}
 }
 
+// Villager Personality.
 u8 VillagerWW::personality() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -72,7 +72,6 @@ u8 VillagerWW::personality() {
 	}
 	return 0;
 }
-
 void VillagerWW::personality(u8 v) {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -88,6 +87,7 @@ void VillagerWW::personality(u8 v) {
 	}
 }
 
+// Villager Song.
 std::unique_ptr<Item> VillagerWW::song() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -103,6 +103,7 @@ std::unique_ptr<Item> VillagerWW::song() {
 	return nullptr;
 }
 
+// Villager Shirt.
 std::unique_ptr<Item> VillagerWW::shirt() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -118,6 +119,7 @@ std::unique_ptr<Item> VillagerWW::shirt() {
 	return nullptr;
 }
 
+// Villager Wallpaper.
 std::unique_ptr<Item> VillagerWW::wallpaper() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -133,6 +135,7 @@ std::unique_ptr<Item> VillagerWW::wallpaper() {
 	return nullptr;
 }
 
+// Villager Carpet.
 std::unique_ptr<Item> VillagerWW::carpet() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -148,6 +151,7 @@ std::unique_ptr<Item> VillagerWW::carpet() {
 	return nullptr;
 }
 
+// Villager Umbrella.
 std::unique_ptr<Item> VillagerWW::umbrella() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -162,6 +166,7 @@ std::unique_ptr<Item> VillagerWW::umbrella() {
 	return nullptr;
 }
 
+// Villager Furniture.
 std::unique_ptr<Item> VillagerWW::furniture(int slot) {
 	if (slot > 9)	return nullptr;
 	switch(this->region) {

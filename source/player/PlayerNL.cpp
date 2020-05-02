@@ -94,7 +94,7 @@ void PlayerNL::playerid(u16 v) {
 	SaveUtils::Write<u16>(playerPointer(), 0x55A6, v);
 }
 
-// Town ID. 
+// Town ID.
 u16 PlayerNL::townid() {
 	return SaveUtils::Read<u16>(playerPointer(), 0x55BC);
 }
@@ -102,16 +102,26 @@ void PlayerNL::townid(u16 v) {
 	SaveUtils::Write<u16>(playerPointer(), 0x55BC, v);
 }
 
+// Town Name.
+std::u16string PlayerNL::townname() {
+	return StringUtils::UTF8toUTF16("?");
+}
+void PlayerNL::townname(std::u16string v) { }
+
+// Player Exist.
 bool PlayerNL::exist() {
 	return SaveUtils::Read<u16>(playerPointer(), 0x55A6) != 0;
 }
 
+// Player Name.
 std::u16string PlayerNL::name() {
 	return StringUtils::ReadNLString(playerPointer(), 0x55A8, 8, u'\uFFFF');
 }
-// TODO.
-void PlayerNL::name(std::u16string v) { }
+void PlayerNL::name(std::u16string v) {
+	StringUtils::WriteNLString(playerPointer(), v, 0x55A8, 8);
+}
 
+// Wallet Amount.
 u32 PlayerNL::wallet() {
 	this->walletValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6E38));
 	return walletValue.value;
@@ -124,7 +134,7 @@ void PlayerNL::wallet(u32 v) {
 	SaveUtils::Write<u32>(playerPointer(), 0x6E3C, encryptionData);
 }
 
-
+// Bank Amount.
 u32 PlayerNL::bank() {
 	this->bankValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B6C));
 	return bankValue.value;
@@ -137,6 +147,7 @@ void PlayerNL::bank(u32 v) {
 	SaveUtils::Write<u32>(playerPointer(), 0x6B70, encryptionData);
 }
 
+// Island Medals.
 u32 PlayerNL::islandmedals() {
 	this->islandValue = EncryptedInt32(SaveUtils::Read<u64>(playerPointer(), 0x6B7C));
 	return islandValue.value;
@@ -149,31 +160,37 @@ void PlayerNL::islandmedals(u32 v) {
 	SaveUtils::Write<u32>(playerPointer(), 0x6B80, encryptionData);
 }
 
+// Coupons.
 u32 PlayerNL::coupons() {
 	return 0; // Does not exist here.
 }
 void PlayerNL::coupons(u32 v) { }
 
+// Player Pocket.
 std::unique_ptr<Item> PlayerNL::pocket(int slot) {
 	if (slot > 15)	return nullptr;
 	return std::make_unique<ItemNL>(data, offset + 0x6BB0 + slot * 4);
 }
 
+// Player Dresser.
 std::unique_ptr<Item> PlayerNL::dresser(int slot) {
 	if (slot > 179)	return nullptr;
 	return std::make_unique<ItemNL>(data, offset + 0x8E18 + slot * 4);
 }
 
+// Player Islandbox.
 std::unique_ptr<Item> PlayerNL::islandbox(int slot) {
 	if (slot > 39)	return nullptr;
 	return std::make_unique<ItemNL>(data, offset + 0x6E40 + slot * 4);
 }
 
+// Player Pattern.
 std::unique_ptr<Pattern> PlayerNL::pattern(int slot) {
 	if (slot > 9)	return nullptr;
 	return std::make_unique<PatternNL>(data, offset + 0x2C + slot * 0x870);
 }
 
+// TPC Image.
 u8* PlayerNL::tpcImage() {
 	u8 *TPCBuffer = nullptr;
 	if (SaveUtils::Read<u32>(data.get(), offset + 0x5720) == 1) {

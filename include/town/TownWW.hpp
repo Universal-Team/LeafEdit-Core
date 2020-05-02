@@ -52,8 +52,10 @@ public:
 	u8 grasstype() override;
 	void grasstype(u8 v) override;
 	std::u16string name() override;
+	void name(std::u16string v) override;
 	std::unique_ptr<Acre> acre(int Acre) override;
 	std::unique_ptr<Item> item(u32 index) override;
+	bool exist() override;
 private:
 	u8* townPointer() const {
 		return data.get();

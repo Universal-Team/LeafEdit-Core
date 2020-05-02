@@ -27,24 +27,29 @@
 #include "checksum.hpp"
 #include "SavWA.hpp"
 
+// Get Player data.
 std::unique_ptr<Player> SavWA::player(int player, int index) {
 	if (player > 3 || index > 3)	return nullptr;
 	return std::make_unique<PlayerWA>(dataPointer, 0xA0 + (player * 0xA480), index);
 }
 
+// Get Villager data.
 std::unique_ptr<Villager> SavWA::villager(int villager) {
 	if (villager > 9)	return nullptr;
 	return std::make_unique<VillagerWA>(dataPointer, 0x0292D0 + (villager * 0x2518));
 }
 
+// Get Town data.
 std::unique_ptr<Town> SavWA::town() {
 	return std::make_unique<TownWA>(dataPointer);
 }
 
+// Get Island data.
 std::unique_ptr<Island> SavWA::island() {
 	return std::make_unique<IslandWA>(dataPointer);
 }
 
+// Last call before writing to file. Update Checksum.
 void SavWA::Finish(void) {
 	Checksum::FixCRC32s(this->savePointer());
 }

@@ -24,10 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
+#include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
 #include <algorithm>
 #include <array>
+#include <cstring>
+#include <sstream>
 
 // ⓢ is actually s̊, but that's two characters
 // ☔ would be better as 💧, but that's too big for a char16_t
@@ -92,8 +95,9 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 			break;
 	}
 
-	for(char character : input) {
-		if(character < characters.size()) {
+	for (char character : input) {
+		if (characters[character] == '\0')	break;
+		if (character < characters.size()) {
 			output += characters[character];
 		}
 	}
@@ -214,6 +218,16 @@ std::u16string StringUtils::ReadWWString(u8 *data, u32 offset, u32 maxSize, WWRe
 	return wwToUnicode(str, region);
 }
 
+void StringUtils::WriteWWString(u8 *data, const std::u16string &str, u32 offset, u32 maxSize, WWRegion region) {
+	// Do not allow a string longer as max.
+	if (str.length() > maxSize + 1) {
+		return;
+	}
+
+	const std::string dataString(unicodeToWW(str, region));
+	memcpy(data + offset, (u8 *)dataString.data(), maxSize * 2);
+}
+
 // Used to get the NL | WA Strings.
 std::u16string StringUtils::ReadNLString(const u8* data, int ofs, int len, char16_t term)
 {
@@ -231,6 +245,16 @@ std::u16string StringUtils::ReadNLString(const u8* data, int ofs, int len, char1
 	return ret;
 }
 
+void StringUtils::WriteNLString(u8 *data, const std::u16string &str, u32 offset, u32 maxSize) {
+	// Do not allow a string longer as max.
+	if (str.length() > maxSize + 1) {
+		return;
+	}
+
+	const std::string dataString(StringUtils::UTF16toUTF8(str));
+	memcpy(data + offset, (u8 *)dataString.data(), maxSize * 2);
+}
+
 // Converts a single latin character from half-width to full-width
 char16_t tofullwidth(char16_t c)
 {
@@ -245,4 +269,14 @@ std::u16string& StringUtils::toFullWidth(std::u16string& in)
 {
 	std::transform(in.begin(), in.end(), in.begin(), tofullwidth);
 	return in;
+}
+
+// String to U16. Useful for the Item ID & Name at one.
+u16 StringUtils::strToU16(const std::string str) {
+	u16 out;
+	std::stringstream ss;
+	ss << std::hex << str;
+	ss >> out;
+
+	return out;
 }

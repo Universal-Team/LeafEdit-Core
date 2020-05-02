@@ -46,6 +46,7 @@ u8 ACWAArray[28] =
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
+// Return the SaveType from a Buffer and load.
 std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 	switch (length) {
 		case 0x40000:
@@ -82,7 +83,7 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 	}
 }
 
-// Because 0x80000 can be a AC:NL & AC:WW save, check it here!
+// Because 0x80000 can be an AC:NL & AC:WW save, check it here!
 std::unique_ptr<Sav> Sav::check080000(std::shared_ptr<u8[]> dt, u32 length) {
 		// Check for AC:WW Japanese.
 	if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {

@@ -26,26 +26,17 @@
 
 #include "itemUtils.hpp"
 #include "LeafEditCore.h"
+#include "stringUtils.hpp"
 #include "types.hpp"
 
 #include <fstream>
 #include <map>
-#include <sstream>
 #include <string>
 #include <unistd.h>
 
 std::map<u16, std::string> ItemDatabase;
 
-// String to U16. Useful for the Item ID & Name at one. TODO: Maybe move to StringUtils?
-u16 strToU16(const std::string str) {
-	u16 out;
-	std::stringstream ss;
-	ss << std::hex << str;
-	ss >> out;
-
-	return out;
-}
-
+// Load the Item Database.
 void ItemUtils::LoadDatabase(SaveType save) {
 	ItemDatabase.clear();
 
@@ -95,7 +86,7 @@ void ItemUtils::LoadDatabase(SaveType save) {
 				itemName = currentLine.substr(8, currentLine.size());
 
 				// Convert itemIdStr to a u16
-				u16 itemId = strToU16(itemIdStr);
+				u16 itemId = StringUtils::strToU16(itemIdStr);
 
 				// Add item to the database
 				ItemDatabase.insert(std::make_pair(itemId, itemName));

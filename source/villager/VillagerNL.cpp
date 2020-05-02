@@ -27,42 +27,48 @@
 #include "saveUtils.hpp"
 #include "VillagerNL.hpp"
 
+// Villager ID.
 u16 VillagerNL::id() {
 	return SaveUtils::Read<u16>(villagerPointer(), 0x0);
 }
-
 void VillagerNL::id(u16 v) {
 	SaveUtils::Write<u16>(villagerPointer(), 0x0, v);
 }
 
+// Villager Personality.
 u8 VillagerNL::personality() {
 	return villagerPointer()[0x2];
 }
-
 void VillagerNL::personality(u8 v) {
 	villagerPointer()[0x2] = v;
 }
 
+// Villager Song.
 std::unique_ptr<Item> VillagerNL::song() {
 	return std::make_unique<ItemNL>(data, offset + 0x2472);
 }
 
+// Villager Shirt.
 std::unique_ptr<Item> VillagerNL::shirt() {
 	return std::make_unique<ItemNL>(data, offset + 0x2472);
 }
 
+// Villager Wallpaper.
 std::unique_ptr<Item> VillagerNL::wallpaper() {
 	return std::make_unique<ItemNL>(data, offset + 0x2472);
 }
 
+// Villager Carpet.
 std::unique_ptr<Item> VillagerNL::carpet() {
 	return std::make_unique<ItemNL>(data, offset + 0x2472);
 }
 
+// Villager Umbrella.
 std::unique_ptr<Item> VillagerNL::umbrella() {
 	return std::make_unique<ItemNL>(data, offset + 0x247E);
 }
 
+// Villager Furniture.
 std::unique_ptr<Item> VillagerNL::furniture(int slot) {
 	if (slot > 15)	return nullptr;
 	return std::make_unique<ItemNL>(data, offset + 0x2472);

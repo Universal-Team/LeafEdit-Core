@@ -28,6 +28,7 @@
 #include "stringUtils.hpp"
 #include "TownWW.hpp"
 
+// Grasstype.
 u8 TownWW::grasstype() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -42,7 +43,6 @@ u8 TownWW::grasstype() {
 	}
 	return 0;
 }
-
 void TownWW::grasstype(u8 v) {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -58,6 +58,7 @@ void TownWW::grasstype(u8 v) {
 	}
 }
 
+// Town Name.
 std::u16string TownWW::name() {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -66,7 +67,7 @@ std::u16string TownWW::name() {
 			return StringUtils::ReadWWString(townPointer(), 0x0004, 8, this->region);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return StringUtils::ReadWWString(townPointer(), 0x0004, 7, this->region);
+			return StringUtils::ReadWWString(townPointer(), 0x0004, 6, this->region);
 		case WWRegion::KOR_REV1:
 			return StringUtils::ReadNLString(townPointer(), 0x0004, 6, u'\uFFFF');
 		case WWRegion::UNKNOWN:
@@ -74,7 +75,26 @@ std::u16string TownWW::name() {
 	}
 	return StringUtils::UTF8toUTF16("?");
 }
+void TownWW::name(std::u16string v) {
+	switch(this->region) {
+		case WWRegion::USA_REV0:
+		case WWRegion::USA_REV1:
+		case WWRegion::EUR_REV1:
+			StringUtils::WriteWWString(townPointer(), v, 0x0004, 8, this->region);
+			break;
+		case WWRegion::JPN_REV0:
+		case WWRegion::JPN_REV1:
+			StringUtils::WriteWWString(townPointer(), v, 0x0004, 6, this->region);
+			break;
+		case WWRegion::KOR_REV1:
+			StringUtils::WriteNLString(townPointer(), v, 0x0004, 6);
+			break;
+		case WWRegion::UNKNOWN:
+			break;
+	}
+}
 
+// Town Acre.
 std::unique_ptr<Acre> TownWW::acre(int Acre) {
 	if (Acre > 35)	return nullptr;
 	switch(this->region) {
@@ -93,6 +113,7 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) {
 	return nullptr;
 }
 
+// Town Item.
 std::unique_ptr<Item> TownWW::item(u32 index) {
 	if (index > 4095)	return nullptr;
 	switch(this->region) {
@@ -109,4 +130,10 @@ std::unique_ptr<Item> TownWW::item(u32 index) {
 			return nullptr;
 	}
 	return nullptr;
+}
+
+// Return if Town exist.
+bool TownWW::exist() {
+	if (SaveUtils::Read<u16>(townPointer(), 0x2) != 0x0 || SaveUtils::Read<u16>(townPointer(), 0x2) != 0xFFFF)	return true;
+	else return false;
 }

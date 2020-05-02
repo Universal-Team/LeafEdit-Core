@@ -28,6 +28,7 @@
 #define PATTERNNL_HPP
 
 #include "Pattern.hpp"
+#include "Player.hpp"
 
 #include <memory>
 #include <vector>
@@ -41,14 +42,22 @@ public:
 	PatternNL(std::shared_ptr<u8[]> patternData, u32 offset) : Pattern(patternData, offset), Offset(offset), data(patternData) { }
 
 	std::u16string name() override;
+	void name(std::u16string v) override;
 	u16 creatorid() override;
+	void creatorid(u16 v) override;
 	std::u16string creatorname() override;
+	void creatorname(std::u16string v) override;
 	u8 creatorGender() override;
+	void creatorGender(u8 v) override;
 	u16 origtownid() override;
+	void origtownid(u16 v) override;
 	std::u16string origtownname() override;
+	void origtownname(std::u16string v) override;
 	u8 designtype() override;
+	void designtype(u8 v) override;
 
 	// Pattern Misc.
+	void ownPattern(std::unique_ptr<Player> player) override;
 	void dumpPattern(const std::string fileName) override;
 	void injectPattern(const std::string fileName) override;
 

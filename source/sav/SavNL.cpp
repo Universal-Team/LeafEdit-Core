@@ -27,24 +27,29 @@
 #include "checksum.hpp"
 #include "SavNL.hpp"
 
+// Get Player data.
 std::unique_ptr<Player> SavNL::player(int player, int index) {
 	if (player > 3 || index > 3)	return nullptr;
 	return std::make_unique<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10), index);
 }
 
+// Get Villager data.
 std::unique_ptr<Villager> SavNL::villager(int villager) {
 	if (villager > 9)	return nullptr;
 	return std::make_unique<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
 }
 
+// Get Town data.
 std::unique_ptr<Town> SavNL::town() {
 	return std::make_unique<TownNL>(dataPointer);
 }
 
+// Get Island data.
 std::unique_ptr<Island> SavNL::island() {
 	return std::make_unique<IslandNL>(dataPointer);
 }
 
+// Last call before writing to file. Update Checksum.
 void SavNL::Finish(void) {
 	Checksum::FixNLCRC32s(this->savePointer());
 }

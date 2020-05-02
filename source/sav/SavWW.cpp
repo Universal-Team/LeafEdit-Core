@@ -65,14 +65,17 @@ std::unique_ptr<Villager> SavWW::villager(int villager) {
 	return nullptr;
 }
 
+// Get Town data.
 std::unique_ptr<Town> SavWW::town() {
 	return std::make_unique<TownWW>(dataPointer, this->region);
 }
 
+// Get Island data. (Does not exist.)
 std::unique_ptr<Island> SavWW::island() {
-	return nullptr; // Does not exist.
+	return nullptr;
 }
 
+// Last call before writing to file. Update Checksum.
 void SavWW::Finish(void) {
 	switch (this->region) {
 		case WWRegion::USA_REV0:

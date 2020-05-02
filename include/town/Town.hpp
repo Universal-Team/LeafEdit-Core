@@ -48,8 +48,10 @@ public:
 	virtual u8 grasstype() = 0;
 	virtual void grasstype(u8 v) = 0;
 	virtual std::u16string name() = 0;
+	virtual void name(std::u16string v) = 0;
 	virtual std::unique_ptr<Acre> acre(int Acre) = 0;
 	virtual std::unique_ptr<Item> item(u32 index) = 0;
+	virtual bool exist() = 0;
 };
 
 #endif

@@ -141,6 +141,7 @@ const u32 crcTable_2[256] = { //Polynomial: 0x04C11DB7, 0x00000000 initial value
 	0xB1F740B4
 };
 
+// Calculate the CRC32 reflected type.
 u32 Checksum::CalculateCRC32Reflected(u8 *buf, u32 size) {
 	u32 crc = 0xFFFFFFFF;
 	while (size-- != 0) {
@@ -151,6 +152,7 @@ u32 Checksum::CalculateCRC32Reflected(u8 *buf, u32 size) {
 	return ~crc;
 }
 
+// Calculate the CRC32 normal type.
 u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	u32 crc = 0;
 	while (size-- != 0) {
@@ -160,6 +162,7 @@ u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	return ~crc;
 }
 
+// Verify the CRC32.
 bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type) {
 	if (type == CRC_NORMAL)
 	{
@@ -169,6 +172,7 @@ bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, Checksum
 	return CalculateCRC32Reflected(buf + startOffset + 4, size) == crc;
 }
 
+// Update the CRC32.
 u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType type) {
 	u32 crc32 = 0;
 	if (type == CRC_NORMAL) {
@@ -184,8 +188,7 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 	return crc32;
 }
 
-
-
+// Fix the CRC32 for AC:WA.
 void Checksum::FixCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header
 
@@ -207,6 +210,7 @@ void Checksum::FixCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL);	// Unknown5 Checksum
 }
 
+// Fix the CRC32 for AC:NL.
 void Checksum::FixNLCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header
 	// Rehash players
@@ -223,6 +227,7 @@ void Checksum::FixNLCRC32s(u8 *data) {
 }
 
 // Wild World.
+// Calculate AC:WW's Checksum.
 u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset)
 {
 	if ((checksumOffset & 1) == 1)
@@ -238,12 +243,14 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset)
 	return (u16) -checksum;
 }
 
+// Verify AC:WW's Checksum.
 bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset)
 {
 	if (CalculateWW(buffer, size, checksumOffset) == currentChecksum)	return true;
 	else	return false;
 }
 
+// Update AC:WW's Checksum.
 void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
 	switch(region) {
 		case WWRegion::USA_REV0:

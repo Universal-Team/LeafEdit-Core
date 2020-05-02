@@ -29,10 +29,10 @@
 
 // 155 & 165 are part of Welcome Amiibo.
 
+// Acre ID.
 u8 AcreNL::id() {
 	return acrePointer()[0];
 }
-
 void AcreNL::id(u8 v) {
 	acrePointer()[0] = v;
 }
