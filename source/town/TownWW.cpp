@@ -134,6 +134,6 @@ std::unique_ptr<Item> TownWW::item(u32 index) {
 
 // Return if Town exist.
 bool TownWW::exist() {
-	if (SaveUtils::Read<u16>(townPointer(), 0x2) != 0x0 || SaveUtils::Read<u16>(townPointer(), 0x2) != 0xFFFF)	return true;
-	else return false;
+	if (SaveUtils::Read<u16>(townPointer(), 0x2) == 0x0 || SaveUtils::Read<u16>(townPointer(), 0x2) == 0xFFFF)	return false;
+	return true;
 }
