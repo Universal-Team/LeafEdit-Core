@@ -43,9 +43,11 @@ public:
 	Villager(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) : data(villagerData), offset(villagerOffset) {}
 	Villager(const Villager& villager) = delete;
 	Villager& operator=(const Villager& villager) = delete;
-
+	virtual u32 getVillagerSize() const = 0;
+	
 	virtual u16 id() = 0;
 	virtual void id(u16 v) = 0;
+	virtual bool exist() = 0;
 	virtual u8 personality() = 0;
 	virtual void personality(u8 v) = 0;
 

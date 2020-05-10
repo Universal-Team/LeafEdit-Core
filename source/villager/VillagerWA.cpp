@@ -35,6 +35,12 @@ void VillagerWA::id(u16 v) {
 	SaveUtils::Write<u16>(villagerPointer(), 0x0, v);
 }
 
+// Check if the Villager exist.
+bool VillagerWA::exist() {
+	if (this->id() == 0xFFFF)	return false;
+	return true;
+}
+
 // Villager Personality.
 u8 VillagerWA::personality() {
 	return villagerPointer()[0x2];

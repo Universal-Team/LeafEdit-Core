@@ -35,6 +35,12 @@ void VillagerNL::id(u16 v) {
 	SaveUtils::Write<u16>(villagerPointer(), 0x0, v);
 }
 
+// Check if the Villager exist.
+bool VillagerNL::exist() {
+	if (this->id() == 0xFFFF)	return false;
+	return true;
+}
+
 // Villager Personality.
 u8 VillagerNL::personality() {
 	return villagerPointer()[0x2];
@@ -45,31 +51,31 @@ void VillagerNL::personality(u8 v) {
 
 // Villager Song.
 std::unique_ptr<Item> VillagerNL::song() {
-	return std::make_unique<ItemNL>(data, offset + 0x2472);
+	return std::make_unique<ItemNL>(data, offset + 0x2452);
 }
 
 // Villager Shirt.
 std::unique_ptr<Item> VillagerNL::shirt() {
-	return std::make_unique<ItemNL>(data, offset + 0x2472);
+	return std::make_unique<ItemNL>(data, offset + 0x244E);
 }
 
 // Villager Wallpaper.
 std::unique_ptr<Item> VillagerNL::wallpaper() {
-	return std::make_unique<ItemNL>(data, offset + 0x2472);
+	return std::make_unique<ItemNL>(data, offset + 0x2456);
 }
 
 // Villager Carpet.
 std::unique_ptr<Item> VillagerNL::carpet() {
-	return std::make_unique<ItemNL>(data, offset + 0x2472);
+	return std::make_unique<ItemNL>(data, offset + 0x245A);
 }
 
 // Villager Umbrella.
 std::unique_ptr<Item> VillagerNL::umbrella() {
-	return std::make_unique<ItemNL>(data, offset + 0x247E);
+	return std::make_unique<ItemNL>(data, offset + 0x245E);
 }
 
 // Villager Furniture.
 std::unique_ptr<Item> VillagerNL::furniture(int slot) {
 	if (slot > 15)	return nullptr;
-	return std::make_unique<ItemNL>(data, offset + 0x2472);
+	return std::make_unique<ItemNL>(data, offset + 0x2462 + slot * 4);
 }

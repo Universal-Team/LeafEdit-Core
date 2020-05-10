@@ -45,9 +45,26 @@ protected:
 public:
 	virtual ~VillagerWW() {}
 	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset, WWRegion Region) : Villager(villagerData, villagerOffset), data(villagerData), region(Region), offset(villagerOffset) { }
+	u32 getVillagerSize() const override {
+		switch(this->region) {
+			case WWRegion::USA_REV0:
+			case WWRegion::USA_REV1:
+			case WWRegion::EUR_REV1:
+				return 0x700;
+			case WWRegion::JPN_REV0:
+			case WWRegion::JPN_REV1:
+				return 0x5C0;
+			case WWRegion::KOR_REV1:
+				return 0x7EC;
+			case WWRegion::UNKNOWN:
+				return 0;
+		}
+		return 0;
+	}
 
 	u16 id() override;
 	void id(u16 v) override;
+	bool exist() override;
 	u8 personality() override;
 	void personality(u8 v) override;
 	

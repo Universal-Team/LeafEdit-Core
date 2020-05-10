@@ -45,6 +45,7 @@ public:
 	Player(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : data(playerData), offset(playerOffset) {}
 	Player(const Player& player) = delete;
 	Player& operator=(const Player& player) = delete;
+	virtual u32 getPlayerSize() const = 0;
 
 	virtual u8 face() = 0;
 	virtual void face(u8 v) = 0;

@@ -58,7 +58,9 @@ std::unique_ptr<Villager> SavWW::villager(int villager) {
 			return std::make_unique<VillagerWW>(dataPointer, 0x8A3C + (villager * 0x700), this->region);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<VillagerWW>(dataPointer, 0x744C + (villager * 0x5C0), this->region);
 		case WWRegion::KOR_REV1:
+			return std::make_unique<VillagerWW>(dataPointer, 0x928C + (villager * 0x7EC), this->region);
 		case WWRegion::UNKNOWN:
 			return nullptr; // TODO: Research.
 	}

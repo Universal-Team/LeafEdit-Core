@@ -106,7 +106,7 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) {
 		case WWRegion::JPN_REV1:
 			return std::make_unique<AcreWW>(data, 0xA32C + Acre *1); // 0xA32C - 0xA34E
 		case WWRegion::KOR_REV1:
-			return std::make_unique<AcreWW>(data, 0xD303 + Acre *1); // Is it D303 or D304?
+			return std::make_unique<AcreWW>(data, 0xD304 + Acre *1);
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}

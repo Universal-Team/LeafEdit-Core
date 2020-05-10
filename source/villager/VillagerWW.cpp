@@ -36,7 +36,9 @@ u16 VillagerWW::id() {
 			return villagerPointer()[0x6CB];
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return villagerPointer()[0x595];
 		case WWRegion::KOR_REV1:
+			return villagerPointer()[0x7A7];
 		case WWRegion::UNKNOWN:
 			return 0;
 	}
@@ -51,10 +53,20 @@ void VillagerWW::id(u16 v) {
 			break;
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			villagerPointer()[0x595] = (u8)v;
+			break;
 		case WWRegion::KOR_REV1:
+			villagerPointer()[0x7A7] = (u8)v;
+			break;
 		case WWRegion::UNKNOWN:
 			break;
 	}
+}
+
+// Check if the Villager exist.
+bool VillagerWW::exist() {
+	if (this->id() == 0xFF)	return false;
+	return true;
 }
 
 // Villager Personality.
@@ -66,7 +78,9 @@ u8 VillagerWW::personality() {
 			return villagerPointer()[0x6CA];
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return villagerPointer()[0x594];
 		case WWRegion::KOR_REV1:
+			return villagerPointer()[0x7A6];
 		case WWRegion::UNKNOWN:
 			return 0;
 	}
@@ -81,7 +95,11 @@ void VillagerWW::personality(u8 v) {
 			break;
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			villagerPointer()[0x594] = v;
+			break;
 		case WWRegion::KOR_REV1:
+			villagerPointer()[0x7A6] = v;
+			break;
 		case WWRegion::UNKNOWN:
 			break;
 	}
@@ -96,7 +114,9 @@ std::unique_ptr<Item> VillagerWW::song() {
 			return std::make_unique<ItemWW>(data, offset + 0x6D0);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x59A);
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x7AC);
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
@@ -112,7 +132,9 @@ std::unique_ptr<Item> VillagerWW::shirt() {
 			return std::make_unique<ItemWW>(data, offset + 0x6EC);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x5AE);
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x7CA);
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
@@ -128,7 +150,9 @@ std::unique_ptr<Item> VillagerWW::wallpaper() {
 			return std::make_unique<ItemWW>(data, offset + 0x6CC);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x596);
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x7A8);
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
@@ -144,7 +168,9 @@ std::unique_ptr<Item> VillagerWW::carpet() {
 			return std::make_unique<ItemWW>(data, offset + 0x6CE);
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x598);
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x7AA);
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
@@ -157,9 +183,12 @@ std::unique_ptr<Item> VillagerWW::umbrella() {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x6D2); // Needs checks.
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x59C); // Needs checks.
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x7AE); // Needs checks.
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
@@ -173,10 +202,12 @@ std::unique_ptr<Item> VillagerWW::furniture(int slot) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return std::make_unique<ItemWW>(data, offset + 0x6AC + slot * 2);
+			return std::make_unique<ItemWW>(data, offset + 0x6AC + slot * 2); // 0x14
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x579 + slot * 2); // 0x14
 		case WWRegion::KOR_REV1:
+			return std::make_unique<ItemWW>(data, offset + 0x784 + slot * 2); // 0x14
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}

@@ -51,6 +51,23 @@ public:
 	// Constructor, Destructor and stuff.
 	virtual ~PlayerWW() {}
 	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, int index) : Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), region(Region), Index(index) { }
+	u32 getPlayerSize() const override {
+		switch(this->region) {
+			case WWRegion::USA_REV0:
+			case WWRegion::USA_REV1:
+			case WWRegion::EUR_REV1:
+				return 0x228C;
+			case WWRegion::JPN_REV0:
+			case WWRegion::JPN_REV1:
+				return 0x1D10;
+			case WWRegion::KOR_REV1:
+				return 0x249C;
+			case WWRegion::UNKNOWN:
+				return 0;
+		}
+		return 0;
+	}
+
 
 	u8 face() override;
 	void face(u8 v) override;

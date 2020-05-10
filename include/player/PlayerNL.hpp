@@ -50,6 +50,7 @@ protected:
 public:
 	virtual ~PlayerNL() {}
 	PlayerNL(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), Index(index) { }
+	u32 getPlayerSize() const override { return 0x9F10; }
 
 	u8 face() override;
 	void face(u8 v) override;

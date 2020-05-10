@@ -33,12 +33,15 @@
 #include <map>
 #include <string>
 #include <unistd.h>
+#include <vector>
 
 std::map<u16, std::string> ItemDatabase;
+std::vector<std::pair<u16, std::string>> itemDB;
 
 // Load the Item Database.
 void ItemUtils::LoadDatabase(SaveType save) {
 	ItemDatabase.clear();
+	itemDB.clear();
 
 	std::string path; // Path.
 	// If SaveType is Wild World -> Check.
@@ -90,6 +93,7 @@ void ItemUtils::LoadDatabase(SaveType save) {
 
 				// Add item to the database
 				ItemDatabase.insert(std::make_pair(itemId, itemName));
+				itemDB.push_back(std::make_pair(itemId, itemName));
 			}
 		}
 		itemDatabase.close();

@@ -44,9 +44,11 @@ protected:
 public:
 	virtual ~VillagerNL() {}
 	VillagerNL(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) : Villager(villagerData, villagerOffset), data(villagerData), offset(villagerOffset) { }
+	u32 getVillagerSize() const override { return 0x24F8; }
 
 	u16 id() override;
 	void id(u16 v) override;
+	bool exist() override;
 	u8 personality() override;
 	void personality(u8 v) override;
 

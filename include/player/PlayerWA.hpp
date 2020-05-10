@@ -50,6 +50,9 @@ protected:
 public:
 	virtual ~PlayerWA() {}
 	PlayerWA(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), Index(index) { }
+	u32 getPlayerSize() const override { return 0xA480; }
+
+
 	u8 face() override;
 	void face(u8 v) override;
 	u8 gender() override;
