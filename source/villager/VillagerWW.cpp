@@ -205,7 +205,7 @@ std::unique_ptr<Item> VillagerWW::furniture(int slot) {
 			return std::make_unique<ItemWW>(data, offset + 0x6AC + slot * 2); // 0x14
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return std::make_unique<ItemWW>(data, offset + 0x579 + slot * 2); // 0x14
+			return std::make_unique<ItemWW>(data, offset + 0x578 + slot * 2); // 0x14
 		case WWRegion::KOR_REV1:
 			return std::make_unique<ItemWW>(data, offset + 0x784 + slot * 2); // 0x14
 		case WWRegion::UNKNOWN:
