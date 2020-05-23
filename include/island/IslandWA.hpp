@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ISLANDWA_HPP
-#define ISLANDWA_HPP
+#ifndef _LEAFEDIT_CORE_ISLAND_WA_HPP
+#define _LEAFEDIT_CORE_ISLAND_WA_HPP
 
 #include "Acre.hpp"
 #include "AcreWA.hpp"

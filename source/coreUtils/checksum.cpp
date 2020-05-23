@@ -159,13 +159,13 @@ u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 		crc = crcTable_2[((crc >> 24) ^ *buf) & 0xFF] ^ (crc << 8);
 		buf++;
 	}
+
 	return ~crc;
 }
 
 // Verify the CRC32.
 bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type) {
-	if (type == CRC_NORMAL)
-	{
+	if (type == CRC_NORMAL) {
 		return CalculateCRC32Normal(buf + startOffset + 4, size) == crc;
 	}
 
@@ -177,14 +177,11 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 	u32 crc32 = 0;
 	if (type == CRC_NORMAL) {
 		crc32 = CalculateCRC32Normal(rawData + startOffset + 4, size);
-	}
-
-	else {
+	} else {
 		crc32 = CalculateCRC32Reflected(rawData + startOffset + 4, size);
 	}
 
 	SaveUtils::Write<u32>(rawData, startOffset, crc32); // write calculated crc32
-
 	return crc32;
 }
 
@@ -228,15 +225,12 @@ void Checksum::FixNLCRC32s(u8 *data) {
 
 // Wild World.
 // Calculate AC:WW's Checksum.
-u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset)
-{
-	if ((checksumOffset & 1) == 1)
-		return 0; // checksumOffset must be 16-bit aligned!
+u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset) {
+	if ((checksumOffset & 1) == 1)	return 0; // checksumOffset must be 16-bit aligned!
 
 	u16 checksum = 0;
-	for (uint i = 0; i < size; i++)
-	{
-		if (i == checksumOffset) continue;
+	for (uint i = 0; i < size; i++) {
+		if (i == checksumOffset)	continue;
 		checksum += buffer[i];
 	}
 
@@ -244,8 +238,7 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset)
 }
 
 // Verify AC:WW's Checksum.
-bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset)
-{
+bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset) {
 	if (CalculateWW(buffer, size, checksumOffset) == currentChecksum)	return true;
 	else	return false;
 }

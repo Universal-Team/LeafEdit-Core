@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ISLANDNL_HPP
-#define ISLANDNL_HPP
+#ifndef _LEAFEDIT_CORE_ISLAND_NL_HPP
+#define _LEAFEDIT_CORE_ISLAND_NL_HPP
 
 #include "Acre.hpp"
 #include "AcreNL.hpp"

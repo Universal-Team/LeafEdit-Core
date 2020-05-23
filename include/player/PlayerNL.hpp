@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef PLAYERNL_HPP
-#define PLAYERNL_HPP
+#ifndef _LEAFEDIT_CORE_PLAYER_NL_HPP
+#define _LEAFEDIT_CORE_PLAYER_NL_HPP
 
 #include "encryptedInt32.hpp"
 #include "Item.hpp"

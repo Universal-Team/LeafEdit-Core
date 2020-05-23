@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ITEM_HPP
-#define ITEM_HPP
+#ifndef _LEAFEDIT_CORE_ITEM_HPP
+#define _LEAFEDIT_CORE_ITEM_HPP
 
 #include "types.hpp"
 
@@ -36,8 +36,7 @@
 extern std::map<u16, std::string> ItemDatabase;
 
 // Type of the Item.
-enum class ItemType
-{
+enum class ItemType {
 	Empty,
 	Furniture,
 	Gyroid,

@@ -71,7 +71,7 @@ void ItemUtils::LoadDatabase(SaveType save) {
 	// Nope sorry. Invalid SaveType.
 	} else { return; }
 	// Check if File even exist!
-	if((access(path.c_str(), F_OK) != 0)) {
+	if ((access(path.c_str(), F_OK) != 0)) {
 		return;
 		// Item File is found, load!
 	} else {
@@ -81,10 +81,8 @@ void ItemUtils::LoadDatabase(SaveType save) {
 		std::string itemIdStr;
 		std::string itemName;
 
-		while (std::getline(itemDatabase, currentLine))
-		{
-			if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos)
-			{											// confirm we don't have any comments
+		while (std::getline(itemDatabase, currentLine)) {
+			if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) { // confirm we don't have any comments
 				itemIdStr = currentLine.substr(2, 4); 	// skip the 0x hex specifier
 				itemName = currentLine.substr(8, currentLine.size());
 

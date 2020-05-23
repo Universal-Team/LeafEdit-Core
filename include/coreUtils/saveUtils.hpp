@@ -24,14 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVEUTILS_HPP
-#define SAVEUTILS_HPP
+#ifndef _LEAFEDIT_CORE_SAVEUTILS_HPP
+#define _LEAFEDIT_CORE_SAVEUTILS_HPP
 
 #include "types.hpp"
+
 #include <string>
 
-namespace SaveUtils
-{
+namespace SaveUtils {
 	// Read.
 	template <typename T>
 	T Read(u8 * Buffer, u32 offset) {

@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVWW_HPP
-#define SAVWW_HPP
+#ifndef _LEAFEDIT_CORE_SAV_WW_HPP
+#define _LEAFEDIT_CORE_SAV_WW_HPP
 
 #include "Island.hpp"
 #include "Player.hpp"

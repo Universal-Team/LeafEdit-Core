@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef HOUSE_HPP
-#define HOUSE_HPP
+#ifndef _LEAFEDIT_CORE_HOUSE_HPP
+#define _LEAFEDIT_CORE_HOUSE_HPP
 
 #include "types.hpp"
 

@@ -37,15 +37,11 @@ u16 ItemWW::flags() { return 0; }
 void ItemWW::flags(u16 v) { }
 
 // Item Rotation. (Furniture / House)
-int ItemWW::rotation() {
-	return 0;
-}
+int ItemWW::rotation() { return 0; }
 void ItemWW::rotation(int Direction) { } // TODO.
 
 // Item Name.
-std::string ItemWW::name() {
-	return ItemUtils::getName(this->id());
-}
+std::string ItemWW::name() { return ItemUtils::getName(this->id()); }
 
 // Item Type / Category.
 ItemType ItemWW::itemtype() {

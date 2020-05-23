@@ -46,13 +46,13 @@ void TownNL::name(std::u16string v) {
 
 // Town Acre.
 std::unique_ptr<Acre> TownNL::acre(int Acre) {
-	if (Acre > 41)	return nullptr;
+	if (Acre > 41)	return nullptr; // Acre Index goes out of scope.
 	return std::make_unique<AcreNL>(data, 0x80+0x04da04 + Acre *2);
 }
 
 // Town Item.
 std::unique_ptr<Item> TownNL::item(u32 index) {
-	if (index > 5119)	return nullptr;
+	if (index > 5119)	return nullptr; // Item Index goes out of scope.
 	return std::make_unique<ItemNL>(data, 0x80+0x04da58 + index * 4);
 }
 

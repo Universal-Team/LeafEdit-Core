@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TOWNNL_HPP
-#define TOWNNL_HPP
+#ifndef _LEAFEDIT_CORE_TOWN_NL_HPP
+#define _LEAFEDIT_CORE_TOWN_NL_HPP
 
 #include "Acre.hpp"
 #include "AcreNL.hpp"

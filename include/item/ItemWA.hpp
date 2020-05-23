@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ITEMWA_HPP
-#define ITEMWA_HPP
+#ifndef _LEAFEDIT_CORE_ITEM_WA_HPP
+#define _LEAFEDIT_CORE_ITEM_WA_HPP
 
 #include "Item.hpp"
 

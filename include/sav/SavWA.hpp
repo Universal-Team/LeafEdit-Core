@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVWA_HPP
-#define SAVWA_HPP
+#ifndef _LEAFEDIT_CORE_SAV_WA_HPP
+#define _LEAFEDIT_CORE_SAV_WA_HPP
 
 #include "Island.hpp"
 #include "IslandWA.hpp"

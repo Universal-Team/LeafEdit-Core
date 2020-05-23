@@ -29,13 +29,13 @@
 
 // Get Player data.
 std::unique_ptr<Player> SavNL::player(int player, int index) {
-	if (player > 3 || index > 3)	return nullptr;
+	if (player > 3 || index > 3)	return nullptr; // Player goes out of scope.
 	return std::make_unique<PlayerNL>(dataPointer, 0xA0 + (player * 0x9F10), index);
 }
 
 // Get Villager data.
 std::unique_ptr<Villager> SavNL::villager(int villager) {
-	if (villager > 9)	return nullptr;
+	if (villager > 9)	return nullptr; // Villager goes out of scope.
 	return std::make_unique<VillagerNL>(dataPointer, 0x027d10 + (villager * 0x24f8));
 }
 

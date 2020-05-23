@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef VILLAGER_HPP
-#define VILLAGER_HPP
+#ifndef _LEAFEDIT_CORE_VILLAGER_HPP
+#define _LEAFEDIT_CORE_VILLAGER_HPP
 
 #include "Item.hpp"
 #include "types.hpp"

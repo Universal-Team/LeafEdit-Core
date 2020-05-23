@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ITEMNL_HPP
-#define ITEMNL_HPP
+#ifndef _LEAFEDIT_CORE_ITEM_NL_HPP
+#define _LEAFEDIT_CORE_ITEM_NL_HPP
 
 #include "Item.hpp"
 

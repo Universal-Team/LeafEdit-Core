@@ -37,15 +37,11 @@ u16 ItemWA::flags() { return SaveUtils::Read<u16>(itemPointer(), 2); }
 void ItemWA::flags(u16 v) { SaveUtils::Write<u16>(itemPointer(), 2, v); }
 
 // Item Rotation. (Furniture / House)
-int ItemWA::rotation() {
-	return 0;
-}
+int ItemWA::rotation() { return 0; }
 void ItemWA::rotation(int Direction) { } // TODO.
 
 // Item Name.
-std::string ItemWA::name() {
-	return ItemUtils::getName(this->id());
-}
+std::string ItemWA::name() { return ItemUtils::getName(this->id()); }
 
 // Item Type / Category.
 ItemType ItemWA::itemtype() {

@@ -31,7 +31,7 @@
 
 // Get Player data.
 std::unique_ptr<Player> SavWW::player(int player, int index) {
-	if (player > 3 || index > 3)	return nullptr;
+	if (player > 3 || index > 3)	return nullptr; // Player goes out of scope.
 	switch (this->region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
@@ -45,12 +45,12 @@ std::unique_ptr<Player> SavWW::player(int player, int index) {
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
-	return nullptr;
+	return nullptr; // Unknwon region.
 }
 
 // Get Villager data.
 std::unique_ptr<Villager> SavWW::villager(int villager) {
-	if (villager > 7)	return nullptr;
+	if (villager > 7)	return nullptr; // Villager goes out of scope.
 	switch (this->region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
@@ -64,7 +64,7 @@ std::unique_ptr<Villager> SavWW::villager(int villager) {
 		case WWRegion::UNKNOWN:
 			return nullptr; // TODO: Research.
 	}
-	return nullptr;
+	return nullptr; // Unknown region.
 }
 
 // Get Town data.

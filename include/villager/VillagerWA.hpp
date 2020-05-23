@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef VILLAGERWA_HPP
-#define VILLAGERWA_HPP
+#ifndef _LEAFEDIT_CORE_VILLAGER_WA_HPP
+#define _LEAFEDIT_CORE_VILLAGER_WA_HPP
 
 #include "Item.hpp"
 #include "ItemWA.hpp"

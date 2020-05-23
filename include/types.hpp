@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef TYPES_HPP
-#define TYPES_HPP
+#ifndef _LEAFEDIT_CORE_TYPES_HPP
+#define _LEAFEDIT_CORE_TYPES_HPP
 
 #include <stdint.h>
 

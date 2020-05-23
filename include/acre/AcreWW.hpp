@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ACREWW_HPP
-#define ACREWW_HPP
+#ifndef _LEAFEDIT_CORE_ACRE_WW_HPP
+#define _LEAFEDIT_CORE_ACRE_WW_HPP
 
 #include "Acre.hpp"
 

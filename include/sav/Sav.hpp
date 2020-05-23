@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAV_HPP
-#define SAV_HPP
+#ifndef _LEAFEDIT_CORE_SAV_HPP
+#define _LEAFEDIT_CORE_SAV_HPP
 
 #include "Island.hpp"
 #include "Player.hpp"
@@ -103,7 +103,6 @@ public:
 	u8 *savePointer() const {
 		return saveData.get();
 	}
-	
 };
 
 #endif

@@ -96,7 +96,7 @@ void TownWW::name(std::u16string v) {
 
 // Town Acre.
 std::unique_ptr<Acre> TownWW::acre(int Acre) {
-	if (Acre > 35)	return nullptr;
+	if (Acre > 35)	return nullptr; // Acre Index goes out of scope.
 	switch(this->region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
@@ -115,7 +115,7 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) {
 
 // Town Item.
 std::unique_ptr<Item> TownWW::item(u32 index) {
-	if (index > 4095)	return nullptr;
+	if (index > 4095)	return nullptr; // Item Index goes out of scope.
 	switch(this->region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:

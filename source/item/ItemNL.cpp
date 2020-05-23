@@ -37,15 +37,11 @@ u16 ItemNL::flags() { return SaveUtils::Read<u16>(itemPointer(), 2); }
 void ItemNL::flags(u16 v) { SaveUtils::Write<u16>(itemPointer(), 2, v); }
 
 // Item Rotation. (Furniture / House)
-int ItemNL::rotation() {
-	return 0;
-}
+int ItemNL::rotation() { return 0; }
 void ItemNL::rotation(int Direction) { } // TODO.
 
 // Item Name.
-std::string ItemNL::name() {
-	return ItemUtils::getName(this->id());
-}
+std::string ItemNL::name() { return ItemUtils::getName(this->id()); }
 
 // Item Type / Category
 ItemType ItemNL::itemtype() {

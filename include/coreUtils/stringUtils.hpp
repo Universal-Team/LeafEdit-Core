@@ -24,14 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef STRINGUTILS_HPP
-#define STRINGUTILS_HPP
+#ifndef _LEAFEDIT_CORE_STRINGUTILS_HPP
+#define _LEAFEDIT_CORE_STRINGUTILS_HPP
 
 #include "types.hpp"
+
 #include <string>
 
-namespace StringUtils
-{
+namespace StringUtils {
 	// Converters.
 	std::u16string UTF8toUTF16(const std::string& src);
 	std::string UTF16toUTF8(const std::u16string& src);

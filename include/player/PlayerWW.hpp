@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef PLAYERWW_HPP
-#define PLAYERWW_HPP
+#ifndef _LEAFEDIT_CORE_PLAYER_WW_HPP
+#define _LEAFEDIT_CORE_PLAYER_WW_HPP
 
 #include "Item.hpp"
 #include "ItemWW.hpp"

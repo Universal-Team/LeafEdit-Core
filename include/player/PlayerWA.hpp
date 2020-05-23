@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef PLAYERWA_HPP
-#define PLAYERWA_HPP
+#ifndef _LEAFEDIT_CORE_PLAYER_WA_HPP
+#define _LEAFEDIT_CORE_PLAYER_WA_HPP
 
 #include "encryptedInt32.hpp"
 #include "Item.hpp"

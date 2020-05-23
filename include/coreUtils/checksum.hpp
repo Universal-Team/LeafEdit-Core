@@ -24,14 +24,13 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef CHECKSUM_HPP
-#define CHECKSUM_HPP
+#ifndef _LEAFEDIT_CORE_CHECKSUM_HPP
+#define _LEAFEDIT_CORE_CHECKSUM_HPP
 
 #include "types.hpp"
 
-typedef enum
-{
-	CRC_REFLECTED = 0, //Most common in ACNL checksums
+typedef enum {
+	CRC_REFLECTED = 0, //Most common in ACNL checksums.
 	CRC_NORMAL = 1
 } ChecksumType;
 
@@ -50,6 +49,5 @@ namespace Checksum {
 	// Checksum for EUR | USA ; JPN ; KOR.
 	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size);
 }
-
 
 #endif

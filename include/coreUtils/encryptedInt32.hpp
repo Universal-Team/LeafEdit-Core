@@ -48,8 +48,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ENCRYPTEDINT32_HPP
-#define ENCRYPTEDINT32_HPP
+#ifndef _LEAFEDIT_CORE_ENCRYPTEDINT32_HPP
+#define _LEAFEDIT_CORE_ENCRYPTEDINT32_HPP
 
 #include "types.hpp"
 

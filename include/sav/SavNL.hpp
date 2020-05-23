@@ -24,8 +24,8 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef SAVNL_HPP
-#define SAVNL_HPP
+#ifndef _LEAFEDIT_CORE_SAV_NL_HPP
+#define _LEAFEDIT_CORE_SAV_NL_HPP
 
 #include "Island.hpp"
 #include "IslandNL.hpp"

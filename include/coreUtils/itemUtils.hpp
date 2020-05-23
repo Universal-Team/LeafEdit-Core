@@ -24,14 +24,14 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef ITEMUTILS_HPP
-#define ITEMUTILS_HPP
+#ifndef _LEAFEDIT_CORE_ITEMUTILS_HPP
+#define _LEAFEDIT_CORE_ITEMUTILS_HPP
 
 #include "types.hpp"
+
 #include <string>
 
-namespace ItemUtils
-{
+namespace ItemUtils {
 	// Read Database.
 	void LoadDatabase(SaveType save);
 	std::string getName(u16 ID); // Get an Item's name.
