@@ -56,6 +56,8 @@ public:
 	std::unique_ptr<Acre> acre(int Acre) override;
 	std::unique_ptr<Item> item(u32 index) override;
 	bool exist() override;
+	u32 turnipPrices(bool isAM, int day) override;
+	void turnipPrices(bool isAM, int day, u32 v) override;
 private:
 	u8* townPointer() const {
 		return data.get();

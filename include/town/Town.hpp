@@ -34,6 +34,16 @@
 #include <memory>
 #include <vector>
 
+// TODO: Make a use of this? Keep it? Remove it?
+enum class TurnipDays {
+	Monday,
+	Tuesday,
+	Wednessday,
+	Thursday,
+	Friday,
+	Saturday
+};
+
 class Acre;
 class Item;
 class Town {
@@ -52,6 +62,8 @@ public:
 	virtual std::unique_ptr<Acre> acre(int Acre) = 0;
 	virtual std::unique_ptr<Item> item(u32 index) = 0;
 	virtual bool exist() = 0;
+	virtual u32 turnipPrices(bool isAM, int day) = 0;
+	virtual void turnipPrices(bool isAM, int day, u32 v) = 0;
 };
 
 #endif

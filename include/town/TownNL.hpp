@@ -29,6 +29,7 @@
 
 #include "Acre.hpp"
 #include "AcreNL.hpp"
+#include "encryptedInt32.hpp"
 #include "Item.hpp"
 #include "ItemNL.hpp"
 #include "Town.hpp"
@@ -55,10 +56,14 @@ public:
 	std::unique_ptr<Acre> acre(int Acre) override;
 	std::unique_ptr<Item> item(u32 index) override;
 	bool exist() override;
+	u32 turnipPrices(bool isAM, int day) override;
+	void turnipPrices(bool isAM, int day, u32 v) override;
 private:
 	u8* townPointer() const {
 		return data.get();
 	}
+
+	EncryptedInt32 v_turnipPrices[12];
 };
 
 #endif

@@ -41,6 +41,7 @@ u8 TownWW::grasstype() {
 		case WWRegion::UNKNOWN:
 			return 0;
 	}
+	
 	return 0;
 }
 void TownWW::grasstype(u8 v) {
@@ -73,6 +74,7 @@ std::u16string TownWW::name() {
 		case WWRegion::UNKNOWN:
 			return StringUtils::UTF8toUTF16("?");
 	}
+
 	return StringUtils::UTF8toUTF16("?");
 }
 void TownWW::name(std::u16string v) {
@@ -110,6 +112,7 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) {
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
+
 	return nullptr;
 }
 
@@ -129,6 +132,7 @@ std::unique_ptr<Item> TownWW::item(u32 index) {
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
+
 	return nullptr;
 }
 
@@ -137,3 +141,9 @@ bool TownWW::exist() {
 	if (SaveUtils::Read<u16>(townPointer(), 0x2) == 0x0 || SaveUtils::Read<u16>(townPointer(), 0x2) == 0xFFFF)	return false;
 	return true;
 }
+
+// Turnip prices. TODO? I'm not sure where they exist yet.
+u32 TownWW::turnipPrices(bool isAM, int day) {
+	return 0;
+}
+void TownWW::turnipPrices(bool isAM, int day, u32 v) { }
