@@ -1,5 +1,8 @@
 # LeafEdit-Core
 
+## LeafEdit-Core has been merged into LeafEdit directly. This repo will be removed soon. This repo is deprecated as well.
+
+
 This is the core for LeafEdit.
 
 This is currently going into a Rewrite to combine the Save classes.
