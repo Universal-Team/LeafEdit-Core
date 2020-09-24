@@ -19,6 +19,5 @@
 
 - [SuperSaiyajinStackZ](https://github.com/SuperSaiyajinStackZ): The Main Developer of LeafEdit.
 
-## Active Contributors
-- [SuperSaiyajinStackZ](https://github.com/SuperSaiyajinStackZ)
-- [RedShyGuy](https://github.com/RedShyGuy)
+## Contributors
+For a list of all contributors, look at [Contributors.md](https://github.com/Universal-Team/LeafEdit-Core/Contributors.md).

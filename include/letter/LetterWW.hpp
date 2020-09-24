@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by

@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -27,28 +27,9 @@
 #include "checksum.hpp"
 #include "SavHHD.hpp"
 
-/* Get Player data. For now uses special player class for AC:HHD. */
-std::unique_ptr<Player> SavHHD::player(int player, int index) const {
-	return nullptr;
-}
-
-/* Get Villager data. */
-std::unique_ptr<Villager> SavHHD::villager(int villager) const {
-	return nullptr;
-}
-
-/* Get Town data. Will likely use a special class. */
-std::unique_ptr<Town> SavHHD::town() const {
-	return nullptr;
-}
-
-/* Get Island data. */
-std::unique_ptr<Island> SavHHD::island() const {
-	return nullptr;
-}
-
-std::unique_ptr<Shop> SavHHD::shop() const {
-	return nullptr;
+/* Get Player data. */
+std::unique_ptr<PlayerHHD> SavHHD::playerhhd() const {
+	return std::make_unique<PlayerHHD>(this->dataPointer);
 }
 
 /* Last call before writing to file. Update Checksum. */

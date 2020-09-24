@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -28,6 +28,7 @@
 #define _LEAFEDIT_CORE_SAV_NL_HPP
 
 #include "IslandNL.hpp"
+#include "PlayerHHD.hpp"
 #include "PlayerNL.hpp"
 #include "Sav.hpp"
 #include "ShopNL.hpp"
@@ -58,6 +59,9 @@ public:
 	std::unique_ptr<Town> town() const override;
 	std::unique_ptr<Island> island() const override;
 	std::unique_ptr<Shop> shop() const override;
+
+	/* Special Getter's for AC:HHD. Return nullptr on that for the main series. */
+	std::unique_ptr<PlayerHHD> playerhhd() const override { return nullptr; };
 
 	SaveType getType() const override { return SaveType::NL; }
 	WWRegion getRegion() const override { return WWRegion::UNKNOWN; }

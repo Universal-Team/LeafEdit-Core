@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 
 #include "Island.hpp"
 #include "Player.hpp"
+#include "PlayerHHD.hpp"
 #include "Shop.hpp"
 #include "stringUtils.hpp"
 #include "Town.hpp"
@@ -41,6 +42,7 @@
 
 class Island;
 class Player;
+class PlayerHHD;
 class Shop;
 class Town;
 class Villager;
@@ -64,6 +66,9 @@ public:
 	virtual std::unique_ptr<Town> town() const = 0;
 	virtual std::unique_ptr<Island> island() const = 0;
 	virtual std::unique_ptr<Shop> shop() const = 0;
+
+	/* Special Getter's for AC:HHD. */
+	virtual std::unique_ptr<PlayerHHD> playerhhd() const = 0;
 	
 	/* Call this when finished editing. */
 	virtual void Finish(void) = 0;

@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -29,6 +29,7 @@
 
 #include "Island.hpp"
 #include "Player.hpp"
+#include "PlayerHHD.hpp"
 #include "Sav.hpp"
 #include "Shop.hpp"
 #include "Town.hpp"
@@ -52,12 +53,15 @@ public:
 	virtual ~SavHHD() { }
 	void Finish(void) override;
 
-	/* Get core class contents. */
-	std::unique_ptr<Player> player(int player, int index = 0) const override;
-	std::unique_ptr<Villager> villager(int villager) const override;
-	std::unique_ptr<Town> town() const override;
-	std::unique_ptr<Island> island() const override;
-	std::unique_ptr<Shop> shop() const override;
+	/* Get core class contents. Return nullptr on AC:HHD for that, cause we'll use special classes for it. */
+	std::unique_ptr<Player> player(int player, int index = 0) const override { return nullptr; };
+	std::unique_ptr<Villager> villager(int villager) const override { return nullptr; };
+	std::unique_ptr<Town> town() const override { return nullptr; };
+	std::unique_ptr<Island> island() const override { return nullptr; };
+	std::unique_ptr<Shop> shop() const override { return nullptr; };
+
+	/* Special Getter's for AC:HHD. */
+	std::unique_ptr<PlayerHHD> playerhhd() const override;
 
 	SaveType getType() const override { return SaveType::HHD; }
 	WWRegion getRegion() const override { return WWRegion::UNKNOWN; }

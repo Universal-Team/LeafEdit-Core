@@ -1,6 +1,6 @@
 /*
 *   This file is part of LeafEdit-Core
-*   Copyright (C) 2020 RedShyGuy, Universal-Team
+*   Copyright (C) 2020 LeafEdit-Core-Contributors
 *
 *   This program is free software: you can redistribute it and/or modify
 *   it under the terms of the GNU General Public License as published by
@@ -46,34 +46,46 @@ public:
 
 	u8 hair() const;
 	void hair(u8 v);
+
 	u8 tan() const;
 	void tan(u8 v);
+
 	u8 haircolor() const;
 	void haircolor(u8 v);
+
 	u8 eyes() const;
 	void eyes(u8 v);
+
 	u8 eyecolor() const;
 	void eyecolor(u8 v);
 
 	u16 headwear() const;
 	void headwear(u16 v);
+
 	u16 accessories() const;
 	void accessories(u16 v);
+
 	u16 shirt() const;
 	void shirt(u16 v);
+
 	u16 pants() const;
 	void pants(u16 v);
+
 	u16 socks() const;
 	void socks(u16 v);
+
 	u16 shoes() const;
 	void shoes(u16 v);
+
 	u16 tools() const;
 	void tools(u16 v);
+
 	u16 playerid() const;
 	void playerid(u16 v);
 
 	std::u16string name() const;
 	void name(std::u16string v);
+	
 	std::unique_ptr<Pattern> pattern(u32 slot) const;
 
 	/* Misc. */
