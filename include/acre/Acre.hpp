@@ -30,7 +30,6 @@
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
 #define WWACRE_SIZE	1
 #define NLACRE_SIZE	2
@@ -40,13 +39,14 @@ protected:
 	std::shared_ptr<u8[]> data;
 	u32 Offset;
 public:
-	virtual ~Acre() {}
-	Acre(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) {}
+	virtual ~Acre() { }
+	Acre(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
 	Acre(const Acre& acre) = delete;
 	Acre& operator=(const Acre& acre) = delete;
 
 	virtual u32 maxAcre() const = 0;
-	virtual u8 id() = 0;
+
+	virtual u8 id() const = 0;
 	virtual void id(u8 v) = 0;
 };
 

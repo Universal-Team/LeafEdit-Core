@@ -30,19 +30,18 @@
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
 class Room {
 protected:
 	std::shared_ptr<u8[]> data;
 	u32 Offset;
 public:
-	virtual ~Room() {}
-	Room(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) {}
+	virtual ~Room() { }
+	Room(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
 	Room(const Room& room) = delete;
 	Room& operator=(const Room& room) = delete;
 
-	virtual u32 debts() = 0;
+	virtual u32 debts() const = 0;
 	virtual void debts(u32 v) = 0;
 };
 
@@ -51,12 +50,12 @@ protected:
 	std::shared_ptr<u8[]> data;
 	u32 Offset;
 public:
-	virtual ~House() {}
-	House(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) {}
+	virtual ~House() { }
+	House(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
 	House(const House& house) = delete;
 	House& operator=(const House& house) = delete;
 
-	virtual std::unique_ptr<Room> room(int room) = 0;
+	virtual std::unique_ptr<Room> room(int room) const = 0;
 };
 
 #endif

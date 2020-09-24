@@ -28,50 +28,80 @@
 #include "stringUtils.hpp"
 #include "TownWA.hpp"
 
-// Grasstype.
-u8 TownWA::grasstype() {
-	return townPointer()[0x053481];
+/* Grasstype. */
+u8 TownWA::grasstype() const {
+	return this->townPointer()[0x053481];
 }
 void TownWA::grasstype(u8 v) {
-	townPointer()[0x053481] = v;
+	SaveUtils::Write<u8>(this->townPointer(), 0x053481, v);
 }
 
-// Town Name.
-std::u16string TownWA::name() {
-	return StringUtils::ReadNLString(townPointer(), 0x0621BA, 8, u'\uFFFF');
+/* Town Name. */
+std::u16string TownWA::name() const {
+	return StringUtils::ReadUTF16String(this->townPointer(), 0x0621BA, 8);
 }
 void TownWA::name(std::u16string v) {
-	StringUtils::WriteNLString(townPointer(), v, 0x0621BA, 8);
+	StringUtils::WriteUTF16String(this->townPointer(), v, 0x0621BA, 8);
 }
 
-// Town Acre.
-std::unique_ptr<Acre> TownWA::acre(int Acre) {
-	if (Acre > 41)	return nullptr; // Acre Index goes out of scope.
-	return std::make_unique<AcreWA>(data, 0x053484 + Acre *2);
+/* Town Acre. */
+std::unique_ptr<Acre> TownWA::acre(int Acre) const {
+	if (Acre > 41) return nullptr; // Acre Index goes out of scope.
+
+	return std::make_unique<AcreWA>(this->data, 0x053484 + Acre *2);
 }
 
-// Town Item.
-std::unique_ptr<Item> TownWA::item(u32 index) {
-	if (index > 5119)	return nullptr; // Item Index goes out of scope.
-	return std::make_unique<ItemWA>(data, 0x0534D8 + index * 4);
+/* Town Item. */
+std::unique_ptr<Item> TownWA::item(u32 index) const {
+	if (index > 5119) return nullptr; // Item Index goes out of scope.
+
+	return std::make_unique<ItemWA>(this->data, 0x0534D8 + index * 4);
 }
 
-// Return if Town exist.
-bool TownWA::exist() {
+/* Return if Town exist. */
+bool TownWA::exist() const {
 	return true; // TODO?
 }
 
-// Turnip prices.
-u32 TownWA::turnipPrices(bool isAM, int day) {
+/* Turnip prices. */
+u32 TownWA::turnipPrices(bool isAM, int day) const {
 	if (day > 5) return 0; // Out of scope.
-	this->v_turnipPrices[isAM ? day : 6 + day] = EncryptedInt32(SaveUtils::Read<u64>(townPointer(), isAM ? 0x06ade0 + day * 16 : 0x06ade0 + day * 16 + 8));
+
+	this->v_turnipPrices[isAM ? day : 6 + day] = EncryptedInt32(SaveUtils::Read<u64>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 : 0x06ADE0 + day * 16 + 8));
 	return this->v_turnipPrices[isAM ? day : 6 + day].value;
 }
 void TownWA::turnipPrices(bool isAM, int day, u32 v) {
 	if (day > 5) return; // Out of scope.
+
 	this->v_turnipPrices[isAM ? day : 6 + day].value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->v_turnipPrices[isAM ? day : 6 + day].encrypt(encryptedInt, encryptionData);
-	SaveUtils::Write<u32>(townPointer(), isAM ? 0x06ade0 + day * 16 : 0x06ade0 + day * 16 + 8, encryptedInt);
-	SaveUtils::Write<u32>(townPointer(), isAM ? 0x06ade0 + day * 16 + 0x4 : 0x06ade0 + day * 16 + 8 + 0x4, encryptionData);
+	SaveUtils::Write<u32>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 : 0x06ADE0 + day * 16 + 8, encryptedInt);
+	SaveUtils::Write<u32>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 + 0x4 : 0x06ADE0 + day * 16 + 8 + 0x4, encryptionData);
+}
+
+/* Town flag. */
+std::unique_ptr<Pattern> TownWA::townflag() const {
+	return std::make_unique<PatternWA>(this->data, 0x70F1C);
+}
+
+/* Item buried. */
+bool TownWA::itemBuried(int index) const {
+	if (index > 5119) return false;
+
+	return (this->townPointer()[(0x0534D8 + index * 4) + 3]) == 0x80; // That is basically Item Flag 2.. but I don't want to init the item class there.
+}
+
+void TownWA::itemBuried(int index, bool buried) {
+	if (index > 5119) return;
+
+	/* Check, if already buried or not. */
+	if (this->itemBuried(index) == buried) return; // No need to set again.
+
+	std::unique_ptr<Item> item = this->item(index);
+
+	if (item->itemtype() == ItemType::Empty) return; // Do not allow buried on empty spots.
+
+	/* Write buried state. */
+	item->flag2(buried ? 0x80 : 0x0);
 }

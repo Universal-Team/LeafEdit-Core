@@ -27,54 +27,76 @@
 #ifndef _LEAFEDIT_CORE_VILLAGER_WW_HPP
 #define _LEAFEDIT_CORE_VILLAGER_WW_HPP
 
-#include "Item.hpp"
 #include "ItemWW.hpp"
 #include "Villager.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
-class Item;
 class ItemWW;
+
 class VillagerWW : public Villager {
 protected:
 	std::shared_ptr<u8[]> data;
 	WWRegion region;
-	u32 offset; // Offset to the Villager.
+	u32 offset;
 public:
-	virtual ~VillagerWW() {}
-	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset, WWRegion Region) : Villager(villagerData, villagerOffset), data(villagerData), region(Region), offset(villagerOffset) { }
+	virtual ~VillagerWW() { }
+	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset, WWRegion Region) :
+			Villager(villagerData, villagerOffset), data(villagerData), region(Region), offset(villagerOffset) { }
+
 	u32 getVillagerSize() const override {
 		switch(this->region) {
 			case WWRegion::USA_REV0:
 			case WWRegion::USA_REV1:
 			case WWRegion::EUR_REV1:
 				return 0x700;
+
 			case WWRegion::JPN_REV0:
 			case WWRegion::JPN_REV1:
 				return 0x5C0;
+
 			case WWRegion::KOR_REV1:
 				return 0x7EC;
+
 			case WWRegion::UNKNOWN:
 				return 0;
 		}
+
 		return 0;
 	}
 
-	u16 id() override;
+	u16 id() const override;
 	void id(u16 v) override;
-	bool exist() override;
-	u8 personality() override;
+
+	bool exist() const override;
+
+	u8 personality() const override;
 	void personality(u8 v) override;
 	
-	// Items.
-	std::unique_ptr<Item> song() override;
-	std::unique_ptr<Item> shirt() override;
-	std::unique_ptr<Item> wallpaper() override;
-	std::unique_ptr<Item> carpet() override;
-	std::unique_ptr<Item> umbrella() override;
-	std::unique_ptr<Item> furniture(int slot) override;
+	/*
+		Items.
+		NOTE: Carpet, Wallpaper, Umbrella & Song is an uint8_t index. [u8]
+	*/
+	std::unique_ptr<Item> song() const override { return nullptr; };
+	std::unique_ptr<Item> shirt() const override;
+	std::unique_ptr<Item> wallpaper() const override { return nullptr; };
+	std::unique_ptr<Item> carpet() const override { return nullptr; };
+	std::unique_ptr<Item> umbrella() const override { return nullptr; };
+
+	u8 songWW() const override;
+	void songWW(u8 sng) override;
+
+	u8 wallpaperWW() const override;
+	void wallpaperWW(u8 wlp) override;
+
+	u8 carpetWW() const override;
+	void carpetWW(u8 crp) override;
+	
+	u8 umbrellaWW() const override;
+	void umbrellaWW(u8 umbr) override;
+
+	std::unique_ptr<Item> furniture(int slot) const override;
 private:
 	u8* villagerPointer() const {
 		return data.get() + offset;

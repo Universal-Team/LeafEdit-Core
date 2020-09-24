@@ -27,37 +27,49 @@
 #ifndef _LEAFEDIT_CORE_TOWN_WW_HPP
 #define _LEAFEDIT_CORE_TOWN_WW_HPP
 
-#include "Acre.hpp"
 #include "AcreWW.hpp"
-#include "Item.hpp"
 #include "ItemWW.hpp"
+#include "PatternWW.hpp"
 #include "Town.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
-class Acre;
 class AcreWW;
-class Item;
 class ItemWW;
+class PatternWW;
+
 class TownWW : public Town {
 protected:
 	WWRegion region;
 	std::shared_ptr<u8[]> data;
 public:
-	virtual ~TownWW() {}
-	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) : Town(townData), region(Region), data(townData) {}
+	virtual ~TownWW() { }
+	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) :
+		Town(townData), region(Region), data(townData) { }
 
-	u8 grasstype() override;
+	u8 grasstype() const override;
 	void grasstype(u8 v) override;
-	std::u16string name() override;
+
+	std::u16string name() const override;
 	void name(std::u16string v) override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-	bool exist() override;
-	u32 turnipPrices(bool isAM, int day) override;
+
+	std::unique_ptr<Acre> acre(int Acre) const override;
+
+	std::unique_ptr<Item> item(u32 index) const override;
+
+	bool exist() const override;
+
+	u32 turnipPrices(bool isAM, int day) const override;
 	void turnipPrices(bool isAM, int day, u32 v) override;
+
+	std::unique_ptr<Pattern> townflag() const override;
+
+	bool itemBuried(int index) const override;
+	void itemBuried(int index, bool buried) override;
+
+	std::unique_ptr<Item> recycleItem(int slot) const override;
+	std::unique_ptr<Item> lostFoundItem(int slot) const override;
 private:
 	u8* townPointer() const {
 		return data.get();

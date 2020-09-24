@@ -26,14 +26,16 @@
 
 #include "IslandNL.hpp"
 
-// Island Acre.
-std::unique_ptr<Acre> IslandNL::acre(int Acre) {
-	if (Acre > 15)	return nullptr;
-	return std::make_unique<AcreNL>(data, 0x80+0x06a408 + Acre * 2);
+/* Island Acre. */
+std::unique_ptr<Acre> IslandNL::acre(int Acre) const {
+	if (Acre > 15) return nullptr;
+
+	return std::make_unique<AcreNL>(this->data, 0x80 + 0x06a408 + Acre * 2);
 }
 
-// Island Item.
-std::unique_ptr<Item> IslandNL::item(u32 index) {
-	if (index > 1023)	return nullptr;
-	return std::make_unique<ItemNL>(data, 0x80+0x06a428 + index * 4);
+/* Island Item. */
+std::unique_ptr<Item> IslandNL::item(u32 index) const {
+	if (index > 1023) return nullptr;
+
+	return std::make_unique<ItemNL>(this->data, 0x80 + 0x06a428 + index * 4);
 }

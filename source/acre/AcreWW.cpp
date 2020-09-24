@@ -27,10 +27,10 @@
 #include "AcreWW.hpp"
 #include "saveUtils.hpp"
 
-// Acre ID.
-u8 AcreWW::id() {
-	return acrePointer()[0];
+/* Acre ID. */
+u8 AcreWW::id() const {
+	return this->acrePointer()[0];
 }
 void AcreWW::id(u8 v) {
-	acrePointer()[0] = v;
+	SaveUtils::Write<u8>(this->acrePointer(), 0x0, v);
 }

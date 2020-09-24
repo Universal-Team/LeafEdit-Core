@@ -27,15 +27,10 @@
 #ifndef _LEAFEDIT_CORE_TYPES_HPP
 #define _LEAFEDIT_CORE_TYPES_HPP
 
-#include <stdint.h>
+#include "logging.hpp" // To log core and in app stuff.
 
-#ifdef _3DS
 #include <3ds.h>
-#endif
-
-#ifdef ARM9
-#include <nds.h>
-#endif
+#include <stdint.h>
 
 typedef uint8_t u8;
 typedef uint16_t u16;
@@ -47,14 +42,16 @@ typedef int16_t s16;
 typedef int32_t s32;
 typedef int64_t s64;
 
-// SaveTypes.
+/* SaveTypes. */
 enum class SaveType {
 	WW,
 	NL,
 	WA,
-	UNUSED,
+	HHD,
+	UNUSED
 };
 
+/* Save Regions. (Mainly for AC:WW) */
 enum class WWRegion {
 	JPN_REV0,
 	JPN_REV1,

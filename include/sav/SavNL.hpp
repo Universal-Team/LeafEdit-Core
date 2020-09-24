@@ -27,46 +27,44 @@
 #ifndef _LEAFEDIT_CORE_SAV_NL_HPP
 #define _LEAFEDIT_CORE_SAV_NL_HPP
 
-#include "Island.hpp"
 #include "IslandNL.hpp"
-#include "Player.hpp"
 #include "PlayerNL.hpp"
 #include "Sav.hpp"
-#include "Town.hpp"
+#include "ShopNL.hpp"
 #include "TownNL.hpp"
 #include "types.hpp"
-#include "Villager.hpp"
 #include "VillagerNL.hpp"
 
 #include <string>
 
-class Island;
 class IslandNL;
-class Player;
 class PlayerNL;
-class Town;
+class ShopNL;
 class TownNL;
-class Villager;
 class VillagerNL;
+
 class SavNL : public Sav {
 protected:
 	std::shared_ptr<u8[]> dataPointer;
 	u32 saveSize;
 public:
 	SavNL(std::shared_ptr<u8[]> dt, u32 ssize) : Sav(dt, ssize), dataPointer(dt), saveSize(ssize) { }
-	virtual ~SavNL() {}
+	virtual ~SavNL() { }
 	void Finish(void) override;
-	std::unique_ptr<Player> player(int player, int index = 0) override;
-	std::unique_ptr<Villager> villager(int villager) override;
-	std::unique_ptr<Town> town() override;
-	std::unique_ptr<Island> island() override;
 	
-	SaveType getType() override { return SaveType::NL; }
-	WWRegion getRegion() override { return WWRegion::UNKNOWN; } // No need for here.
+	/* Get core class contents. */
+	std::unique_ptr<Player> player(int player, int index = 0) const override;
+	std::unique_ptr<Villager> villager(int villager) const override;
+	std::unique_ptr<Town> town() const override;
+	std::unique_ptr<Island> island() const override;
+	std::unique_ptr<Shop> shop() const override;
 
-	int maxVillager() override { return 9; }
+	SaveType getType() const override { return SaveType::NL; }
+	WWRegion getRegion() const override { return WWRegion::UNKNOWN; }
+
+	int maxVillager() const override { return 9; }
 private:
-	u8 *savePointer() {
+	u8 *savePointer() const {
 		return dataPointer.get();
 	}
 };

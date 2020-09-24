@@ -27,29 +27,27 @@
 #ifndef _LEAFEDIT_CORE_ISLAND_WA_HPP
 #define _LEAFEDIT_CORE_ISLAND_WA_HPP
 
-#include "Acre.hpp"
 #include "AcreWA.hpp"
 #include "Island.hpp"
-#include "Item.hpp"
 #include "ItemWA.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
-class Acre;
 class AcreWA;
-class Item;
 class ItemWA;
+
 class IslandWA : public Island {
 protected:
 	std::shared_ptr<u8[]> data;
 public:
-	virtual ~IslandWA() {}
-	IslandWA(std::shared_ptr<u8[]> islandData) : Island(islandData), data(islandData) {}
+	virtual ~IslandWA() { }
+	IslandWA(std::shared_ptr<u8[]> islandData) :
+		Island(islandData), data(islandData) { }
 
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
+	std::unique_ptr<Acre> acre(int Acre) const override;
+
+	std::unique_ptr<Item> item(u32 index) const override;
 private:
 	u8* islandPointer() const {
 		return data.get();

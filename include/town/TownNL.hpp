@@ -27,43 +27,55 @@
 #ifndef _LEAFEDIT_CORE_TOWN_NL_HPP
 #define _LEAFEDIT_CORE_TOWN_NL_HPP
 
-#include "Acre.hpp"
 #include "AcreNL.hpp"
 #include "encryptedInt32.hpp"
-#include "Item.hpp"
 #include "ItemNL.hpp"
+#include "PatternNL.hpp"
 #include "Town.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
-class Acre;
 class AcreNL;
-class Item;
 class ItemNL;
+class PatternNL;
+
 class TownNL : public Town {
 protected:
 	std::shared_ptr<u8[]> data;
 public:
-	virtual ~TownNL() {}
-	TownNL(std::shared_ptr<u8[]> townData) : Town(townData), data(townData) {}
+	virtual ~TownNL() { }
+	TownNL(std::shared_ptr<u8[]> townData) :
+		Town(townData), data(townData) { }
 
-	u8 grasstype() override;
+	u8 grasstype() const override;
 	void grasstype(u8 v) override;
-	std::u16string name() override;
+	
+	std::u16string name() const override;
 	void name(std::u16string v) override;
-	std::unique_ptr<Acre> acre(int Acre) override;
-	std::unique_ptr<Item> item(u32 index) override;
-	bool exist() override;
-	u32 turnipPrices(bool isAM, int day) override;
+
+	std::unique_ptr<Acre> acre(int Acre) const override;
+
+	std::unique_ptr<Item> item(u32 index) const override;
+
+	bool exist() const override;
+
+	u32 turnipPrices(bool isAM, int day) const override;
 	void turnipPrices(bool isAM, int day, u32 v) override;
+
+	std::unique_ptr<Pattern> townflag() const override;
+
+	bool itemBuried(int index) const override;
+	void itemBuried(int index, bool buried) override;
+
+	std::unique_ptr<Item> recycleItem(int slot) const override { return nullptr; }
+	std::unique_ptr<Item> lostFoundItem(int slot) const override { return nullptr; }
 private:
 	u8* townPointer() const {
 		return data.get();
 	}
 
-	EncryptedInt32 v_turnipPrices[12];
+	mutable EncryptedInt32 v_turnipPrices[12];
 };
 
 #endif

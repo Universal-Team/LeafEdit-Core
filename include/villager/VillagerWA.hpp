@@ -27,38 +27,54 @@
 #ifndef _LEAFEDIT_CORE_VILLAGER_WA_HPP
 #define _LEAFEDIT_CORE_VILLAGER_WA_HPP
 
-#include "Item.hpp"
 #include "ItemWA.hpp"
 #include "Villager.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
 
-class Item;
 class ItemWA;
+
 class VillagerWA : public Villager {
 protected:
 	std::shared_ptr<u8[]> data;
-	u32 offset; // Offset to the Villager.
+	u32 offset;
 public:
-	virtual ~VillagerWA() {}
-	VillagerWA(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) : Villager(villagerData, villagerOffset), data(villagerData), offset(villagerOffset) { }
+	virtual ~VillagerWA() { }
+	VillagerWA(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) :
+			Villager(villagerData, villagerOffset), data(villagerData), offset(villagerOffset) { }
+			
 	u32 getVillagerSize() const override { return 0x2518; }
 
-	u16 id() override;
+	u16 id() const override;
 	void id(u16 v) override;
-	bool exist() override;
-	u8 personality() override;
+
+	bool exist() const override;
+
+	u8 personality() const override;
 	void personality(u8 v) override;
 
-	// Items.
-	std::unique_ptr<Item> song() override;
-	std::unique_ptr<Item> shirt() override;
-	std::unique_ptr<Item> wallpaper() override;
-	std::unique_ptr<Item> carpet() override;
-	std::unique_ptr<Item> umbrella() override;
-	std::unique_ptr<Item> furniture(int slot) override;
+	/* Items. */
+	std::unique_ptr<Item> song() const override;
+	std::unique_ptr<Item> shirt() const override;
+	std::unique_ptr<Item> wallpaper() const override;
+	std::unique_ptr<Item> carpet() const override;
+	std::unique_ptr<Item> umbrella() const override;
+	
+	/* Only for AC:WW. */
+	u8 songWW() const override { return 0; };
+	void songWW(u8 sng) override { };
+
+	u8 wallpaperWW() const override { return 0; };
+	void wallpaperWW(u8 wlp) override { };
+
+	u8 carpetWW() const override { return 0; };
+	void carpetWW(u8 crp) override { };
+	
+	u8 umbrellaWW() const override { return 0; };
+	void umbrellaWW(u8 umbr) override { };
+
+	std::unique_ptr<Item> furniture(int slot) const override;
 private:
 	u8* villagerPointer() const {
 		return data.get() + offset;

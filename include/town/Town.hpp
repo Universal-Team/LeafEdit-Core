@@ -29,41 +29,45 @@
 
 #include "Acre.hpp"
 #include "Item.hpp"
+#include "Pattern.hpp"
 #include "types.hpp"
 
 #include <memory>
-#include <vector>
-
-// TODO: Make a use of this? Keep it? Remove it?
-enum class TurnipDays {
-	Monday,
-	Tuesday,
-	Wednessday,
-	Thursday,
-	Friday,
-	Saturday
-};
 
 class Acre;
 class Item;
+class Pattern;
+
 class Town {
 protected:
 	std::shared_ptr<u8[]> data;
 public:
-	virtual ~Town() {}
-	Town(std::shared_ptr<u8[]> townData) : data(townData) {}
+	virtual ~Town() { }
+	Town(std::shared_ptr<u8[]> townData) : data(townData) { }
 	Town(const Town& town) = delete;
 	Town& operator=(const Town& town) = delete;
 
-	virtual u8 grasstype() = 0;
+	virtual u8 grasstype() const = 0;
 	virtual void grasstype(u8 v) = 0;
-	virtual std::u16string name() = 0;
+	
+	virtual std::u16string name() const = 0;
 	virtual void name(std::u16string v) = 0;
-	virtual std::unique_ptr<Acre> acre(int Acre) = 0;
-	virtual std::unique_ptr<Item> item(u32 index) = 0;
-	virtual bool exist() = 0;
-	virtual u32 turnipPrices(bool isAM, int day) = 0;
+
+	virtual std::unique_ptr<Acre> acre(int Acre) const = 0;
+	virtual std::unique_ptr<Item> item(u32 index) const = 0;
+
+	virtual bool exist() const = 0;
+
+	virtual u32 turnipPrices(bool isAM, int day) const = 0;
 	virtual void turnipPrices(bool isAM, int day, u32 v) = 0;
+
+	virtual std::unique_ptr<Pattern> townflag() const = 0;
+
+	virtual bool itemBuried(int index) const = 0;
+	virtual void itemBuried(int index, bool buried) = 0;
+
+	virtual std::unique_ptr<Item> recycleItem(int slot) const = 0;
+	virtual std::unique_ptr<Item> lostFoundItem(int slot) const = 0;
 };
 
 #endif

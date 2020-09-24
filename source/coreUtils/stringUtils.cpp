@@ -32,8 +32,11 @@
 #include <cstring>
 #include <sstream>
 
-// ⓢ is actually s̊, but that's two characters
-// ☔ would be better as 💧, but that's too big for a char16_t
+/*
+	ⓢ is actually s̊, but that's two characters.
+	☔ would be better as 💧, but that's too big for a char16_t.
+*/
+
 constexpr std::array<char16_t, 256> wwCharacterDictionary = {
 	u'\0', u'A', u'B', u'C', u'D', u'E', u'F', u'G', u'H', u'I', u'J', u'K', u'L', u'M', u'N', u'O',
 	u'P', u'Q', u'R', u'S', u'T', u'U', u'V', u'W', u'X', u'Y', u'Z', u'a', u'b', u'c', u'd', u'e',
@@ -53,7 +56,10 @@ constexpr std::array<char16_t, 256> wwCharacterDictionary = {
 	u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0', u'\0',
 };
 
-// ☔ would be better as 💧, but that's too big for a char16_t
+/*
+	☔ would be better as 💧, but that's too big for a char16_t.
+*/
+
 constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	u'\0', u'あ', u'い', u'う', u'え', u'お', u'か', u'き', u'く', u'け', u'こ', u'さ', u'し', u'す', u'せ', u'そ',
 	u'た', u'ち', u'つ', u'て', u'と', u'な', u'に', u'ぬ', u'ね', u'の', u'は', u'ひ', u'ふ', u'へ', u'ほ', u'ま',
@@ -73,65 +79,70 @@ constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	u'>', u'\'', u'\"', u'_', u'+', u'=', u'&', u'@', u':', u';', u'×', u'÷', u'☔', u'★', u'♥', u'♪',
 };
 
-// Korean is different and uses the NL Strings.
+/* Korean is different and uses the NL Strings. */
 std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion region) {
 	std::u16string output;
-	std::array<char16_t, 256> characters;
+	const std::array<char16_t, 256> *characters;
+
 	switch(region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			characters = wwCharacterDictionary;
+			characters = &wwCharacterDictionary;
 			break;
+
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			characters = wwCharacterDictionaryJapanese;
+			characters = &wwCharacterDictionaryJapanese;
 			break;
+
 		case WWRegion::KOR_REV1:
 		case WWRegion::UNKNOWN:
-			break;
+			return output;
+
 		default:
-			characters = wwCharacterDictionary;
-			break;
+			return output;
 	}
 
-	for (char character : input) {
-		if (characters[character] == '\0')	break;
-		if (character < characters.size()) {
-			output += characters[character];
+	for (char16_t character : input) {
+		if ((*characters)[character] == '\0') break;
+		if (character < characters->size()) {
+			output += (*characters)[character];
 		}
 	}
 
 	return output;
 }
 
-// Korean is different and uses the NL Strings.
+/* Korean is different and uses the NL Strings. */
 std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion region) {
 	std::string output;
+	const std::array<char16_t, 256> *characters;
 
-	std::array<char16_t, 256> characters;
 	switch(region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			characters = wwCharacterDictionary;
+			characters = &wwCharacterDictionary;
 			break;
+
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			characters = wwCharacterDictionaryJapanese;
+			characters = &wwCharacterDictionaryJapanese;
 			break;
+
 		case WWRegion::KOR_REV1:
 		case WWRegion::UNKNOWN:
-			break;
+			return "";
+
 		default:
-			characters = wwCharacterDictionary;
-			break;
+			return "";
 	}
 
-	for(char character : input) {
-		auto it = std::find(characters.begin(), characters.end(), character);
-		if (it != characters.end()) {
-			output += std::distance(characters.begin(), it);
+	for(char16_t character : input) {
+		auto it = std::find(characters->begin(), characters->end(), character);
+		if (it != characters->end()) {
+			output += std::distance(characters->begin(), it);
 		}
 	}
 
@@ -142,32 +153,38 @@ std::string utf16DataToUtf8(const char16_t* data, size_t size, char16_t delim = 
 	std::string ret;
 	ret.reserve(size);
 	char addChar[4] = {0};
+
 	for (size_t i = 0; i < size; i++) {
 		if (data[i] == delim) {
 			return ret;
+
 		} else if (data[i] < 0x0080) {
 			addChar[0] = data[i];
 			addChar[1] = '\0';
+
 		} else if (data[i] < 0x0800) {
 			addChar[0] = 0xC0 | ((data[i] >> 6) & 0x1F);
 			addChar[1] = 0x80 | (data[i] & 0x3F);
 			addChar[2] = '\0';
+
 		} else {
 			addChar[0] = 0xE0 | ((data[i] >> 12) & 0x0F);
 			addChar[1] = 0x80 | ((data[i] >> 6) & 0x3F);
 			addChar[2] = 0x80 | (data[i] & 0x3F);
 			addChar[3] = '\0';
 		}
+
 		ret.append(addChar);
 	}
 
 	return ret;
 }
 
-// Might be useful for the Keyboard to convert to u16string.
+/* Might be useful for the Keyboard to convert to u16string. */
 std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
 	std::u16string ret;
 	ret.reserve(src.size());
+
 	for (size_t i = 0; i < src.size(); i++) {
 		u16 codepoint	= 0xFFFD;
 		int iMod		= 0;
@@ -176,10 +193,12 @@ std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
 			codepoint	= codepoint << 6 | (src[i + 1] & 0x3F);
 			codepoint	= codepoint << 6 | (src[i + 2] & 0x3F);
 			iMod		= 2;
+
 		} else if (src[i] & 0x80 && src[i] & 0x40 && !(src[i] & 0x20) && i + 1 < src.size()) {
 			codepoint	= src[i] & 0x1F;
 			codepoint	= codepoint << 6 | (src[i + 1] & 0x3F);
 			iMod		= 1;
+			
 		} else if (!(src[i] & 0x80)) {
 			codepoint = src[i];
 		}
@@ -191,52 +210,38 @@ std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
 	return ret;
 }
 
-// Is used to display Text on 3DS.
+/* Is used to display Text on 3DS. */
 std::string StringUtils::UTF16toUTF8(const std::u16string& src) {
 	return utf16DataToUtf8(src.data(), src.size());
 }
 
-
-// Read a Wild World String.
-std::u16string StringUtils::ReadWWString(u8 *data, u32 offset, u32 maxSize, WWRegion region) {
+/* Read a Wild World String. */
+std::u16string StringUtils::ReadUTF8String(u8 *data, u32 offset, u32 maxSize, WWRegion region) {
 	std::string str(reinterpret_cast<char *>(data + offset), maxSize + 1);
 	return wwToUnicode(str, region);
 }
 
-void StringUtils::WriteWWString(u8 *data, const std::u16string &str, u32 offset, u32 maxSize, WWRegion region) {
-	// Do not allow a string longer as max.
-	if (str.length() > maxSize + 1) {
-		return;
-	}
+void StringUtils::WriteUTF8String(u8 *data, const std::u16string &str, u32 offset, u32 maxSize, WWRegion region) {
+	/* Do not allow a string longer as max. */
+	if (str.length() > maxSize + 1) return;
 
 	const std::string dataString(unicodeToWW(str, region));
-	memcpy(data + offset, (u8 *)dataString.data(), maxSize * 2);
+	memcpy(data + offset, (u8 *)dataString.data(), maxSize);
 }
 
-// Used to get the NL | WA Strings.
-std::u16string StringUtils::ReadNLString(const u8* data, int ofs, int len, char16_t term) {
-	std::u16string ret;
-	ret.reserve(len);
-	const char16_t* buf = (char16_t*)(data + ofs);
-	for (int i = 0; i < len; i++) {
-		if (buf[i] == term)	return ret;
-		ret.push_back(buf[i]);
-	}
-
-	return ret;
+/* Used to get the NL | WA Strings. */
+std::u16string StringUtils::ReadUTF16String(u8* data, int ofs, int len) {
+	return std::u16string(reinterpret_cast<char16_t *>(data + ofs), len + 1);
 }
 
-void StringUtils::WriteNLString(u8 *data, const std::u16string &str, u32 offset, u32 maxSize) {
-	// Do not allow a string longer as max.
-	if (str.length() > maxSize + 1) {
-		return;
-	}
+void StringUtils::WriteUTF16String(u8 *data, const std::u16string &str, u32 offset, u32 maxSize) {
+	/* Do not allow a string longer as max. */
+	if (str.length() > maxSize + 1) return;
 
-	const std::string dataString(StringUtils::UTF16toUTF8(str));
-	memcpy(data + offset, (u8 *)dataString.data(), maxSize * 2);
+	memcpy(data + offset, (u8 *)str.data(), maxSize * 2);
 }
 
-// Converts a single latin character from half-width to full-width
+/* Converts a single latin character from half-width to full-width. */
 char16_t tofullwidth(char16_t c) {
 	if (c == ' ')	c = u'　';
 	else if (c >= '!' && c <= '~')	c += 0xFEE0;
@@ -248,7 +253,7 @@ std::u16string& StringUtils::toFullWidth(std::u16string& in) {
 	return in;
 }
 
-// String to U16. Useful for the Item ID & Name at one.
+/* String to U16. Useful for the Item ID & Name at one. */
 u16 StringUtils::strToU16(const std::string str) {
 	u16 out;
 	std::stringstream ss;

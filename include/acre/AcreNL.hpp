@@ -30,7 +30,6 @@
 #include "Acre.hpp"
 
 #include <memory>
-#include <vector>
 
 class AcreNL : public Acre {
 protected:
@@ -38,9 +37,12 @@ protected:
 	std::shared_ptr<u8[]> data;
 public:
 	virtual ~AcreNL() {}
-	AcreNL(std::shared_ptr<u8[]> acreData, u32 offset) : Acre(acreData, offset), Offset(offset), data(acreData) { }
+	AcreNL(std::shared_ptr<u8[]> acreData, u32 offset) :
+		Acre(acreData, offset), Offset(offset), data(acreData) { }
+		
 	u32 maxAcre() const { return 204; };
-	u8 id() override;
+	
+	u8 id() const override;
 	void id(u8 v) override;
 private:
 	u8* acrePointer() const {

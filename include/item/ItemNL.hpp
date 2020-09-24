@@ -30,25 +30,36 @@
 #include "Item.hpp"
 
 #include <memory>
-#include <vector>
 
 class ItemNL : public Item {
 protected:
 	u32 Offset;
 	std::shared_ptr<u8[]> data;
 public:
-	virtual ~ItemNL() {}
-	ItemNL(std::shared_ptr<u8[]> itemData, u32 offset) : Item(itemData, offset), Offset(offset), data(itemData) { }
+	virtual ~ItemNL() { }
+	ItemNL(std::shared_ptr<u8[]> itemData, u32 offset) :
+		Item(itemData, offset), Offset(offset), data(itemData) { }
 
 	u32 maxItems() const override { return 0; };
-	u16 id() override;
+
+	u16 id() const override;
 	void id(u16 v) override;
-	u16 flags() override;
+
+	u16 flags() const override;
 	void flags(u16 v) override;
-	std::string name() override;
-	ItemType itemtype() override;
-	int rotation() override;
-	void rotation(int Direction) override;
+
+	u8 flag1() const override;
+	void flag1(u8 v) override;
+
+	u8 flag2() const override;
+	void flag2(u8 v) override;
+
+	std::string name() const override;
+
+	ItemType itemtype() const override;
+	
+	FurnitureDirection rotation() const override;
+	void rotation(FurnitureDirection Direction) override;
 private:
 	u8* itemPointer() const {
 		return data.get() + Offset;
