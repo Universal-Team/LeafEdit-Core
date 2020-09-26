@@ -41,7 +41,7 @@ std::u16string PatternWW::name() const {
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return StringUtils::ReadUTF8String(this->patternPointer(), 0x212, 9, this->region);
+			return StringUtils::ReadUTF8String(this->patternPointer(), 0x212, 10, this->region);
 
 		case WWRegion::KOR_REV1:
 			return StringUtils::ReadUTF16String(this->patternPointer(), 0x21E, 10);
@@ -62,7 +62,7 @@ void PatternWW::name(std::u16string v) {
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x212, 9, this->region);
+			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x212, 10, this->region);
 			break;
 
 		case WWRegion::KOR_REV1:
@@ -123,7 +123,7 @@ std::u16string PatternWW::creatorname() const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return StringUtils::ReadUTF8String(this->patternPointer(), 0x20C, 7, this->region);
+			return StringUtils::ReadUTF8String(this->patternPointer(), 0x20C, 8, this->region);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
@@ -143,7 +143,7 @@ void PatternWW::creatorname(std::u16string v) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x20C, 7, this->region);
+			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x20C, 8, this->region);
 			break;
 
 		case WWRegion::JPN_REV0:
@@ -242,7 +242,7 @@ std::u16string PatternWW::origtownname() const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return StringUtils::ReadUTF8String(this->patternPointer(), 0x202, 7, this->region);
+			return StringUtils::ReadUTF8String(this->patternPointer(), 0x202, 8, this->region);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
@@ -262,7 +262,7 @@ void PatternWW::origtownname(std::u16string v) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x202, 7, this->region);
+			StringUtils::WriteUTF8String(this->patternPointer(), v, 0x202, 8, this->region);
 			break;
 
 		case WWRegion::JPN_REV0:

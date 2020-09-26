@@ -57,5 +57,5 @@ std::unique_ptr<Shop> SavWA::shop() const {
 
 /* Last call before writing to file. Update Checksum. */
 void SavWA::Finish(void) {
-	Checksum::FixCRC32s(this->savePointer());
+	Checksum::FixWACRC32s(this->savePointer());
 }

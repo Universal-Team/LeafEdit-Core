@@ -189,7 +189,7 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 }
 
 /* Fix the CRC32 for AC:WA. */
-void Checksum::FixCRC32s(u8 *data) {
+void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
 	/* Rehash players. */

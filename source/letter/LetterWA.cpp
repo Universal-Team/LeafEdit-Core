@@ -28,35 +28,35 @@
 #include "saveUtils.hpp"
 
 /* Player ID. */
-u16 LetterWA::playerid() const {
+u16 LetterWA::playerid(bool sender) const {
 	return SaveUtils::Read<u16>(this->letterPointer(), 0x0);
 }
-void LetterWA::playerid(u16 v) {
+void LetterWA::playerid(u16 v, bool sender) {
 	SaveUtils::Write<u16>(this->letterPointer(), 0x0, v);
 }
 
 /* Player Name. */
-std::u16string LetterWA::playername() const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x2, 8);
+std::u16string LetterWA::playername(bool sender) const {
+	return StringUtils::ReadUTF16String(this->letterPointer(), 0x2, 9);
 }
-void LetterWA::playername(std::u16string v) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x2, 8);
+void LetterWA::playername(std::u16string v, bool sender) {
+	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x2, 9);
 }
 
 /* Town ID. */
-u16 LetterWA::townid() const {
+u16 LetterWA::townid(bool sender) const {
 	return SaveUtils::Read<u16>(this->letterPointer(), 0x16);
 }
-void LetterWA::townid(u16 v) {
+void LetterWA::townid(u16 v, bool sender) {
 	SaveUtils::Write<u16>(this->letterPointer(), 0x16, v);
 }
 
 /* Town Name. */
-std::u16string LetterWA::townname() const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x18, 8);
+std::u16string LetterWA::townname(bool sender) const {
+	return StringUtils::ReadUTF16String(this->letterPointer(), 0x18, 9);
 }
-void LetterWA::townname(std::u16string v) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x18, 8);
+void LetterWA::townname(std::u16string v, bool sender) {
+	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x18, 9);
 }
 
 /* Player Index. */
@@ -69,26 +69,26 @@ void LetterWA::playerindex(u8 v) {
 
 /* Letter intro part. */
 std::u16string LetterWA::intro() const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x68, 31);
+	return StringUtils::ReadUTF16String(this->letterPointer(), 0x68, 32);
 }
 void LetterWA::intro(std::u16string v) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x68, 31);
+	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x68, 32);
 }
 
 /* Letter body part. */
 std::u16string LetterWA::body() const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0xAA, 191);
+	return StringUtils::ReadUTF16String(this->letterPointer(), 0xAA, 192);
 }
 void LetterWA::body(std::u16string v) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0xAA, 191);
+	StringUtils::WriteUTF16String(this->letterPointer(), v, 0xAA, 192);
 }
 
 /* Letter end part. */
 std::u16string LetterWA::end() const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x22C, 31);
+	return StringUtils::ReadUTF16String(this->letterPointer(), 0x22C, 32);
 }
 void LetterWA::end(std::u16string v) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x22C, 31);
+	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x22C, 32);
 }
 
 /* Name index. */

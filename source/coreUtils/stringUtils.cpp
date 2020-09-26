@@ -217,7 +217,7 @@ std::string StringUtils::UTF16toUTF8(const std::u16string& src) {
 
 /* Read a Wild World String. */
 std::u16string StringUtils::ReadUTF8String(u8 *data, u32 offset, u32 maxSize, WWRegion region) {
-	std::string str(reinterpret_cast<char *>(data + offset), maxSize + 1);
+	std::string str(reinterpret_cast<char *>(data + offset), maxSize);
 	return wwToUnicode(str, region);
 }
 
@@ -231,7 +231,7 @@ void StringUtils::WriteUTF8String(u8 *data, const std::u16string &str, u32 offse
 
 /* Used to get the NL | WA Strings. */
 std::u16string StringUtils::ReadUTF16String(u8* data, int ofs, int len) {
-	return std::u16string(reinterpret_cast<char16_t *>(data + ofs), len + 1);
+	return std::u16string(reinterpret_cast<char16_t *>(data + ofs), len);
 }
 
 void StringUtils::WriteUTF16String(u8 *data, const std::u16string &str, u32 offset, u32 maxSize) {

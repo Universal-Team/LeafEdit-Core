@@ -130,6 +130,7 @@ void PlayerNL::wallet(u32 v) {
 	this->walletValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6E38, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6E3C, encryptionData);
 }
@@ -143,6 +144,7 @@ void PlayerNL::bank(u32 v) {
 	this->bankValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->bankValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B6C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B70, encryptionData);
 }
@@ -156,6 +158,7 @@ void PlayerNL::islandmedals(u32 v) {
 	this->islandValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->islandValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B7C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B80, encryptionData);
 }
@@ -170,47 +173,47 @@ void PlayerNL::coupons(u32 v) { }
 std::unique_ptr<Letter> PlayerNL::letter(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<LetterNL>(data, offset + 0x6C38 + (0x280 * slot));
+	return std::make_unique<LetterNL>(this->data, this->offset + 0x6C38 + (0x280 * slot));
 }
 
 /* Player Pocket. */
 std::unique_ptr<Item> PlayerNL::pocket(int slot) const {
 	if (slot > 15) return nullptr;
 
-	return std::make_unique<ItemNL>(data, offset + 0x6BB0 + slot * 4);
+	return std::make_unique<ItemNL>(this->data, this->offset + 0x6BB0 + slot * 4);
 }
 
 /* Player Dresser. */
 std::unique_ptr<Item> PlayerNL::dresser(int slot) const {
 	if (slot > 179) return nullptr;
 
-	return std::make_unique<ItemNL>(data, offset + 0x8E18 + slot * 4);
+	return std::make_unique<ItemNL>(this->data, this->offset + 0x8E18 + slot * 4);
 }
 
 /* Player Islandbox. */
 std::unique_ptr<Item> PlayerNL::islandbox(int slot) const {
 	if (slot > 39) return nullptr;
 	
-	return std::make_unique<ItemNL>(data, offset + 0x6E40 + slot * 4);
+	return std::make_unique<ItemNL>(this->data, this->offset + 0x6E40 + slot * 4);
 }
 
 /* Player Pattern. */
 std::unique_ptr<Pattern> PlayerNL::pattern(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<PatternNL>(data, offset + 0x2C + slot * 0x870);
+	return std::make_unique<PatternNL>(this->data, this->offset + 0x2C + slot * 0x870);
 }
 
 /* TPC Image. */
 u8* PlayerNL::tpcImage() const {
 	u8 *TPCBuffer = nullptr;
 
-	if (SaveUtils::Read<u32>(data.get(), offset + 0x5720) == 1) {
-		if (SaveUtils::Read<u16>(data.get(), offset + 0x5724) == 0xD8FF) { // 0xFFD8 = JPEG File Marker.
+	if (SaveUtils::Read<u32>(this->playerPointer(), 0x5720) == 1) {
+		if (SaveUtils::Read<u16>(this->playerPointer(), 0x5724) == 0xD8FF) { // 0xFFD8 = JPEG File Marker.
 			TPCBuffer = new u8[0x1400];
 			
 			/* Put the data to buffer. */
-			memcpy(TPCBuffer, data.get() + offset + 0x5724, 0x1400);
+			memcpy(TPCBuffer, this->playerPointer() + 0x5724, 0x1400);
 		}
 	}
 	

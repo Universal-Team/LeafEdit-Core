@@ -412,7 +412,7 @@ std::u16string PlayerWW::name() const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return StringUtils::ReadUTF8String(this->playerPointer(), 0x2282, 7, this->region);
+			return StringUtils::ReadUTF8String(this->playerPointer(), 0x2282, 8, this->region);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
@@ -432,7 +432,7 @@ void PlayerWW::name(std::u16string v) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			StringUtils::WriteUTF8String(this->playerPointer(), v, 0x2282, 7, this->region);
+			StringUtils::WriteUTF8String(this->playerPointer(), v, 0x2282, 8, this->region);
 			break;
 
 		case WWRegion::JPN_REV0:
@@ -555,14 +555,14 @@ std::unique_ptr<Letter> PlayerWW::letter(int slot) const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return std::make_unique<LetterWW>(data, offset + 0x114C + slot * 0xF4, this->region);
+			return std::make_unique<LetterWW>(this->data, this->offset + 0x114C + slot * 0xF4, this->region);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return std::make_unique<LetterWW>(data, offset + 0x1108 + slot * 0x8C, this->region);
+			return std::make_unique<LetterWW>(this->data, this->offset + 0x110C + slot * 0x8C, this->region);
 
 		case WWRegion::KOR_REV1:
-			return std::make_unique<LetterWW>(data, offset + 0x116C + slot * 0x140, this->region);
+			return std::make_unique<LetterWW>(this->data, this->offset + 0x11AC + slot * 0x100, this->region);
 
 		case WWRegion::UNKNOWN:
 			return nullptr;
@@ -579,14 +579,14 @@ std::unique_ptr<Item> PlayerWW::pocket(int slot) const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return std::make_unique<ItemWW>(data, offset + 0x1B22 + slot * 2);
+			return std::make_unique<ItemWW>(this->data, this->offset + 0x1B22 + slot * 2);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return std::make_unique<ItemWW>(data, offset + 0x16A6 + slot * 2);
+			return std::make_unique<ItemWW>(this->data, this->offset + 0x16A6 + slot * 2);
 
 		case WWRegion::KOR_REV1:
-			return std::make_unique<ItemWW>(data, offset + 0x1BF2 + slot * 2);
+			return std::make_unique<ItemWW>(this->data, this->offset + 0x1BF2 + slot * 2);
 
 		case WWRegion::UNKNOWN:
 			return nullptr;
@@ -603,14 +603,14 @@ std::unique_ptr<Item> PlayerWW::dresser(int slot) const {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			return std::make_unique<ItemWW>(data, 0x15430 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->data, 0x15430 + 0xB4 * Index + slot * 2);
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			return std::make_unique<ItemWW>(data, 0x11764 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->data, 0x11764 + 0xB4 * Index + slot * 2);
 
 		case WWRegion::KOR_REV1:
-			return std::make_unique<ItemWW>(data, 0x16800 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->data, 0x16800 + 0xB4 * Index + slot * 2);
 
 		case WWRegion::UNKNOWN:
 			return nullptr;

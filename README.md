@@ -20,4 +20,4 @@
 - [SuperSaiyajinStackZ](https://github.com/SuperSaiyajinStackZ): The Main Developer of LeafEdit.
 
 ## Contributors
-For a list of all contributors, look at [Contributors.md](https://github.com/Universal-Team/LeafEdit-Core/Contributors.md).
+For a list of all contributors, look at [Contributors.md](https://github.com/Universal-Team/LeafEdit-Core/blob/master/Contributors.md).

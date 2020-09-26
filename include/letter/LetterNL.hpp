@@ -43,17 +43,17 @@ public:
 	LetterNL(std::shared_ptr<u8[]> letterData, u32 offset) :
 		Letter(letterData, offset), Offset(offset), data(letterData) { }
 
-	u16 playerid() const override;
-	void playerid(u16 v) override;
+	u16 playerid(bool sender) const override;
+	void playerid(u16 v, bool sender) override;
 
-	std::u16string playername() const override;
-	void playername(std::u16string v) override;
+	std::u16string playername(bool sender) const override;
+	void playername(std::u16string v, bool sender) override;
 
-	u16 townid() const override;
-	void townid(u16 v) override;
+	u16 townid(bool sender) const override;
+	void townid(u16 v, bool sender) override;
 
-	std::u16string townname() const override;
-	void townname(std::u16string v) override;
+	std::u16string townname(bool sender) const override;
+	void townname(std::u16string v, bool sender) override;
 
 	u8 playerindex() const override;
 	void playerindex(u8 v) override;

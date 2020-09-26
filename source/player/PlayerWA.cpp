@@ -130,6 +130,7 @@ void PlayerWA::wallet(u32 v) {
 	this->walletValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->walletValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6F08, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6F0C, encryptionData);
 }
@@ -143,6 +144,7 @@ void PlayerWA::bank(u32 v) {
 	this->bankValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->bankValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B8C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B90, encryptionData);
 }
@@ -156,6 +158,7 @@ void PlayerWA::islandmedals(u32 v) {
 	this->islandValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->islandValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B9C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6BA0, encryptionData);
 }
@@ -169,6 +172,7 @@ void PlayerWA::coupons(u32 v) {
 	this->couponValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
 	this->couponValue.encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->playerPointer(), 0x8D1C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x8D20, encryptionData);
 }
@@ -177,54 +181,54 @@ void PlayerWA::coupons(u32 v) {
 std::unique_ptr<Letter> PlayerWA::letter(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<LetterWA>(data, offset + 0x7008 + (0x280 * slot));
+	return std::make_unique<LetterWA>(this->data, this->offset + 0x7008 + (0x280 * slot));
 }
 
 /* Player Pocket. */
 std::unique_ptr<Item> PlayerWA::pocket(int slot) const {
 	if (slot > 15) return nullptr;
 
-	return std::make_unique<ItemWA>(data, offset + 0x6BD0 + slot * 4);
+	return std::make_unique<ItemWA>(this->data, this->offset + 0x6BD0 + slot * 4);
 }
 
 // Player Dresser. */
 std::unique_ptr<Item> PlayerWA::dresser(int slot) const {
 	if (slot > 179) return nullptr;
 
-	return std::make_unique<ItemWA>(data, offset + 0x92F0 + slot * 4);
+	return std::make_unique<ItemWA>(this->data, this->offset + 0x92F0 + slot * 4);
 }
 
 /* Player Islandbox. */
 std::unique_ptr<Item> PlayerWA::islandbox(int slot) const {
 	if (slot > 39) return nullptr;
 
-	return std::make_unique<ItemWA>(data, offset + 0x6F10 + slot * 4);
+	return std::make_unique<ItemWA>(this->data, this->offset + 0x6F10 + slot * 4);
 }
 
 /* Player Storage. */
 std::unique_ptr<Item> PlayerWA::storage(int slot) const {
 	if (slot > 359) return nullptr;
 
-	return std::make_unique<ItemWA>(data, (Index * 360) + 0x07A778 + slot * 4);
+	return std::make_unique<ItemWA>(this->data, (this->Index * 360) + 0x07A778 + slot * 4);
 }
 
 /* Player Pattern. */
 std::unique_ptr<Pattern> PlayerWA::pattern(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<PatternWA>(data, offset + 0x2C + slot * 0x870);
+	return std::make_unique<PatternWA>(this->data, this->offset + 0x2C + slot * 0x870);
 }
 
 /* TPC Image. */
 u8* PlayerWA::tpcImage() const {
 	u8 *TPCBuffer = nullptr;
 
-	if (SaveUtils::Read<u32>(data.get(), offset + 0x5734) == 1) {
-		if (SaveUtils::Read<u16>(data.get(), offset + 0x5738) == 0xD8FF) { // 0xFFD8 = JPEG File Marker.
+	if (SaveUtils::Read<u32>(this->playerPointer(), 0x5734) == 1) {
+		if (SaveUtils::Read<u16>(this->playerPointer(), 0x5738) == 0xD8FF) { // 0xFFD8 = JPEG File Marker.
 			TPCBuffer = new u8[0x1400];
 			
 			/* Put the data to buffer. */
-			memcpy(TPCBuffer, data.get() + offset + 0x5738, 0x1400);
+			memcpy(TPCBuffer, this->playerPointer() + 0x5738, 0x1400);
 		}
 	}
 	

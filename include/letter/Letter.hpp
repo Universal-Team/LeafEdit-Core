@@ -44,17 +44,17 @@ public:
 	Letter(const Letter& letter) = delete;
 	Letter& operator=(const Letter& letter) = delete;
 
-	virtual u16 playerid() const = 0;
-	virtual void playerid(u16 v) = 0;
+	virtual u16 playerid(bool sender) const = 0;
+	virtual void playerid(u16 v, bool sender) = 0;
 
-	virtual std::u16string playername() const = 0;
-	virtual void playername(std::u16string v) = 0;
+	virtual std::u16string playername(bool sender) const = 0;
+	virtual void playername(std::u16string v, bool sender) = 0;
 
-	virtual u16 townid() const = 0;
-	virtual void townid(u16 v) = 0;
+	virtual u16 townid(bool sender) const = 0;
+	virtual void townid(u16 v, bool sender) = 0;
 
-	virtual std::u16string townname() const = 0;
-	virtual void townname(std::u16string v) = 0;
+	virtual std::u16string townname(bool sender) const = 0;
+	virtual void townname(std::u16string v, bool sender) = 0;
 
 	virtual u8 playerindex() const = 0;
 	virtual void playerindex(u8 v) = 0;

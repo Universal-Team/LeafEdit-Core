@@ -132,11 +132,11 @@ void PlayerHHD::playerid(u16 v) {
 }
 
 std::u16string PlayerHHD::name() const {
-	return StringUtils::ReadUTF16String(this->playerPointer(), 0x3F52A, 7);
+	return StringUtils::ReadUTF16String(this->playerPointer(), 0x3F52A, 8);
 }
 
 void PlayerHHD::name(std::u16string v) {
-	StringUtils::WriteUTF16String(this->playerPointer(), v, 0x3F52A, 7);
+	StringUtils::WriteUTF16String(this->playerPointer(), v, 0x3F52A, 8);
 }
 
 std::unique_ptr<Pattern> PlayerHHD::pattern(u32 slot) const {
