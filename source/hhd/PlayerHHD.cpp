@@ -52,7 +52,7 @@ void PlayerHHD::haircolor(u8 v) {
 	if (v >= 0x0 && v <= 0xF) this->playerPointer()[0xE] = v;
 }
 
-/*  (ranges from 0 to 0xC). */
+/* (ranges from 0 to 0xC). */
 u8 PlayerHHD::eyes() const {
 	return this->playerPointer()[0xF];
 }
@@ -124,6 +124,7 @@ void PlayerHHD::tools(u16 v) {
 	if (v >= 0x3221 && v <= 0x3277) SaveUtils::Write<u16>(this->playerPointer(), 0x2A, v);
 }
 
+/* Player ID. */
 u16 PlayerHHD::playerid() const {
 	return SaveUtils::Read<u16>(this->playerPointer(), 0x3F528);
 }
@@ -131,6 +132,7 @@ void PlayerHHD::playerid(u16 v) {
 	SaveUtils::Write<u16>(this->playerPointer(), 0x3F528, v);
 }
 
+/* Player Name. */
 std::u16string PlayerHHD::name() const {
 	return StringUtils::ReadUTF16String(this->playerPointer(), 0x3F52A, 8);
 }
@@ -139,12 +141,12 @@ void PlayerHHD::name(std::u16string v) {
 	StringUtils::WriteUTF16String(this->playerPointer(), v, 0x3F52A, 8);
 }
 
+/* Player Pattern. */
 std::unique_ptr<Pattern> PlayerHHD::pattern(u32 slot) const {
 	if (slot > 119) return nullptr;
 
 	return std::make_unique<PatternHHD>(this->playerData, (0x1A0 + 0x1BFA88) + 0x30 + (0x870 * slot));
 }
-
 
 /* Unlock everything. */
 void PlayerHHD::unlockAll() {
@@ -192,7 +194,6 @@ void PlayerHHD::unlockAll() {
 	this->playerPointer()[0xFE954] = 1; // Choosing a Layout.
 	this->playerPointer()[0xFE924] = 1; // Styling Machine.
 }
-
 /* Lock everything. */
 void PlayerHHD::lockAll() {
 	this->playerPointer()[0x3F541] = 0x7E;
@@ -240,7 +241,7 @@ void PlayerHHD::lockAll() {
 	this->playerPointer()[0xFE924] = 0; // Styling Machine.
 }
 
-/* Unlock Emotions */
+/* Unlock Emotions. */
 void PlayerHHD::unlockEmotions() {
 	static const u8 Emotions[48] = {
 		0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08, 0x09, 0x0A, 0x0B, 
@@ -254,8 +255,7 @@ void PlayerHHD::unlockEmotions() {
 		this->playerPointer()[0x40D54 + i] = Emotions[i];
 	}
 }
-
-/* lock Emotions */
+/* lock Emotions. */
 void PlayerHHD::lockEmotions() {
 	for(int i = 0; i < 48; i++) {
 		this->playerPointer()[0x40D54 + i] = 0;
