@@ -24,21 +24,34 @@
 *         reasonable ways as different from the original version.
 */
 
-#ifndef _LEAFEDIT_CORE_ITEMUTILS_HPP
-#define _LEAFEDIT_CORE_ITEMUTILS_HPP
+#ifndef _LEAFEDIT_CORE_ITEM_KIND_HPP
+#define _LEAFEDIT_CORE_ITEM_KIND_HPP
 
 #include "types.hpp"
 
-#include <string>
-#include <vector>
+namespace ItemKind {
+	void loadItemBins();
+	void closeItemBins();
 
-namespace ItemUtils {
-	/* Read Database. */
-	void LoadDatabase(SaveType save);
+	/* Return if that's a "normal" item. */
+	s32 IsNormalItem(u16 itemID);
 
-	/* Get an Item's name. */
-	std::string getName(u16 ID);
-	std::string getWWName(int category, u8 index);
+	/* Axe Damage stuff. */
+	u16 GetAxeDamageValue(u16 ItemID, u16 Flags = 0);
+	u16 GetAxeDamageIcon(u16 ItemID, u16 Flags = 0);
+
+	/*
+		Return if item is in the whitelist.
+		This should avoid having a full grown Tree or such in a pocket.
+	*/
+	bool IsInvWhitelisted(u16 ItemID);
+
+	/* Get an Item's category. */
+	u8 GetCategory(u16 ItemID);
+
+	/* Get an Item's icon. */
+	u16 GetIconID(u16 ItemID, u16 Flags = 0);
+	s32 GetSpritesheetID(u16 ItemID, u16 Flags = 0);
 }
 
 #endif

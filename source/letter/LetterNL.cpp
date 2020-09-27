@@ -29,34 +29,34 @@
 
 /* Player ID. */
 u16 LetterNL::playerid(bool sender) const {
-	return SaveUtils::Read<u16>(this->letterPointer(), 0x0);
+	return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x34 : 0x0);
 }
 void LetterNL::playerid(u16 v, bool sender) {
-	SaveUtils::Write<u16>(this->letterPointer(), 0x0, v);
+	SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x34 : 0x0, v);
 }
 
 /* Player Name. */
 std::u16string LetterNL::playername(bool sender) const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x2, 9);
+	return StringUtils::ReadUTF16String(this->letterPointer(), sender ? 0x36 : 0x2, 8);
 }
 void LetterNL::playername(std::u16string v, bool sender) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x2, 9);
+	StringUtils::WriteUTF16String(this->letterPointer(), v, sender ? 0x36 : 0x2, 8);
 }
 
 /* Town ID. */
 u16 LetterNL::townid(bool sender) const {
-	return SaveUtils::Read<u16>(this->letterPointer(), 0x16);
+	return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x4A : 0x16);
 }
 void LetterNL::townid(u16 v, bool sender) {
-	SaveUtils::Write<u16>(this->letterPointer(), 0x16, v);
+	SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x4A : 0x16, v);
 }
 
 /* Town Name. */
 std::u16string LetterNL::townname(bool sender) const {
-	return StringUtils::ReadUTF16String(this->letterPointer(), 0x18, 9);
+	return StringUtils::ReadUTF16String(this->letterPointer(), sender ? 0x4C : 0x18, 8);
 }
 void LetterNL::townname(std::u16string v, bool sender) {
-	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x18, 9);
+	StringUtils::WriteUTF16String(this->letterPointer(), v, sender ? 0x4C : 0x18, 8);
 }
 
 /* Player Index. */

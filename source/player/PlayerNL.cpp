@@ -173,7 +173,7 @@ void PlayerNL::coupons(u32 v) { }
 std::unique_ptr<Letter> PlayerNL::letter(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<LetterNL>(this->data, this->offset + 0x6C38 + (0x280 * slot));
+	return std::make_unique<LetterNL>(this->data, this->offset + 0x6F38 + (0x280 * slot));
 }
 
 /* Player Pocket. */

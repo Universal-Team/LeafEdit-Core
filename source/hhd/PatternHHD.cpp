@@ -104,6 +104,7 @@ void PatternHHD::dumpPattern(const std::string fileName) {
 
 	/* Open File. */
 	FILE* ptrn = fopen(fileName.c_str(), "wb");
+
 	if (ptrn) {
 		/* Write to file and close. */
 		fwrite(this->patternPointer(), 1, size, ptrn);
@@ -117,6 +118,7 @@ void PatternHHD::injectPattern(const std::string fileName) {
 
 	/* Open file and get size. */
 	FILE* ptrn = fopen(fileName.c_str(), "rb");
+	
 	if (ptrn) {
 		fseek(ptrn, 0, SEEK_END);
 		u32 size = ftell(ptrn);
