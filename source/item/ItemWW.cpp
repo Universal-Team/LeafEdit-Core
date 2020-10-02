@@ -28,28 +28,47 @@
 #include "ItemWW.hpp"
 #include "saveUtils.hpp"
 
-/* Item ID. */
+/*
+	Get and Set the Item's ID.
+*/
 u16 ItemWW::id() const { return SaveUtils::Read<u16>(this->itemPointer(), 0); }
 void ItemWW::id(u16 v) { SaveUtils::Write<u16>(this->itemPointer(), 0, v); }
 
-/* Item Flags. (Does not exist?) */
+/*
+	Get and Set the Item's Flags.
+	Does not exist on Wild World?
+*/
 u16 ItemWW::flags() const { return 0; }
 void ItemWW::flags(u16 v) { }
 
+/*
+	Get and Set the Item's first flag.
+	Does not exist on Wild World?
+*/
 u8 ItemWW::flag1() const { return 0; }
 void ItemWW::flag1(u8 v) { }
 
+/*
+	Get and Set the Item's second flag.
+	Does not exist on Wild World?
+*/
 u8 ItemWW::flag2() const { return 0; }
 void ItemWW::flag2(u8 v) { }
 
-/* Item Rotation. (Furniture / House) */
+/*
+	Get and Set the Item's Rotation. (Furniture / House)
+*/
 FurnitureDirection ItemWW::rotation() const { return FurnitureDirection::None; }
 void ItemWW::rotation(FurnitureDirection Direction) { } // TODO.
 
-/* Item Name. */
+/*
+	Get the Item's name.
+*/
 std::string ItemWW::name() const { return ItemUtils::getName(this->id()); }
 
-/* Item Type / Category. */
+/*
+	Get the Item's category | type.
+*/
 ItemType ItemWW::itemtype() const {
 	u16 ID = this->id(); // Only 1 time needed.
 
@@ -124,7 +143,7 @@ ItemType ItemWW::itemtype() const {
 
 	} else if ((ID >= 0x5000 && ID <= 0x5021) || ID == 0xF030 || ID == 0xF031) {
 		return ItemType::Building; // F030-1 = Multispace furniture item.
-		
+
 	} else {
 		return ItemType::Invalid;
 	}

@@ -27,7 +27,9 @@
 #include "AcreWW.hpp"
 #include "saveUtils.hpp"
 
-/* Acre ID. */
+/*
+	Get and Set for the Acre ID.
+*/
 u8 AcreWW::id() const {
 	return this->acrePointer()[0];
 }

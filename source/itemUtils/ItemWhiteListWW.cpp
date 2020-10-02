@@ -26,38 +26,83 @@
 
 #include "ItemWhiteListWW.hpp"
 
+/*
+	Return if the provided item ID in the parameter is a valid Hat.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validHat(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Accessoires.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validAccessoires(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Shirt.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validShirt(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Pant.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validPants(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Sock.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validSocks(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Shoe.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validShoes(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Tool.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validTools(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Music.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validMusic(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Item.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWW::validItem(u16 itemID) const {
 	return false;
 }

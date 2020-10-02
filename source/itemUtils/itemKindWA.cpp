@@ -29,19 +29,27 @@
 ItemKindWA::ItemKindWA() { this->loadItemBins(); }
 ItemKindWA::~ItemKindWA() { this->closeItemBins(); }
 
-/* Load the Item Bin's. */
+/*
+	Load the Item Bin's.
+*/
 void ItemKindWA::loadItemBins() {
 	this->g_ItemBin = fopen("romfs:/ItemBins/ItemWA.bin", "rb");
 	this->g_ItemKindBin = fopen("romfs:/ItemBins/KindWA.bin", "rb");
 }
 
-/* Close the Item Bin's.. if not closed. */
+/*
+	Close the Item Bin's.. if not closed.
+*/
 void ItemKindWA::closeItemBins() {
 	if (this->g_ItemBin) fclose(this->g_ItemBin);
 	if (this->g_ItemKindBin) fclose(this->g_ItemKindBin);
 }
 
-/* Return, if it's a "normal" item. */
+/*
+	Return, if it's a "normal" item.
+
+	u16 itemID: The Item ID.
+*/
 s32 ItemKindWA::IsNormalItem(u16 itemID) {
 	u16 ID = itemID & 0x7FFF;
 	s32 chk = ID - 0x2000; // To cover items lower than 0x2000 (Enviroment Items).
@@ -51,7 +59,11 @@ s32 ItemKindWA::IsNormalItem(u16 itemID) {
 	else return -1;
 }
 
-/* Return the ItemBin's struct from an ItemID. */
+/*
+	Return the ItemBin's struct from an ItemID.
+
+	u16 ItemID: The Item ID.
+*/
 ItemKindWA::ItemBin_s* ItemKindWA::GetItemBinSlot(u16 ItemID) {
 	ItemKindWA::ItemBin_s *ItemSlot = new ItemKindWA::ItemBin_s;
 	s32 chk = this->IsNormalItem(ItemID);
@@ -73,7 +85,11 @@ ItemKindWA::ItemBin_s* ItemKindWA::GetItemBinSlot(u16 ItemID) {
 	return nullptr;
 }
 
-/* Return the ItemKind's struct from an ItemID. */
+/*
+	Return the ItemKind's struct from an ItemID.
+
+	u16 ItemID: The Item ID.
+*/
 ItemKind_s* ItemKindWA::GetItemKindSlot(u16 ItemID) {
 	ItemKind_s *KindSlot = new ItemKind_s;
 	ItemBin_s *ItemSlot = this->GetItemBinSlot(ItemID);
@@ -102,7 +118,12 @@ ItemKind_s* ItemKindWA::GetItemKindSlot(u16 ItemID) {
 	return nullptr;
 }
 
-/* Return the Ace Damage amount / value. */
+/*
+	Return the Axe Damage amount / value.
+
+	u16 ItemID: The Item ID.
+	u16 Flags: The Item's flags.
+*/
 u16 ItemKindWA::GetAxeDamageValue(u16 ItemID, u16 Flags) {
 	/* Used for Normal Axe and Silver Axe. */
 	if (ItemID != 0x334D && ItemID != 0x334E) return 0;
@@ -110,7 +131,12 @@ u16 ItemKindWA::GetAxeDamageValue(u16 ItemID, u16 Flags) {
 	return (Flags & 0xF);
 }
 
-/* Return the Axe Damaged value icon index. */
+/*
+	Return the Axe Damaged value icon index.
+
+	u16 ItemID: The Item ID.
+	u16 Flags: The Item's flags.
+*/
 u16 ItemKindWA::GetAxeDamageIcon(u16 ItemID, u16 Flags) {
 	static constexpr u8 AxeDamageTable[] = { 0, 0, 0, 1, 1, 1, 2, 2 };
 
@@ -120,7 +146,11 @@ u16 ItemKindWA::GetAxeDamageIcon(u16 ItemID, u16 Flags) {
 	return ItemID + AxeDamageTable[DamageValue];
 }
 
-/* Return if the item is in the white list. */
+/*
+	Return if the item is in the white list.
+
+	u16 ItemID: The Item ID.
+*/
 bool ItemKindWA::IsInvWhiteListed(u16 ItemID) {
 	u16 ID = ItemID;
 	ID &= 0x6000;
@@ -136,7 +166,11 @@ bool ItemKindWA::IsInvWhiteListed(u16 ItemID) {
 	return false;
 }
 
-/* Get the Item's Category. */
+/*
+	Get the Item's Category.
+
+	u16 ItemID: The Item ID.
+*/
 u8 ItemKindWA::GetCategory(u16 ItemID) {
 	ItemKindWA::ItemBin_s* ItemSlot = this->GetItemBinSlot(ItemID);
 
@@ -149,7 +183,12 @@ u8 ItemKindWA::GetCategory(u16 ItemID) {
 	return category;
 }
 
-/* Get the Item's icon ID. */
+/*
+	Get the Item's icon ID.
+
+	u16 ItemID: The Item ID.
+	u16 Flags: The Item's flags.
+*/
 u16 ItemKindWA::GetIconID(u16 ItemID, u16 Flags) {
 	ItemKindWA::ItemBin_s* ItemSlot = this->GetItemBinSlot(ItemID);
 	if (!ItemSlot) return 0;
@@ -167,7 +206,12 @@ u16 ItemKindWA::GetIconID(u16 ItemID, u16 Flags) {
 	return IconID;
 }
 
-/* Get the SpriteSheet ID of the item. */
+/*
+	Get the SpriteSheet ID of the item.
+
+	u16 ItemID: The Item ID.
+	u16 Flags: The Item's flags.
+*/
 s32 ItemKindWA::GetSpritesheetID(u16 ItemID, u16 Flags) {
 	if (ItemID == 0x7FFE) return -1;
 

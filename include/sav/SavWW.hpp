@@ -53,9 +53,9 @@ public:
 	SavWW(std::shared_ptr<u8[]> dt, WWRegion Region, u32 ssize) : Sav(dt, ssize), dataPointer(dt), region(Region), saveSize(ssize) { }
 	virtual ~SavWW() { }
 	void Finish(void) override;
-	
+
 	/* Get core class contents. */
-	std::unique_ptr<Player> player(int player, int index = 0) const override;
+	std::unique_ptr<Player> player(int player) const override;
 	std::unique_ptr<Villager> villager(int villager) const override;
 	std::unique_ptr<Town> town() const override;
 	std::unique_ptr<Island> island() const override;

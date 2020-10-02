@@ -28,7 +28,9 @@
 #include "stringUtils.hpp"
 #include "TownNL.hpp"
 
-/* Grasstype. */
+/*
+	Get and Set the Grasstype.
+*/
 u8 TownNL::grasstype() const {
 	return this->townPointer()[0x80 + 0x04DA01];
 }
@@ -36,7 +38,9 @@ void TownNL::grasstype(u8 v) {
 	SaveUtils::Write<u8>(this->townPointer(), 0x80 + 0x04DA01, v);
 }
 
-/* Town Name. */
+/*
+	Get and Set the Town Name.
+*/
 std::u16string TownNL::name() const {
 	return StringUtils::ReadUTF16String(this->townPointer(), 0x80 + 0x05C73A, 8);
 }
@@ -44,26 +48,41 @@ void TownNL::name(std::u16string v) {
 	StringUtils::WriteUTF16String(this->townPointer(), v, 0x80 + 0x05C73A, 8);
 }
 
-/* Town Acre. */
+/*
+	Return a Town Acre.
+
+	int Acre: Acre Index.
+*/
 std::unique_ptr<Acre> TownNL::acre(int Acre) const {
 	if (Acre > 41) return nullptr; // Acre Index goes out of scope.
 
 	return std::make_unique<AcreNL>(this->data, 0x80 + 0x04DA04 + Acre * 2);
 }
 
-/* Town Item. */
+/*
+	Return a Town Map Item.
+
+	u32 index: The Town Map Item index.
+*/
 std::unique_ptr<Item> TownNL::item(u32 index) const {
 	if (index > 5119) return nullptr; // Item Index goes out of scope.
 
 	return std::make_unique<ItemNL>(this->data, 0x80 + 0x04DA58 + index * 4);
 }
 
-/* Return if Town exist. */
+/*
+	Return if Town exist.
+*/
 bool TownNL::exist() const {
 	return true; // TODO?
 }
 
-/* Turnip prices. */
+/*
+	Get and Set the Turnip prices.
+
+	bool isAM: If the price is AM (true) or PM (false).
+	int day: The day index.
+*/
 u32 TownNL::turnipPrices(bool isAM, int day) const {
 	if (day > 5) return 0; // Out of scope.
 
@@ -80,12 +99,18 @@ void TownNL::turnipPrices(bool isAM, int day, u32 v) {
 	SaveUtils::Write<u32>(this->townPointer(), isAM ? (0x80 + 0x06535C) + day * 16 + 0x4 : (0x80 + 0x06535C) + day * 16 + 8 + 0x4, encryptionData);
 }
 
-/* Town flag. */
+/*
+	Return the Townflag pattern.
+*/
 std::unique_ptr<Pattern> TownNL::townflag() const {
 	return std::make_unique<PatternNL>(this->data, 0x6B4EC);
 }
 
-/* Item buried. */
+/*
+	Get and Set, if item is buried.
+
+	int index: Town Map Item index.
+*/
 bool TownNL::itemBuried(int index) const {
 	if (index > 5119) return false;
 

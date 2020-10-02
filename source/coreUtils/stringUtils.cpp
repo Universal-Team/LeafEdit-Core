@@ -36,7 +36,6 @@
 	ⓢ is actually s̊, but that's two characters.
 	☔ would be better as 💧, but that's too big for a char16_t.
 */
-
 constexpr std::array<char16_t, 256> wwCharacterDictionary = {
 	u'\0', u'A', u'B', u'C', u'D', u'E', u'F', u'G', u'H', u'I', u'J', u'K', u'L', u'M', u'N', u'O',
 	u'P', u'Q', u'R', u'S', u'T', u'U', u'V', u'W', u'X', u'Y', u'Z', u'a', u'b', u'c', u'd', u'e',
@@ -59,7 +58,6 @@ constexpr std::array<char16_t, 256> wwCharacterDictionary = {
 /*
 	☔ would be better as 💧, but that's too big for a char16_t.
 */
-
 constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	u'\0', u'あ', u'い', u'う', u'え', u'お', u'か', u'き', u'く', u'け', u'こ', u'さ', u'し', u'す', u'せ', u'そ',
 	u'た', u'ち', u'つ', u'て', u'と', u'な', u'に', u'ぬ', u'ね', u'の', u'は', u'ひ', u'ふ', u'へ', u'ほ', u'ま',
@@ -79,7 +77,14 @@ constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	u'>', u'\'', u'\"', u'_', u'+', u'=', u'&', u'@', u':', u';', u'×', u'÷', u'☔', u'★', u'♥', u'♪',
 };
 
-/* Korean is different and uses the NL Strings. */
+/*
+	Convert a Wild World character to unicode.
+
+	const std::string &input: What should be converted.
+	WWRegion region: The save region.
+
+	NOTE: For Korean, please use UTF-16. This is only for EUR | USA | JPN.
+*/
 std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion region) {
 	std::u16string output;
 	const std::array<char16_t, 256> *characters;
@@ -106,6 +111,7 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 
 	for (char16_t character : input) {
 		if ((*characters)[character] == '\0') break;
+
 		if (character < characters->size()) {
 			output += (*characters)[character];
 		}
@@ -114,7 +120,14 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 	return output;
 }
 
-/* Korean is different and uses the NL Strings. */
+/*
+	Convert the unicode back to Wild World.
+
+	const std::u16string &input: What should be converted back.
+	WWRegion region: The save region.
+
+	NOTE: For Korean, please use UTF-16. This is only for EUR | USA | JPN.
+*/
 std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion region) {
 	std::string output;
 	const std::array<char16_t, 256> *characters;
@@ -141,6 +154,7 @@ std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion regio
 
 	for(char16_t character : input) {
 		auto it = std::find(characters->begin(), characters->end(), character);
+
 		if (it != characters->end()) {
 			output += std::distance(characters->begin(), it);
 		}
@@ -149,7 +163,7 @@ std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion regio
 	return output;
 }
 
-std::string utf16DataToUtf8(const char16_t* data, size_t size, char16_t delim = 0) {
+static std::string utf16DataToUtf8(const char16_t* data, size_t size, char16_t delim = 0) {
 	std::string ret;
 	ret.reserve(size);
 	char addChar[4] = {0};
@@ -180,8 +194,12 @@ std::string utf16DataToUtf8(const char16_t* data, size_t size, char16_t delim = 
 	return ret;
 }
 
-/* Might be useful for the Keyboard to convert to u16string. */
-std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
+/*
+	Convert an UTF-8 String to UTF-16.
+
+	const std::string &src: The UTF-8 Text.
+*/
+std::u16string StringUtils::UTF8toUTF16(const std::string &src) {
 	std::u16string ret;
 	ret.reserve(src.size());
 
@@ -198,7 +216,7 @@ std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
 			codepoint	= src[i] & 0x1F;
 			codepoint	= codepoint << 6 | (src[i + 1] & 0x3F);
 			iMod		= 1;
-			
+
 		} else if (!(src[i] & 0x80)) {
 			codepoint = src[i];
 		}
@@ -210,17 +228,41 @@ std::u16string StringUtils::UTF8toUTF16(const std::string& src) {
 	return ret;
 }
 
-/* Is used to display Text on 3DS. */
-std::string StringUtils::UTF16toUTF8(const std::u16string& src) {
+/*
+	Convert an UTF-16 String to UTF-8.
+
+	const std::u16string &src: The UTF-16 Text.
+*/
+std::string StringUtils::UTF16toUTF8(const std::u16string &src) {
 	return utf16DataToUtf8(src.data(), src.size());
 }
 
-/* Read a Wild World String. */
+/*
+	Read an UTF-8 String from a save buffer.
+
+	u8 *data: The save buffer.
+	u32 offset: The offset from where to read.
+	u32 maxSize: The max size of the Text.
+	WWRegion region: The save region.
+
+	NOTE: For AC:WW Korean, please use UTF-16. This is only for EUR | USA | JPN.
+*/
 std::u16string StringUtils::ReadUTF8String(u8 *data, u32 offset, u32 maxSize, WWRegion region) {
 	std::string str(reinterpret_cast<char *>(data + offset), maxSize);
 	return wwToUnicode(str, region);
 }
 
+/*
+	Write an UTF-8 String to a save buffer.
+
+	u8 *data: The save buffer.
+	const std::u16string &str: The String which should be written to the save buffer.
+	u32 offset: The offset from where to read.
+	u32 maxSize: The max size of the Text.
+	WWRegion region: The save region.
+
+	NOTE: For AC:WW Korean, please use UTF-16. This is only for EUR | USA | JPN.
+*/
 void StringUtils::WriteUTF8String(u8 *data, const std::u16string &str, u32 offset, u32 maxSize, WWRegion region) {
 	/* Do not allow a string longer as max. */
 	if (str.length() > maxSize + 1) return;
@@ -229,11 +271,25 @@ void StringUtils::WriteUTF8String(u8 *data, const std::u16string &str, u32 offse
 	memcpy(data + offset, (u8 *)dataString.data(), maxSize);
 }
 
-/* Used to get the NL | WA Strings. */
-std::u16string StringUtils::ReadUTF16String(u8* data, int ofs, int len) {
-	return std::u16string(reinterpret_cast<char16_t *>(data + ofs), len);
+/*
+	Read an UTF-16 String from a save buffer.
+
+	u8 *data: The save buffer.
+	u32 offset: The offset from where to read.
+	u32 maxSize: The max size of the Text.
+*/
+std::u16string StringUtils::ReadUTF16String(u8 *data, u32 offset, u32 maxSize) {
+	return std::u16string(reinterpret_cast<char16_t *>(data + offset), maxSize);
 }
 
+/*
+	Write an UTF-16 String to a save buffer.
+
+	u8 *data: The save buffer.
+	const std::u16string &str: The String which should be written to the save buffer.
+	u32 offset: The offset from where to read.
+	u32 maxSize: The max size of the Text.
+*/
 void StringUtils::WriteUTF16String(u8 *data, const std::u16string &str, u32 offset, u32 maxSize) {
 	/* Do not allow a string longer as max. */
 	if (str.length() > maxSize + 1) return;
@@ -241,20 +297,34 @@ void StringUtils::WriteUTF16String(u8 *data, const std::u16string &str, u32 offs
 	memcpy(data + offset, (u8 *)str.data(), maxSize * 2);
 }
 
-/* Converts a single latin character from half-width to full-width. */
+/*
+	Converts a single latin character from half-width to full-width.
+
+	char16_t c: The character which should be converted from half-width to full width.
+*/
 char16_t tofullwidth(char16_t c) {
-	if (c == ' ')	c = u'　';
-	else if (c >= '!' && c <= '~')	c += 0xFEE0;
+	if (c == ' ') c = u'　';
+	else if (c >= '!' && c <= '~') c += 0xFEE0;
+
 	return c;
 }
 
-std::u16string& StringUtils::toFullWidth(std::u16string& in) {
+/*
+	Converts a String to full width.
+
+	std::u16string &in: The String which should be converted to full width.
+*/
+std::u16string& StringUtils::toFullWidth(std::u16string &in) {
 	std::transform(in.begin(), in.end(), in.begin(), tofullwidth);
 	return in;
 }
 
-/* String to U16. Useful for the Item ID & Name at one. */
-u16 StringUtils::strToU16(const std::string str) {
+/*
+	Convert a String to an uint16_t.
+
+	const std::string &str: The String which should be converted to an uint16_t.
+*/
+u16 StringUtils::strToU16(const std::string &str) {
 	u16 out;
 	std::stringstream ss;
 	ss << std::hex << str;

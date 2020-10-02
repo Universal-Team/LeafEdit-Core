@@ -27,7 +27,11 @@
 #include "saveUtils.hpp"
 #include "ShopWW.hpp"
 
-/* Get able sister pattern. */
+/*
+	Return the able sister pattern.
+
+	int pattern: Pattern Index.
+*/
 std::unique_ptr<Pattern> ShopWW::ableSisterPattern(int pattern) const {
 	if (pattern > 7) return nullptr;
 
@@ -43,7 +47,7 @@ std::unique_ptr<Pattern> ShopWW::ableSisterPattern(int pattern) const {
 
 		case WWRegion::KOR_REV1:
 			return std::make_unique<PatternWW>(this->data, this->Offset + 0x10AD0 + pattern * 0x234, this->region);
-			
+
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}

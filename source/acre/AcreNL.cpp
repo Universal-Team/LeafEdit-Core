@@ -32,6 +32,9 @@
 	Acre ID.
 */
 
+/*
+	Get and Set for the Acre ID.
+*/
 u8 AcreNL::id() const {
 	return this->acrePointer()[0];
 }

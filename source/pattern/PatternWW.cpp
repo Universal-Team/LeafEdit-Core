@@ -31,7 +31,9 @@
 #include <cstring>
 #include <unistd.h>
 
-/* Pattern Name. */
+/*
+	Get and Set for the Pattern Name.
+*/
 std::u16string PatternWW::name() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -74,7 +76,9 @@ void PatternWW::name(std::u16string v) {
 	}
 }
 
-/* Creator ID. */
+/*
+	Get and Set for the Creator ID.
+*/
 u16 PatternWW::creatorid() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -117,7 +121,9 @@ void PatternWW::creatorid(u16 v) {
 	}
 }
 
-/* Creator Name. */
+/*
+	Get and Set for the Creator Name.
+*/
 std::u16string PatternWW::creatorname() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -160,7 +166,9 @@ void PatternWW::creatorname(std::u16string v) {
 	}
 }
 
-/* Creator Gender. */
+/*
+	Get and Set for the Creator Gender.
+*/
 u8 PatternWW::creatorGender() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -203,7 +211,9 @@ void PatternWW::creatorGender(u8 v) {
 	}
 }
 
-/* Town ID. */
+/*
+	Get and Set for the Town ID.
+*/
 u16 PatternWW::origtownid() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -236,7 +246,9 @@ void PatternWW::origtownid(u16 v) {
 	}
 }
 
-/* Town Name. */
+/*
+	Get and Set for the Town Name.
+*/
 std::u16string PatternWW::origtownname() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -279,7 +291,11 @@ void PatternWW::origtownname(std::u16string v) {
 	}
 }
 
-/* Own a Pattern. */
+/*
+	Overwrite player info to the pattern.
+
+	std::unique_ptr<Player> player: A pointer to the player.
+*/
 void PatternWW::ownPattern(std::unique_ptr<Player> player) {
 	/* Only set if player is not nullptr! */
 	if (player) {
@@ -291,7 +307,9 @@ void PatternWW::ownPattern(std::unique_ptr<Player> player) {
 	}
 }
 
-/* Design Type. */
+/*
+	Get and Set for the Design type.
+*/
 u8 PatternWW::designtype() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -334,52 +352,35 @@ void PatternWW::designtype(u8 v) {
 	}
 }
 
-/* Dump a Pattern to file. */
+/*
+	Dump a Pattern to file.
+
+	const std::string fileName: Where to place the dump at.
+*/
 void PatternWW::dumpPattern(const std::string fileName) {
 	/* If region == UNKNOWN -> Do NOTHING. */
 	if (this->region != WWRegion::UNKNOWN) {
-		u32 size = 0;
-
-		/* Get size. */
-		switch(this->region) {
-			case WWRegion::USA_REV0:
-			case WWRegion::USA_REV1:
-			case WWRegion::EUR_REV1:
-				size = 0x228;
-				break;
-
-			case WWRegion::JPN_REV0:
-			case WWRegion::JPN_REV1:
-				size = 0x220;
-				break;
-
-			case WWRegion::KOR_REV1:
-				size = 0x234;
-				break;
-
-			case WWRegion::UNKNOWN:
-				break;
-		}
-	
 		/* Open File. */
 		FILE* ptrn = fopen(fileName.c_str(), "wb");
 
 		if (ptrn) {
 			/* Write to file and close. */
-			fwrite(this->patternPointer(), 1, size, ptrn);
+			fwrite(this->patternPointer(), 1, this->getPatternSize(), ptrn);
 			fclose(ptrn);
 		}
 	}
 }
 
-// Needs checking. Inject a Pattern from a file. */
+/*
+	Inject a Pattern from a file.
+
+	const std::string fileName: The location of the file.
+*/
 void PatternWW::injectPattern(const std::string fileName) {
 	/* If region == UNKNOWN -> Do NOTHING. */
 	if (this->region != WWRegion::UNKNOWN) {
 		if ((access(fileName.c_str(), F_OK) != 0)) return; // File not found. Do NOTHING.
 
-		bool allowInject = false;
-		
 		/* Open file and get size. */
 		FILE* ptrn = fopen(fileName.c_str(), "rb");
 
@@ -388,28 +389,7 @@ void PatternWW::injectPattern(const std::string fileName) {
 			u32 size = ftell(ptrn);
 			fseek(ptrn, 0, SEEK_SET);
 
-			/* Get size. */
-			switch(this->region) {
-				case WWRegion::USA_REV0:
-				case WWRegion::USA_REV1:
-				case WWRegion::EUR_REV1:
-					if (size == 0x228) allowInject = true;
-					break;
-
-				case WWRegion::JPN_REV0:
-				case WWRegion::JPN_REV1:
-					if (size == 0x220) allowInject = true;
-					break;
-
-				case WWRegion::KOR_REV1:
-					if (size == 0x234) allowInject = true;
-					break;
-
-				case WWRegion::UNKNOWN:
-					break;
-			}
-
-			if (allowInject) {
+			if (size == this->getPatternSize()) {
 				u8 *patternData = new u8[size];
 				fread(patternData, 1, size, ptrn);
 
@@ -419,7 +399,7 @@ void PatternWW::injectPattern(const std::string fileName) {
 				}
 
 				/* Free Buffer. */
-				delete(patternData);
+				delete[] patternData;
 
 			}
 
@@ -429,31 +409,35 @@ void PatternWW::injectPattern(const std::string fileName) {
 	}
 }
 
+/*
+	Return a Pattern Image of the pattern.
+
+	const int pattern: The Pattern index. Unused for Wild World.
+*/
 std::unique_ptr<PatternImage> PatternWW::image(const int pattern) const {
-	u32 patternOffset = this->Offset + 0, pltOffset = this->Offset + 0;
+	u32 patternOffset = this->Offset, pltOffset = this->Offset;
 
 	switch(this->region) {
 		case WWRegion::USA_REV0:
 		case WWRegion::USA_REV1:
 		case WWRegion::EUR_REV1:
-			patternOffset = this->Offset + 0;
+			patternOffset = this->Offset;
 			pltOffset = this->Offset + 0x226;
 			break;
 
 		case WWRegion::JPN_REV0:
 		case WWRegion::JPN_REV1:
-			patternOffset = this->Offset + 0;
+			patternOffset = this->Offset;
 			pltOffset = this->Offset + 0x21C;
 			break;
 
 		case WWRegion::KOR_REV1:
-			patternOffset = this->Offset + 0;
+			patternOffset = this->Offset;
 			pltOffset = this->Offset + 0x232;
 			break;
 
 		case WWRegion::UNKNOWN:
 			return nullptr; // What else should be returned?
-			break;
 	}
 
 	return std::make_unique<PatternImageWW>(this->data, patternOffset, pltOffset);

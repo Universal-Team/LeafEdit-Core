@@ -44,8 +44,8 @@ public:
 	PlayerHHD(const PlayerHHD& p) = delete;
 	PlayerHHD& operator=(const PlayerHHD& p) = delete;
 
-	u8 hair() const;
-	void hair(u8 v);
+	u8 hairstyle() const;
+	void hairstyle(u8 v);
 
 	u8 tan() const;
 	void tan(u8 v);
@@ -53,8 +53,8 @@ public:
 	u8 haircolor() const;
 	void haircolor(u8 v);
 
-	u8 eyes() const;
-	void eyes(u8 v);
+	u8 face() const;
+	void face(u8 v);
 
 	u8 eyecolor() const;
 	void eyecolor(u8 v);
@@ -85,12 +85,12 @@ public:
 
 	std::u16string name() const;
 	void name(std::u16string v);
-	
+
 	std::unique_ptr<Pattern> pattern(u32 slot) const;
 
 	/* Misc. */
-	void unlockAll();
-	void lockAll();
+	void unlockHandbooks();
+	void lockHandbooks();
 	void unlockEmotions();
 	void lockEmotions();
 private:

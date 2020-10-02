@@ -33,7 +33,11 @@
 extern std::vector<std::tuple<u16, std::string, std::string>> itemDB;
 extern std::vector<std::string> itemCategories;
 
-/* Get an Item's name. */
+/*
+	Get an Item's name.
+
+	u16 ID: The Item ID.
+*/
 std::string ItemUtils::getName(u16 ID) {
 	if (itemDB.empty()) return "???"; // Database empty.
 
@@ -46,12 +50,17 @@ std::string ItemUtils::getName(u16 ID) {
 	return std::string("???");
 }
 
-/* Get an WW's index Item's name. */
+/*
+	Get an Animal Crossing: Wild World's index Item's name.
+
+	int category: The item category.
+	u8 index: The index.
+*/
 std::string ItemUtils::getWWName(int category, u8 index) {
 	std::vector<std::tuple<u16, std::string, std::string>> temp = StringDB::searchTuple("", {itemCategories[category]}, itemDB, true);
 
 	if (temp.empty()) return "???"; // Database empty.
-	
+
 	if (temp.size() >= index) return std::get<1>(temp[index]);
 
 	return std::string("???");

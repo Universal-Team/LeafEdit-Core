@@ -31,7 +31,9 @@
 #include <cstring>
 #include <unistd.h>
 
-/* Pattern Name. */
+/*
+	Get and Set for the Pattern Name.
+*/
 std::u16string PatternWA::name() const {
 	return StringUtils::ReadUTF16String(this->patternPointer(), 0, 20);
 }
@@ -39,7 +41,9 @@ void PatternWA::name(std::u16string v) {
 	StringUtils::WriteUTF16String(this->patternPointer(), v, 0, 20);
 }
 
-/* Creator ID. */
+/*
+	Get and Set for the Creator ID.
+*/
 u16 PatternWA::creatorid() const {
 	return SaveUtils::Read<u16>(this->patternPointer(), 0x2A);
 }
@@ -47,7 +51,9 @@ void PatternWA::creatorid(u16 v) {
 	return SaveUtils::Write<u16>(this->patternPointer(), 0x2A, v);
 }
 
-/* Creator Name. */
+/*
+	Get and Set for the Creator Name.
+*/
 std::u16string PatternWA::creatorname() const {
 	return StringUtils::ReadUTF16String(this->patternPointer(), 0x2C, 8);
 }
@@ -55,7 +61,9 @@ void PatternWA::creatorname(std::u16string v) {
 	StringUtils::WriteUTF16String(this->patternPointer(), v, 0x2C, 8);
 }
 
-/* Creator Gender. */
+/*
+	Get and Set for the Creator Gender.
+*/
 u8 PatternWA::creatorGender() const {
 	return this->patternPointer()[0x3E];
 }
@@ -63,7 +71,9 @@ void PatternWA::creatorGender(u8 v) {
 	SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v);
 }
 
-/* Town ID. */
+/*
+	Get and Set for the Town ID.
+*/
 u16 PatternWA::origtownid() const {
 	return SaveUtils::Read<u16>(this->patternPointer(), 0x40);
 }
@@ -71,7 +81,9 @@ void PatternWA::origtownid(u16 v) {
 	return SaveUtils::Write<u16>(this->patternPointer(), 0x40, v);
 }
 
-/* Town Name. */
+/*
+	Get and Set for the Town Name.
+*/
 std::u16string PatternWA::origtownname() const {
 	return StringUtils::ReadUTF16String(this->patternPointer(), 0x42, 8);
 }
@@ -79,7 +91,11 @@ void PatternWA::origtownname(std::u16string v) {
 	StringUtils::WriteUTF16String(this->patternPointer(), v, 0x42, 8);
 }
 
-/* Own a Pattern. */
+/*
+	Overwrite player info to the pattern.
+
+	std::unique_ptr<Player> player: A pointer to the player.
+*/
 void PatternWA::ownPattern(std::unique_ptr<Player> player) {
 	/* Only set if player is not nullptr! */
 	if (player) {
@@ -91,7 +107,9 @@ void PatternWA::ownPattern(std::unique_ptr<Player> player) {
 	}
 }
 
-/* Design Type. */
+/*
+	Get and Set for the Design type.
+*/
 u8 PatternWA::designtype() const {
 	return (this->patternPointer()[0x69] & 9);
 }
@@ -99,11 +117,15 @@ void PatternWA::designtype(u8 v) {
 	SaveUtils::Write<u8>(this->patternPointer(), 0x69, (this->patternPointer()[0x69] & 0xF0) | (v & 0x9));
 }
 
-/* Dump a Pattern to file. */
+/*
+	Dump a Pattern to a file.
+
+	const std::string fileName: Where to place the dump at.
+*/
 void PatternWA::dumpPattern(const std::string fileName) {
 	/* Get Pattern size. 0x9 for default pattern, else pro pattern. */
 	u32 size = 0;
-	
+
 	if (this->patternPointer()[0x69] == 0x09) {
 		size = 620;
 
@@ -113,7 +135,7 @@ void PatternWA::dumpPattern(const std::string fileName) {
 
 	/* Open File. */
 	FILE* ptrn = fopen(fileName.c_str(), "wb");
-	
+
 	if (ptrn) {
 		/* Write to file and close. */
 		fwrite(this->patternPointer(), 1, size, ptrn);
@@ -121,12 +143,17 @@ void PatternWA::dumpPattern(const std::string fileName) {
 	}
 }
 
-/* Inject a Pattern from a file. */
+/*
+	Inject a Pattern from a file.
+
+	const std::string fileName: The location of the file.
+*/
 void PatternWA::injectPattern(const std::string fileName) {
 	if ((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
 
 	/* Open file and get size. */
 	FILE* ptrn = fopen(fileName.c_str(), "rb");
+
 	if (ptrn) {
 		fseek(ptrn, 0, SEEK_END);
 		u32 size = ftell(ptrn);
@@ -142,9 +169,9 @@ void PatternWA::injectPattern(const std::string fileName) {
 			for(int i = 0; i < (int)size; i++){
 				SaveUtils::Write<u8>(this->patternPointer(), i, patternData[i]);
 			}
-	
+
 			/* Free Buffer. */
-			delete(patternData);
+			delete[] patternData;
 		}
 
 		/* Close File, cause we don't need it. */
@@ -152,6 +179,11 @@ void PatternWA::injectPattern(const std::string fileName) {
 	}
 }
 
+/*
+	Return a Pattern Image of the pattern.
+
+	const int pattern: The Pattern index. Used for "pro pattern".
+*/
 std::unique_ptr<PatternImage> PatternWA::image(const int pattern) const {
 	return std::make_unique<PatternImageNL>(this->data, (this->Offset + 0x6C + (pattern * 0x200)), this->Offset + 0x58);
 }

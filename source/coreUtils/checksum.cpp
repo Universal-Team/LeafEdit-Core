@@ -31,7 +31,7 @@
 #include <cstring>
 #include <string>
 
-const u32 crcTable_1[256] = { /* Polynomial: 0x1EDC6F41, 0xFFFFFFFF initial value, 0xFFFFFFFF xor, Input Reflection, Output Reflection. */
+static constexpr u32 crcTable_1[256] = { /* Polynomial: 0x1EDC6F41, 0xFFFFFFFF initial value, 0xFFFFFFFF xor, Input Reflection, Output Reflection. */
 	0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F,
 	0x35F1141C, 0x26A1E7E8, 0xD4CA64EB, 0x8AD958CF, 0x78B2DBCC,
 	0x6BE22838, 0x9989AB3B, 0x4D43CFD0, 0xBF284CD3, 0xAC78BF27,
@@ -86,7 +86,7 @@ const u32 crcTable_1[256] = { /* Polynomial: 0x1EDC6F41, 0xFFFFFFFF initial valu
 	0xAD7D5351
 };
 
-const u32 crcTable_2[256] = { /* Polynomial: 0x04C11DB7, 0x00000000 initial value, 0xFFFFFFFF xor, No Input Reflection, No Output Reflection. */
+static constexpr u32 crcTable_2[256] = { /* Polynomial: 0x04C11DB7, 0x00000000 initial value, 0xFFFFFFFF xor, No Input Reflection, No Output Reflection. */
 	0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9, 0x130476DC,
 	0x17C56B6B, 0x1A864DB2, 0x1E475005, 0x2608EDB8, 0x22C9F00F,
 	0x2F8AD6D6, 0x2B4BCB61, 0x350C9B64, 0x31CD86D3, 0x3C8EA00A,
@@ -141,7 +141,12 @@ const u32 crcTable_2[256] = { /* Polynomial: 0x04C11DB7, 0x00000000 initial valu
 	0xB1F740B4
 };
 
-/* Calculate the CRC32 reflected type. */
+/*
+	Calculate the CRC32 reflected type.
+
+	u8 *buf: The save buffer.
+	u32 size: The size which should be calculated.
+*/
 u32 Checksum::CalculateCRC32Reflected(u8 *buf, u32 size) {
 	u32 crc = 0xFFFFFFFF;
 
@@ -153,7 +158,12 @@ u32 Checksum::CalculateCRC32Reflected(u8 *buf, u32 size) {
 	return ~crc;
 }
 
-/* Calculate the CRC32 normal type. */
+/*
+	Calculate the CRC32 normal type.
+
+	u8 *buf: The save buffer.
+	u32 size: The size which should be calculated.
+*/
 u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	u32 crc = 0;
 
@@ -165,7 +175,15 @@ u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	return ~crc;
 }
 
-/* Verify the CRC32. */
+/*
+	Verify the CRC32.
+
+	u32 crc: The CRC.
+	u8 *buf: The save buffer.
+	u32 startOffset: The Startoffset.
+	u32 size: The size which should be verified.
+	ChecksumType type: The type of the checksum.
+*/
 bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type) {
 	if (type == CRC_NORMAL) {
 		return CalculateCRC32Normal(buf + startOffset + 4, size) == crc;
@@ -174,7 +192,14 @@ bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, Checksum
 	return CalculateCRC32Reflected(buf + startOffset + 4, size) == crc;
 }
 
-/* Update the CRC32. */
+/*
+	Update the CRC32.
+
+	u8 *rawData: The save buffer.
+	u32 startOffset: The Startoffset.
+	u32 size: The size which should be updated.
+	ChecksumType type: The type of the checksum.
+*/
 u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType type) {
 	u32 crc32 = 0;
 	if (type == CRC_NORMAL) {
@@ -188,7 +213,11 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 	return crc32;
 }
 
-/* Fix the CRC32 for AC:WA. */
+/*
+	Fix the CRC32 for Animal Crossing: New Leaf Welcome amiibo (garden_plus.dat).
+
+	u8 *data: The save buffer.
+*/
 void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
@@ -210,7 +239,11 @@ void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL); // Unknown5 Checksum.
 }
 
-/* Fix the CRC32 for AC:NL. */
+/*
+	Fix the CRC32 for Animal Crossing: New Leaf (garden.dat).
+
+	u8 *data: The save buffer.
+*/
 void Checksum::FixNLCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
@@ -228,11 +261,14 @@ void Checksum::FixNLCRC32s(u8 *data) {
 }
 
 /*
-	Wild World.
-	Calculate AC:WW's Checksum.
+	Calculate Animal Crossing: Wild World's Checksum.
+
+	const u16 *buffer: The save buffer.
+	u64 size: The size which should be calculated.
+	uint checksumOffset: The offset of the checksum.
 */
 u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset) {
-	if ((checksumOffset & 1) == 1)	return 0; // checksumOffset must be 16-bit aligned!
+	if ((checksumOffset & 1) == 1) return 0; // checksumOffset must be 16-bit aligned!
 
 	u16 checksum = 0;
 
@@ -244,13 +280,27 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset) {
 	return (u16) -checksum;
 }
 
-/* Verify AC:WW's Checksum. */
+/*
+	Verify Animal Crossing: Wild World's Checksum.
+
+	const u16 *buffer: The save buffer.
+	u64 size: The size which should be verified.
+	u16 currentChecksum: The current checksum.
+	uint checksumOffset: The offset of the checksum.
+*/
 bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset) {
 	if (CalculateWW(buffer, size, checksumOffset) == currentChecksum) return true;
 	else return false;
 }
 
-/* Update AC:WW's Checksum. */
+/*
+	Update Animal Crossing: Wild World's Checksum.
+
+	WWRegion region: The save region.
+	u8 *saveBuffer: The save buffer.
+	u16 *buffer: The save buffer again(?) (I forgot exactly for what it was..)
+	u64 size: The size which should be updated.
+*/
 void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
 	switch(region) {
 		case WWRegion::USA_REV0:
@@ -267,15 +317,16 @@ void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u6
 		case WWRegion::KOR_REV1:
 			SaveUtils::Write<u16>(saveBuffer, 0x173F8, CalculateWW(buffer, size, 0xB9FC));
 			break;
-			
+
 		case WWRegion::UNKNOWN:
 			break;
 	}
 }
 
 /*
-	AC:HHD part.
-	Fix the CRC32 for AC:HHD.
+	Fix the CRC32 for Animal Crossing: Happy Home Designer.
+
+	u8 *data: The save buffer.
 */
 void Checksum::FixHHDChecksum(u8 *data) {
     UpdateCRC32(data, 0x1A0, 0x1C);

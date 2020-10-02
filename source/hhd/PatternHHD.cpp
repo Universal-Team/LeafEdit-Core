@@ -31,7 +31,9 @@
 #include <cstring>
 #include <unistd.h>
 
-/* Pattern Name. */
+/*
+	Get and Set for the Pattern Name.
+*/
 std::u16string PatternHHD::name() const {
 	return StringUtils::ReadUTF16String(patternPointer(), 0, 20);
 }
@@ -39,7 +41,9 @@ void PatternHHD::name(std::u16string v) {
 	StringUtils::WriteUTF16String(patternPointer(), v, 0, 20);
 }
 
-/* Creator ID. */
+/*
+	Get and Set for the Creator ID.
+*/
 u16 PatternHHD::creatorid() const {
 	return SaveUtils::Read<u16>(patternPointer(), 0x2A);
 }
@@ -47,7 +51,9 @@ void PatternHHD::creatorid(u16 v) {
 	return SaveUtils::Write<u16>(patternPointer(), 0x2A, v);
 }
 
-/* Creator Name. */
+/*
+	Get and Set for the Creator Name.
+*/
 std::u16string PatternHHD::creatorname() const {
 	return StringUtils::ReadUTF16String(patternPointer(), 0x2C, 8);
 }
@@ -55,7 +61,9 @@ void PatternHHD::creatorname(std::u16string v) {
 	StringUtils::WriteUTF16String(patternPointer(), v, 0x2C, 8);
 }
 
-/* Creator Gender. */
+/*
+	Get and Set for the Creator Gender.
+*/
 u8 PatternHHD::creatorGender() const {
 	return patternPointer()[0x3E];
 }
@@ -63,7 +71,9 @@ void PatternHHD::creatorGender(u8 v) {
 	SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v);
 }
 
-/* Town ID. */
+/*
+	Get and Set for the Town ID.
+*/
 u16 PatternHHD::origtownid() const {
 	return SaveUtils::Read<u16>(patternPointer(), 0x40);
 }
@@ -71,7 +81,9 @@ void PatternHHD::origtownid(u16 v) {
 	return SaveUtils::Write<u16>(patternPointer(), 0x40, v);
 }
 
-/* Town Name. */
+/*
+	Get and Set for the Town Name.
+*/
 std::u16string PatternHHD::origtownname() const {
 	return StringUtils::ReadUTF16String(patternPointer(), 0x42, 8);
 }
@@ -79,7 +91,9 @@ void PatternHHD::origtownname(std::u16string v) {
 	StringUtils::WriteUTF16String(patternPointer(), v, 0x42, 8);
 }
 
-/* Design Type. */
+/*
+	Get and Set for the Design Type.
+*/
 u8 PatternHHD::designtype() const {
 	return (patternPointer()[0x69] & 9);
 }
@@ -87,14 +101,21 @@ void PatternHHD::designtype(u8 v) {
 	SaveUtils::Write<u8>(this->patternPointer(), 0x69, (patternPointer()[0x69] & 0xF0) | (v & 0x9));
 }
 
-/* Cannot be used this way. */
+/*
+	Overwrite player info to pattern.
+	Cannot be used this way.
+*/
 void PatternHHD::ownPattern(std::unique_ptr<Player> player) { return; }
 
-/* Dump a Pattern to file. */
+/*
+	Dump a Pattern to file.
+
+	const std::string fileName: Where to place the dump at.
+*/
 void PatternHHD::dumpPattern(const std::string fileName) {
 	/* Get Pattern size. 0x9 for default pattern, else pro pattern. */
 	u32 size = 0;
-	
+
 	if (patternPointer()[0x69] == 0x09) {
 		size = 620;
 
@@ -112,13 +133,17 @@ void PatternHHD::dumpPattern(const std::string fileName) {
 	}
 }
 
-/* Inject a Pattern from a file. */
+/*
+	Inject a Pattern from a file.
+
+	const std::string fileName: The location of the file.
+*/
 void PatternHHD::injectPattern(const std::string fileName) {
 	if ((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
 
 	/* Open file and get size. */
 	FILE* ptrn = fopen(fileName.c_str(), "rb");
-	
+
 	if (ptrn) {
 		fseek(ptrn, 0, SEEK_END);
 		u32 size = ftell(ptrn);
@@ -131,10 +156,10 @@ void PatternHHD::injectPattern(const std::string fileName) {
 			fread(patternData, 1, size, ptrn);
 
 			/* Set Buffer data to save. */
-			for(int i = 0; i < (int)size; i++){
+			for(int i = 0; i < (int)size; i++) {
 				SaveUtils::Write<u8>(this->patternPointer(), i, patternData[i]);
 			}
-	
+
 			/* Free Buffer. */
 			delete(patternData);
 		}
@@ -144,6 +169,11 @@ void PatternHHD::injectPattern(const std::string fileName) {
 	}
 }
 
+/*
+	Return a Pattern Image of the pattern.
+
+	const int pattern: The Pattern index. Used for "pro pattern".
+*/
 std::unique_ptr<PatternImage> PatternHHD::image(const int pattern) const {
 	return std::make_unique<PatternImageNL>(this->data, (this->Offset + 0x6C + (pattern * 0x200)), this->Offset + 0x58);
 }

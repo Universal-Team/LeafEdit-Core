@@ -27,7 +27,9 @@
 #include "saveUtils.hpp"
 #include "VillagerWW.hpp"
 
-/* Villager ID. */
+/*
+	Get and Set the Villager ID.
+*/
 u16 VillagerWW::id() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -70,13 +72,17 @@ void VillagerWW::id(u16 v) {
 	}
 }
 
-/* Check if the Villager exist. */
+/*
+	Return if the Villager exist.
+*/
 bool VillagerWW::exist() const {
 	if (this->id() == 0xFF)	return false;
 	return true;
 }
 
-/* Villager Personality. */
+/*
+	Get and Set for the Villager Personality.
+*/
 u8 VillagerWW::personality() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -119,7 +125,12 @@ void VillagerWW::personality(u8 v) {
 	}
 }
 
-/* Villager Song. This needs still to be researched. */
+/*
+	Get and Set for the Villager Song.
+
+	This is an uint8_t index on Wild World.
+	This needs still to be researched.
+*/
 u8 VillagerWW::songWW() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -162,7 +173,9 @@ void VillagerWW::songWW(u8 sng) {
 	}
 }
 
-/* Villager Shirt. */
+/*
+	Return the Villager Shirt.
+*/
 std::unique_ptr<Item> VillagerWW::shirt() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -184,7 +197,11 @@ std::unique_ptr<Item> VillagerWW::shirt() const {
 	return nullptr;
 }
 
-/* Villager Wallpaper. */
+/*
+	Get and Set for the Villager Wallpaper.
+
+	This is an uint8_t index on Wild World.
+*/
 u8 VillagerWW::wallpaperWW() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -227,7 +244,11 @@ void VillagerWW::wallpaperWW(u8 wlp) {
 	}
 }
 
-/* Villager Carpet. */
+/*
+	Get and Set for the Villager Carpet.
+
+	This is an uint8_t index on Wild World.
+*/
 u8 VillagerWW::carpetWW() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -270,7 +291,11 @@ void VillagerWW::carpetWW(u8 crp) {
 	}
 }
 
-/* Villager Umbrella. */
+/*
+	Get and Set for the Villager Umbrella.
+
+	This is an uint8_t index on Wild World.
+*/
 u8 VillagerWW::umbrellaWW() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -313,7 +338,11 @@ void VillagerWW::umbrellaWW(u8 umbr) {
 	}
 }
 
-/* Villager Furniture. */
+/*
+	Return the Villager Furniture.
+
+	int slot: The Furniture index.
+*/
 std::unique_ptr<Item> VillagerWW::furniture(int slot) const {
 	if (slot > 9) return nullptr;
 
@@ -333,6 +362,6 @@ std::unique_ptr<Item> VillagerWW::furniture(int slot) const {
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
-	
+
 	return nullptr;
 }

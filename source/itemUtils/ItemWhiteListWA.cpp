@@ -26,34 +26,74 @@
 
 #include "ItemWhiteListWA.hpp"
 
+/*
+	Return if the provided item ID in the parameter is a valid Hat.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validHat(u16 itemID) const {
 	return (itemID > 0x280A && itemID < 0x28F4);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Accessoires.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validAccessoires(u16 itemID) const {
 	return (itemID > 0x28F4 && itemID < 0x295C);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Shirt.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validShirt(u16 itemID) const {
 	return (itemID > 0x2492 && itemID < 0x26F6);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Pant.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validPants(u16 itemID) const {
 	return (itemID > 0x26F7 && itemID < 0x2777);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Sock.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validSocks(u16 itemID) const {
 	return (itemID > 0x2776 && itemID < 0x279F);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Shoe.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validShoes(u16 itemID) const {
 	return (itemID > 0x279E && itemID < 0x27E6);
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Tool.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validTools(u16 itemID) const {
 	return (itemID == 0x2001 || (itemID == 0x3729) || (itemID > 0x334B && itemID < 0x33A3));
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Music.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validMusic(u16 itemID) const {
 	if (itemID < 0xFFF) {
 		if (itemID > 0x0DB && itemID < 0x10B) return false;
@@ -63,7 +103,11 @@ bool ItemWhiteListWA::validMusic(u16 itemID) const {
 	return false;
 }
 
+/*
+	Return if the provided item ID in the parameter is a valid Item.
+
+	u16 itemID: The Item ID.
+*/
 bool ItemWhiteListWA::validItem(u16 itemID) const {
-	/* TODO. */
 	return false;
 }

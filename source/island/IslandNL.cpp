@@ -26,14 +26,22 @@
 
 #include "IslandNL.hpp"
 
-/* Island Acre. */
+/*
+	Return an Island Acre.
+
+	int Acre: The Acre index.
+*/
 std::unique_ptr<Acre> IslandNL::acre(int Acre) const {
 	if (Acre > 15) return nullptr;
 
 	return std::make_unique<AcreNL>(this->data, 0x80 + 0x06a408 + Acre * 2);
 }
 
-/* Island Item. */
+/*
+	Return an Island Map item.
+
+	u32 index: The map index.
+*/
 std::unique_ptr<Item> IslandNL::item(u32 index) const {
 	if (index > 1023) return nullptr;
 

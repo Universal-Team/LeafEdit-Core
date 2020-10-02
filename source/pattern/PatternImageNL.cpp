@@ -27,34 +27,60 @@
 #include "PatternImageNL.hpp"
 #include "saveUtils.hpp"
 
+/*
+	Return the palette color index as an uint8_t.
+
+	u8 plt: Index of the palette color.
+*/
 u8 PatternImageNL::getPaletteColor(u8 plt) const {
 	if (plt > 14) return 0;
 
 	return (u8)this->paletteData()[plt];
 }
 
-/* There is no "index" on NL. */
+/*
+	Return the Palette Index.
+
+	This is not used in the NL format, cause they can be any color.
+*/
 int PatternImageNL::getWWPaletteIndex() const { return 0; }
 
+/*
+	Set the Palette color for an index.
+
+	int index: The index of the palette.
+	u8 color: The color index.
+*/
 void PatternImageNL::setPaletteColor(int index, u8 color) {
 	if (index > 15) return;
-	
+
 	SaveUtils::Write<u8>(this->paletteData(), index, color);
 }
 
+/*
+	Return a pixel struct for the Left & Right pixel buffer.
+
+	int index: The pixel index of the pattern.
+*/
 pixel PatternImageNL::getPixel(int index) const {
 	if (this->valid) {
 		if (this->pixelPointer()) {
 			return this->pixelPointer()[index];
-		} 
+		}
 	}
 
-	return {0, 0};
+	return { 0, 0 };
 }
 
+/*
+	Set a pixel's color to the Pattern Image.
+
+	int index: The pixel index of the pattern.
+	int color: The color index.
+*/
 void PatternImageNL::setPixel(int index, int color) {
 	if (color > 14 || index > 0x3FF) return; // Out of scope.
-	
+
 	if (this->valid) {
 		if (this->pixelPointer()) {
 			if (index % 2 == 0) this->pixelPointer()[index / 2].left = color;
@@ -63,6 +89,9 @@ void PatternImageNL::setPixel(int index, int color) {
 	}
 }
 
+/*
+	Same as above, just with X & Y position instead of index.
+*/
 void PatternImageNL::setPixel(int x, int y, int color) {
 	this->setPixel((x + (y * 32)), color);
 }

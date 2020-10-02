@@ -28,7 +28,11 @@
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
 
-/* Face. */
+#include <unistd.h>
+
+/*
+	Get and Set for the Face.
+*/
 u8 PlayerWW::face() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -71,7 +75,9 @@ void PlayerWW::face(u8 v) {
 	}
 }
 
-/* Tan. */
+/*
+	Get and Set for the Tan aka skin color.
+*/
 u16 PlayerWW::tan() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -114,7 +120,9 @@ void PlayerWW::tan(u16 v) {
 	}
 }
 
-/* Gender. */
+/*
+	Get and Set for the Gender.
+*/
 u8 PlayerWW::gender() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -157,7 +165,9 @@ void PlayerWW::gender(u8 v) {
 	}
 }
 
-/* HairStyle. */
+/*
+	Get and Set for the HairStyle.
+*/
 u8 PlayerWW::hairstyle() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -200,7 +210,9 @@ void PlayerWW::hairstyle(u8 v) {
 	}
 }
 
-/* HairColor. */
+/*
+	Get and Set for the HairColor.
+*/
 u8 PlayerWW::haircolor() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -242,19 +254,27 @@ void PlayerWW::haircolor(u8 v) {
 	}
 }
 
-/* Eye Color. Does not exist. */
+/*
+	Get and Set for the EyeColor.
+	EyeColor is handled on facetype for Wild World.
+*/
 u8 PlayerWW::eyecolor() const {
 	return 0;
 }
 void PlayerWW::eyecolor(u8 v) { }
 
-/* Badges. Does not exist. */
+/*
+	Get and Set for the Player Badges.
+	Does not exist on Wild World.
+*/
 u8 PlayerWW::badge(int badge) const {
 	return 0;
 }
 void PlayerWW::badge(int badge, u8 v) { }
 
-/* Player ID. Is that right? Check that! */
+/*
+	Get and Set for the Player ID.
+*/
 u16 PlayerWW::playerid() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -297,7 +317,9 @@ void PlayerWW::playerid(u16 v) {
 	}
 }
 
-/* Town ID. Is that right? Check that! */
+/*
+	Get and Set for the Town ID.
+*/
 u16 PlayerWW::townid() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -340,7 +362,9 @@ void PlayerWW::townid(u16 v) {
 	}
 }
 
-/* Town Name. */
+/*
+	Get and Set for the Town Name.
+*/
 std::u16string PlayerWW::townname() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -384,7 +408,9 @@ void PlayerWW::townname(std::u16string v) {
 	}
 }
 
-/* Player Exist. */
+/*
+	Return if the Player exist.
+*/
 bool PlayerWW::exist() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -406,7 +432,9 @@ bool PlayerWW::exist() const {
 	return false;
 }
 
-/* Player Name. */
+/*
+	Get and Set for the Player Name.
+*/
 std::u16string PlayerWW::name() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -449,7 +477,9 @@ void PlayerWW::name(std::u16string v) {
 	}
 }
 
-/* Wallet Amount. */
+/*
+	Get and Set for the Wallet Amount.
+*/
 u32 PlayerWW::wallet() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -492,7 +522,9 @@ void PlayerWW::wallet(u32 v) {
 	}
 }
 
-/* Bank Amount. */
+/*
+	Get and Set for the Bank Amount.
+*/
 u32 PlayerWW::bank() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -535,19 +567,29 @@ void PlayerWW::bank(u32 v) {
 	}
 }
 
-/* Island Medals. Does not exist. */
+/*
+	Get and Set for the Meow-Coupon amount.
+	Does not exist on Wild World.
+*/
 u32 PlayerWW::islandmedals() const {
 	return 0;
 }
 void PlayerWW::islandmedals(u32 v) { }
 
-/* Coupons. Does not exist. */
+/*
+	Get and Set for the Meow-Coupon amount.
+	Does not exist on Wild World.
+*/
 u32 PlayerWW::coupons() const {
 	return 0;
 }
 void PlayerWW::coupons(u32 v) { }
 
-/* Player Letters. */
+/*
+	Return a Player Letter.
+
+	int slot: The slot of the letter.
+*/
 std::unique_ptr<Letter> PlayerWW::letter(int slot) const {
 	if (slot > 9) return nullptr;
 
@@ -571,7 +613,11 @@ std::unique_ptr<Letter> PlayerWW::letter(int slot) const {
 	return nullptr;
 }
 
-/* Player Pocket. */
+/*
+	Return an item of the Player Pocket.
+
+	int slot: The slot of the Pocket.
+*/
 std::unique_ptr<Item> PlayerWW::pocket(int slot) const {
 	if (slot > 14) return nullptr;
 
@@ -595,7 +641,11 @@ std::unique_ptr<Item> PlayerWW::pocket(int slot) const {
 	return nullptr;
 }
 
-/* Player Dresser. */
+/*
+	Return an item of the Player Dresser.
+
+	int slot: The slot of the Dresser.
+*/
 std::unique_ptr<Item> PlayerWW::dresser(int slot) const {
 	if (slot > 89) return nullptr;
 
@@ -619,9 +669,13 @@ std::unique_ptr<Item> PlayerWW::dresser(int slot) const {
 	return nullptr;
 }
 
-/* Player Pattern. */
+/*
+	Return a Player Pattern.
+
+	int slot: The slot of the pattern.
+*/
 std::unique_ptr<Pattern> PlayerWW::pattern(int slot) const {
-	if (slot > 9) return nullptr;
+	if (slot > 7) return nullptr;
 
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -639,14 +693,74 @@ std::unique_ptr<Pattern> PlayerWW::pattern(int slot) const {
 		case WWRegion::UNKNOWN:
 			return nullptr;
 	}
-	
+
 	return nullptr;
-	
+
 }
 
-/* TPC Image. Does not exist. */
+/*
+	Return a TPC Image buffer pointer.
+	Does not exist on Wild World.
+*/
 u8* PlayerWW::tpcImage() const { return nullptr; }
 
-/* Other Offsets:
-Player Bed: this->playerPointer()[0x1C9E] // JPN.
+/*
+	Dump a player to file.
+
+	const std::string filename: The filename where the dump should be stored at.
+*/
+void PlayerWW::dumpPlayer(const std::string fileName) {
+	/* Open File. */
+	FILE* pl = fopen(fileName.c_str(), "w");
+
+	if (pl) {
+		// Write to file and close. */
+		fwrite(this->playerPointer(), 1, this->getPlayerSize(), pl);
+		fclose(pl);
+	}
+}
+
+/*
+	Inject a Player from a file.
+
+	const std::string fileName: The location of the file.
+*/
+bool PlayerWW::injectPlayer(const std::string fileName) {
+	bool isGood = false;
+	if ((access(fileName.c_str(), F_OK) != 0)) return isGood; // File not found. Do NOTHING.
+
+	/* Open file and get size. */
+	FILE* pl = fopen(fileName.c_str(), "rb");
+
+	if (pl) {
+		fseek(pl, 0, SEEK_END);
+		u32 size = ftell(pl);
+		fseek(pl, 0, SEEK_SET);
+
+		/* Check for size. */
+		if (size == this->getPlayerSize()) {
+			/* Create Buffer with the size and read the file. */
+			u8 *playerData = new u8[size];
+			fread(playerData, 1, size, pl);
+
+			/* Set Buffer data to save. */
+			for(int i = 0; i < (int)size; i++){
+				SaveUtils::Write<u8>(this->playerPointer(), i, playerData[i]);
+			}
+
+			/* Free Buffer. */
+			delete[] playerData;
+			isGood = true;
+		}
+
+		/* Close File, cause we don't need it. */
+		fclose(pl);
+	}
+
+	return isGood;
+}
+
+/*
+	Other Offsets:
+	Player Bed: this->playerPointer()[0x1C9E] // JPN.
 */

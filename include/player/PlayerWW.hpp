@@ -49,7 +49,7 @@ public:
 	virtual ~PlayerWW() { }
 	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, int index) :
 			Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), region(Region), Index(index) { }
-			
+
 	u32 getPlayerSize() const override {
 		switch(this->region) {
 			case WWRegion::USA_REV0:
@@ -120,16 +120,20 @@ public:
 	void coupons(u32 v) override;
 
 	std::unique_ptr<Letter> letter(int slot) const override;
-	
+
 	std::unique_ptr<Item> pocket(int slot) const override;
 	std::unique_ptr<Item> dresser(int slot) const override;
 	std::unique_ptr<Item> islandbox(int slot) const override { return nullptr; };
 	std::unique_ptr<Item> storage(int slot) const override { return nullptr; };
-	
+
 	std::unique_ptr<Pattern> pattern(int slot) const override;
 
 	u8 *tpcImage() const override;
 	bool hasTPC() const override { return false; }
+
+	/* Dump & Inject. */
+	void dumpPlayer(const std::string fileName) override;
+	bool injectPlayer(const std::string fileName) override;
 private:
 	u8* playerPointer() const {
 		return data.get() + offset;

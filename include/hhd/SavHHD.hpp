@@ -54,7 +54,7 @@ public:
 	void Finish(void) override;
 
 	/* Get core class contents. Return nullptr on AC:HHD for that, cause we'll use special classes for it. */
-	std::unique_ptr<Player> player(int player, int index = 0) const override { return nullptr; };
+	std::unique_ptr<Player> player(int player) const override { return nullptr; };
 	std::unique_ptr<Villager> villager(int villager) const override { return nullptr; };
 	std::unique_ptr<Town> town() const override { return nullptr; };
 	std::unique_ptr<Island> island() const override { return nullptr; };
@@ -65,7 +65,7 @@ public:
 
 	SaveType getType() const override { return SaveType::HHD; }
 	WWRegion getRegion() const override { return WWRegion::UNKNOWN; }
-	
+
 	int maxVillager() const override { return 0; }
 private:
 	u8 *savePointer() const {

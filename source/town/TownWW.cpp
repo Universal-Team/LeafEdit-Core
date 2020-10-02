@@ -28,7 +28,9 @@
 #include "stringUtils.hpp"
 #include "TownWW.hpp"
 
-/* Grasstype. */
+/*
+	Get and Set the Grasstype.
+*/
 u8 TownWW::grasstype() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -42,7 +44,7 @@ u8 TownWW::grasstype() const {
 		case WWRegion::UNKNOWN:
 			return 0;
 	}
-	
+
 	return 0;
 }
 void TownWW::grasstype(u8 v) {
@@ -61,7 +63,9 @@ void TownWW::grasstype(u8 v) {
 	}
 }
 
-/* Town Name. */
+/*
+	Get and Set the Town Name.
+*/
 std::u16string TownWW::name() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -75,7 +79,7 @@ std::u16string TownWW::name() const {
 
 		case WWRegion::KOR_REV1:
 			return StringUtils::ReadUTF16String(this->townPointer(), 0x0004, 6);
-			
+
 		case WWRegion::UNKNOWN:
 			return StringUtils::UTF8toUTF16("?");
 	}
@@ -104,7 +108,11 @@ void TownWW::name(std::u16string v) {
 	}
 }
 
-/* Town Acre. */
+/*
+	Return a Town Acre.
+
+	int Acre: Acre Index.
+*/
 std::unique_ptr<Acre> TownWW::acre(int Acre) const {
 	if (Acre > 35) return nullptr; // Acre Index goes out of scope.
 
@@ -128,7 +136,11 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) const {
 	return nullptr;
 }
 
-/* Town Item. */
+/*
+	Return a Town Map Item.
+
+	u32 index: The Town Map Item index.
+*/
 std::unique_ptr<Item> TownWW::item(u32 index) const {
 	if (index > 4095) return nullptr; // Item Index goes out of scope.
 
@@ -152,13 +164,22 @@ std::unique_ptr<Item> TownWW::item(u32 index) const {
 	return nullptr;
 }
 
-/* Return if Town exist. */
+/*
+	Return if Town exist.
+*/
 bool TownWW::exist() const {
 	if (SaveUtils::Read<u16>(this->townPointer(), 0x2) == 0x0 || SaveUtils::Read<u16>(this->townPointer(), 0x2) == 0xFFFF)	return false;
 	return true;
 }
 
-/* Turnip prices. In AC:WW, they seem to be only *one* price. */
+/*
+	Get and Set the Turnip prices.
+
+	bool isAM: If the price is AM (true) or PM (false).
+	int day: The day index.
+
+	^ Both parameters are ignored, cause only one price seem to exist there.
+*/
 u32 TownWW::turnipPrices(bool isAM, int day) const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -201,7 +222,9 @@ void TownWW::turnipPrices(bool isAM, int day, u32 v) {
 	}
 }
 
-/* Town flag. */
+/*
+	Return the Townflag pattern.
+*/
 std::unique_ptr<Pattern> TownWW::townflag() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -223,7 +246,11 @@ std::unique_ptr<Pattern> TownWW::townflag() const {
 	return nullptr;
 }
 
-/* Item buried. */
+/*
+	Get and Set, if item is buried.
+
+	int index: Town Map Item index.
+*/
 bool TownWW::itemBuried(int index) const {
 	if (index > 4095) return false;
 
@@ -272,7 +299,7 @@ void TownWW::itemBuried(int index, bool buried) {
 		case WWRegion::KOR_REV1:
 			offset = 0xF328 + ((index / 256) * 256 + (index % 256)) / 8;
 			break;
-			
+
 		case WWRegion::UNKNOWN:
 			return;
 	}
@@ -285,7 +312,11 @@ void TownWW::itemBuried(int index, bool buried) {
 	SaveUtils::SetBit(this->townPointer(), offset, (index % 256) % 8, buried);
 }
 
-/* Recycle bin (or whatever you would call that box inside the Townhall there) Items. */
+/*
+	Return the Recycle bin (or whatever you would call that box inside the Townhall there) Items.
+
+	int slot: The slot of the item.
+*/
 std::unique_ptr<Item> TownWW::recycleItem(int slot) const {
     if (slot > 14) return nullptr; // Item Index goes out of scope.
 
@@ -309,7 +340,11 @@ std::unique_ptr<Item> TownWW::recycleItem(int slot) const {
     return nullptr;
 }
 
-/* Lost and Found Items. */
+/*
+	Return the Lost and Found Items.
+
+	int slot: The slot of the item.
+*/
 std::unique_ptr<Item> TownWW::lostFoundItem(int slot) const {
     if (slot > 14) return nullptr; // Item Index goes out of scope.
 

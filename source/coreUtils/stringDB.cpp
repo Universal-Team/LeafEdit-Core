@@ -41,7 +41,11 @@ std::vector<std::string> villagerSpecies;
 #define NL_VILLAGER_PATH "romfs:/lang/strings/nl/villager.txt"
 #define WA_VILLAGER_PATH "romfs:/lang/strings/wa/villager.txt"
 
-/* Load the Item Database. */
+/*
+	Load the Item Database.
+
+	SaveType save: The savetype.
+*/
 void StringDB::LoadItemDatabase(SaveType save) {
 	itemDB.clear();
 	itemCategories.clear();
@@ -79,7 +83,7 @@ void StringDB::LoadItemDatabase(SaveType save) {
 			itemCategories.push_back({categoryName});
 
 		/* confirm we don't have any comments. */
-		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) { 
+		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) {
 			itemIdStr = currentLine.substr(2, 4); // skip the 0x hex specifier.
 			itemName = currentLine.substr(8, currentLine.size());
 
@@ -94,7 +98,11 @@ void StringDB::LoadItemDatabase(SaveType save) {
 	itemDatabase.close();
 }
 
-/* Load the Villager Database. */
+/*
+	Load the Villager Database.
+
+	SaveType save: The savetype.
+*/
 void StringDB::LoadVillagerDatabase(SaveType save) {
 	villagerDB.clear();
 
@@ -131,7 +139,7 @@ void StringDB::LoadVillagerDatabase(SaveType save) {
 			villagerSpecies.push_back({categoryName});
 
 		/* confirm we don't have any comments. */
-		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) { 
+		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) {
 			villagerIdStr = currentLine.substr(2, 4); // skip the 0x hex specifier.
 			villagerName = currentLine.substr(8, currentLine.size());
 
@@ -146,7 +154,14 @@ void StringDB::LoadVillagerDatabase(SaveType save) {
 	villagerDatabase.close();
 }
 
-/* Searching. */
+/*
+	Searching for stuff in the tuple.
+
+	std::string searchResult: What to search for.
+	std::vector<std::string> searchCategory: Which categories should be included in the search.
+	std::vector<std::tuple<u16, std::string, std::string>> &searchType: From which tuple to search.
+	bool compare: If the search should EXACTLY match.
+*/
 std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std::string searchResult, std::vector<std::string> searchCategory, std::vector<std::tuple<u16, std::string, std::string>> &searchType, bool compare) {
 	std::vector<std::tuple<u16, std::string, std::string>> temp, tempEnd;
 
@@ -163,7 +178,7 @@ std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std
 
 				for (int i2 = 0; i2 < (int)searchType.size(); i2++) {
 					if (std::get<2>(searchType[i2]).find(searchCategory[i]) != std::string::npos) {
-						
+
 						if (compare) {
 							if (std::get<2>(searchType[i2]) == searchCategory[i]) {
 								temp.push_back({searchType[i2]});

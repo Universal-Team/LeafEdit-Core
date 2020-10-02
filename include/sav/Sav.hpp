@@ -61,7 +61,7 @@ public:
 	Sav& operator=(const Sav& save) = delete;
 
 	/* Get Sav Contents. */
-	virtual std::unique_ptr<Player> player(int player, int index = 0) const = 0;
+	virtual std::unique_ptr<Player> player(int player) const = 0;
 	virtual std::unique_ptr<Villager> villager(int villager) const = 0;
 	virtual std::unique_ptr<Town> town() const = 0;
 	virtual std::unique_ptr<Island> island() const = 0;
@@ -69,7 +69,7 @@ public:
 
 	/* Special Getter's for AC:HHD. */
 	virtual std::unique_ptr<PlayerHHD> playerhhd() const = 0;
-	
+
 	/* Call this when finished editing. */
 	virtual void Finish(void) = 0;
 

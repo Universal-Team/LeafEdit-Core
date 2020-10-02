@@ -28,28 +28,44 @@
 #include "itemUtils.hpp"
 #include "saveUtils.hpp"
 
-/* Item ID. */
+/*
+	Get and Set the Item's ID.
+*/
 u16 ItemNL::id() const { return SaveUtils::Read<u16>(this->itemPointer(), 0); }
 void ItemNL::id(u16 v) { SaveUtils::Write<u16>(this->itemPointer(), 0, v); }
 
-/* Item Flags. */
+/*
+	Get and Set the Item's Flags.
+*/
 u16 ItemNL::flags() const { return SaveUtils::Read<u16>(this->itemPointer(), 2); }
 void ItemNL::flags(u16 v) { SaveUtils::Write<u16>(this->itemPointer(), 2, v); }
 
+/*
+	Get and Set the Item's first flag.
+*/
 u8 ItemNL::flag1() const { return SaveUtils::Read<u8>(this->itemPointer(), 2); }
 void ItemNL::flag1(u8 v) { SaveUtils::Write<u8>(this->itemPointer(), 2, v); }
 
+/*
+	Get and Set the Item's second flag.
+*/
 u8 ItemNL::flag2() const { return SaveUtils::Read<u8>(this->itemPointer(), 3); }
 void ItemNL::flag2(u8 v) { SaveUtils::Write<u8>(this->itemPointer(), 3, v); }
 
-/* Item Rotation. (Furniture / House) */
+/*
+	Get and Set the Item's Rotation. (Furniture / House)
+*/
 FurnitureDirection ItemNL::rotation() const { return FurnitureDirection::None; }
 void ItemNL::rotation(FurnitureDirection Direction) { }
 
-/* Item Name. */
+/*
+	Get the Item's name.
+*/
 std::string ItemNL::name() const { return ItemUtils::getName(this->id()); }
 
-/* Item Type / Category. */
+/*
+	Get the Item's category | type.
+*/
 ItemType ItemNL::itemtype() const {
 	u16 ID = this->id(); // Only 1 time needed.
 

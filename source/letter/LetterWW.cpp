@@ -27,7 +27,11 @@
 #include "LetterWW.hpp"
 #include "saveUtils.hpp"
 
-/* Player ID. */
+/*
+	Get and Set the Player ID.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 u16 LetterWW::playerid(bool sender) const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -68,7 +72,11 @@ void LetterWW::playerid(u16 v, bool sender) {
 	}
 }
 
-/* Player Name. */
+/*
+	Get and Set the Player Name.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 std::u16string LetterWW::playername(bool sender) const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -111,7 +119,11 @@ void LetterWW::playername(std::u16string v, bool sender) {
 	}
 }
 
-/* Town ID. */
+/*
+	Get and Set the Town ID.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 u16 LetterWW::townid(bool sender) const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -152,7 +164,11 @@ void LetterWW::townid(u16 v, bool sender) {
 	}
 }
 
-/* Town Name. */
+/*
+	Get and Set the Town Name.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 std::u16string LetterWW::townname(bool sender) const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -195,13 +211,17 @@ void LetterWW::townname(std::u16string v, bool sender) {
 	}
 }
 
-/* Player Index. TODO? */
+/*
+	Get and Set the Player Index.
+*/
 u8 LetterWW::playerindex() const {
 	return 0;
 }
 void LetterWW::playerindex(u8 v) { }
 
-/* Letter intro part. */
+/*
+	Get and Set the Letter's intro part.
+*/
 std::u16string LetterWW::intro() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -244,7 +264,9 @@ void LetterWW::intro(std::u16string v) {
 	}
 }
 
-/* Letter body part. */
+/*
+	Get and Set the Letter's body part.
+*/
 std::u16string LetterWW::body() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -287,7 +309,9 @@ void LetterWW::body(std::u16string v) {
 	}
 }
 
-/* Letter end part. */
+/*
+	Get and Set the Letter's ending part.
+*/
 std::u16string LetterWW::end() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -330,13 +354,17 @@ void LetterWW::end(std::u16string v) {
 	}
 }
 
-/* Name index. TODO? */
+/*
+	Get and Set the Name index.
+*/
 u8 LetterWW::nameindex() const {
 	return 0;
 }
 void LetterWW::nameindex(u8 v) { }
 
-/* Paper ID. */
+/*
+	Get and Set the Letter's Paper ID.
+*/
 u8 LetterWW::paperid() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -377,7 +405,9 @@ void LetterWW::paperid(u8 v) {
 	}
 }
 
-/* Letter flags. */
+/*
+	Get and Set the Letter's flags.
+*/
 u8 LetterWW::flag() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:
@@ -418,19 +448,25 @@ void LetterWW::flag(u8 v) {
 	}
 }
 
-/* Sender ID. AC:WW handles it different. */
+/*
+	Get and Set the Sender ID.
+*/
 u8 LetterWW::senderid() const {
 	return 0;
 }
 void LetterWW::senderid(u8 v) { }
 
-/* Letter type. TODO? */
+/*
+	Get and Set the Letter's type.
+*/
 u8 LetterWW::lettertype() const {
 	return 0;
 }
 void LetterWW::lettertype(u8 v) { }
 
-/* Attachment item. */
+/*
+	Return the Letter's Attachment item.
+*/
 std::unique_ptr<Item> LetterWW::item() const {
 	switch(this->region) {
 		case WWRegion::USA_REV0:

@@ -62,7 +62,7 @@ public:
 
 	std::u16string origtownname() const override;
 	void origtownname(std::u16string v) override;
-	
+
 	u8 designtype() const override;
 	void designtype(u8 v) override;
 
@@ -76,6 +76,27 @@ public:
 private:
 	u8* patternPointer() const {
 		return data.get() + Offset;
+	}
+
+	u32 getPatternSize() const {
+		switch(this->region) {
+			case WWRegion::USA_REV0:
+			case WWRegion::USA_REV1:
+			case WWRegion::EUR_REV1:
+				return 0x228;
+
+			case WWRegion::JPN_REV0:
+			case WWRegion::JPN_REV1:
+				return 0x220;
+
+			case WWRegion::KOR_REV1:
+				return 0x234;
+
+			case WWRegion::UNKNOWN:
+				return 0;
+		}
+
+		return 0;
 	}
 };
 

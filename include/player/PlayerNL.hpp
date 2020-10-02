@@ -47,9 +47,9 @@ protected:
 	int Index;
 public:
 	virtual ~PlayerNL() { }
-	PlayerNL(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : 
+	PlayerNL(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) :
 			 Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), Index(index) { }
-			 
+
 	u32 getPlayerSize() const override { return 0x9F10; }
 
 	u8 face() const override;
@@ -105,11 +105,15 @@ public:
 	std::unique_ptr<Item> dresser(int slot) const override;
 	std::unique_ptr<Item> islandbox(int slot) const override;
 	std::unique_ptr<Item> storage(int slot) const override { return nullptr; };
-	
+
 	std::unique_ptr<Pattern> pattern(int slot) const override;
 
 	u8 *tpcImage() const override;
 	bool hasTPC() const override { return true; }
+
+	/* Dump & Inject. */
+	void dumpPlayer(const std::string fileName) override;
+	bool injectPlayer(const std::string fileName) override;
 private:
 	/* EncryptedInt32 Variables. */
 	mutable EncryptedInt32 walletValue, bankValue, islandValue;

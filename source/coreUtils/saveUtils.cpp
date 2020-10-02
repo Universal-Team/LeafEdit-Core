@@ -27,11 +27,27 @@
 #include "saveUtils.hpp"
 
 /* Credits: PKSM-Core: https://github.com/FlagBrew/PKSM-Core/blob/master/source/utils/flagUtil.cpp. */
+
+/*
+	Get a bit.
+
+	const u8 *data: The save buffer.
+	int offset: The offset.
+	u8 bitIndex: The index of the bit.
+*/
 bool SaveUtils::GetBit(const u8 *data, int offset, u8 bitIndex) {
 	bitIndex &= 7; // ensure bit access is 0-7.
 	return (data[offset] >> bitIndex & 1) != 0;
 }
 
+/*
+	Set a bit.
+
+	const u8 *data: The save buffer.
+	int offset: The offset.
+	u8 bitIndex: The index of the bit.
+	bool bit: if the bit is 1 (true) or 0 (false).
+*/
 void SaveUtils::SetBit(u8 *data, int offset, u8 bitIndex, bool bit) {
 	bitIndex &= 7; // ensure bit access is 0-7.
 	data[offset] &= ~(1 << bitIndex);

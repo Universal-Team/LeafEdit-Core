@@ -27,7 +27,11 @@
 #include "LetterNL.hpp"
 #include "saveUtils.hpp"
 
-/* Player ID. */
+/*
+	Get and Set the Player ID.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 u16 LetterNL::playerid(bool sender) const {
 	return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x34 : 0x0);
 }
@@ -35,7 +39,11 @@ void LetterNL::playerid(u16 v, bool sender) {
 	SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x34 : 0x0, v);
 }
 
-/* Player Name. */
+/*
+	Get and Set the Player Name.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 std::u16string LetterNL::playername(bool sender) const {
 	return StringUtils::ReadUTF16String(this->letterPointer(), sender ? 0x36 : 0x2, 8);
 }
@@ -43,7 +51,11 @@ void LetterNL::playername(std::u16string v, bool sender) {
 	StringUtils::WriteUTF16String(this->letterPointer(), v, sender ? 0x36 : 0x2, 8);
 }
 
-/* Town ID. */
+/*
+	Get and Set the Town ID.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 u16 LetterNL::townid(bool sender) const {
 	return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x4A : 0x16);
 }
@@ -51,7 +63,11 @@ void LetterNL::townid(u16 v, bool sender) {
 	SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x4A : 0x16, v);
 }
 
-/* Town Name. */
+/*
+	Get and Set the Town Name.
+
+	bool sender: If sender (true) or receiver (false).
+*/
 std::u16string LetterNL::townname(bool sender) const {
 	return StringUtils::ReadUTF16String(this->letterPointer(), sender ? 0x4C : 0x18, 8);
 }
@@ -59,7 +75,9 @@ void LetterNL::townname(std::u16string v, bool sender) {
 	StringUtils::WriteUTF16String(this->letterPointer(), v, sender ? 0x4C : 0x18, 8);
 }
 
-/* Player Index. */
+/*
+	Get and Set the Player Index.
+*/
 u8 LetterNL::playerindex() const {
 	return this->letterPointer()[0x30];
 }
@@ -67,7 +85,9 @@ void LetterNL::playerindex(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x30, v);
 }
 
-/* Letter intro part. */
+/*
+	Get and Set the Letter's intro part.
+*/
 std::u16string LetterNL::intro() const {
 	return StringUtils::ReadUTF16String(this->letterPointer(), 0x68, 32);
 }
@@ -75,7 +95,9 @@ void LetterNL::intro(std::u16string v) {
 	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x68, 32);
 }
 
-/* Letter body part. */
+/*
+	Get and Set the Letter's body part.
+*/
 std::u16string LetterNL::body() const {
 	return StringUtils::ReadUTF16String(this->letterPointer(), 0xAA, 192);
 }
@@ -83,7 +105,9 @@ void LetterNL::body(std::u16string v) {
 	StringUtils::WriteUTF16String(this->letterPointer(), v, 0xAA, 192);
 }
 
-/* Letter end part. */
+/*
+	Get and Set the Letter's ending part.
+*/
 std::u16string LetterNL::end() const {
 	return StringUtils::ReadUTF16String(this->letterPointer(), 0x22C, 32);
 }
@@ -91,7 +115,9 @@ void LetterNL::end(std::u16string v) {
 	StringUtils::WriteUTF16String(this->letterPointer(), v, 0x22C, 32);
 }
 
-/* Name index. */
+/*
+	Get and Set the Name index.
+*/
 u8 LetterNL::nameindex() const {
 	return this->letterPointer()[0x26E];
 }
@@ -99,7 +125,9 @@ void LetterNL::nameindex(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x26E, v);
 }
 
-/* Paper ID. */
+/*
+	Get and Set the Letter's Paper ID.
+*/
 u8 LetterNL::paperid() const {
 	return this->letterPointer()[0x26F];
 }
@@ -107,7 +135,9 @@ void LetterNL::paperid(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x26F, v);
 }
 
-/* Letter flags. */
+/*
+	Get and Set the Letter's flags.
+*/
 u8 LetterNL::flag() const {
 	return this->letterPointer()[0x270];
 }
@@ -115,7 +145,9 @@ void LetterNL::flag(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x270, v);
 }
 
-/* Sender ID. */
+/*
+	Get and Set the Sender ID.
+*/
 u8 LetterNL::senderid() const {
 	return this->letterPointer()[0x271];
 }
@@ -123,7 +155,9 @@ void LetterNL::senderid(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x271, v);
 }
 
-/* Letter type. */
+/*
+	Get and Set the Letter's type.
+*/
 u8 LetterNL::lettertype() const {
 	return this->letterPointer()[0x272];
 }
@@ -131,7 +165,9 @@ void LetterNL::lettertype(u8 v) {
 	SaveUtils::Write<u8>(this->letterPointer(), 0x272, v);
 }
 
-/* Attachment item. */
+/*
+	Return the Letter's Attachment item.
+*/
 std::unique_ptr<Item> LetterNL::item() const {
 	return std::make_unique<ItemNL>(this->data, this->Offset + 0x274);
 }

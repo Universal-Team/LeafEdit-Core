@@ -102,11 +102,15 @@ public:
 	virtual std::unique_ptr<Item> dresser(int slot) const = 0;
 	virtual std::unique_ptr<Item> islandbox(int slot) const = 0;
 	virtual std::unique_ptr<Item> storage(int slot) const = 0;
-	
+
 	virtual std::unique_ptr<Pattern> pattern(int slot) const = 0;
 
 	virtual u8 *tpcImage() const = 0;
 	virtual bool hasTPC() const = 0;
+
+	/* Dump & Inject. */
+	virtual void dumpPlayer(const std::string fileName) = 0;
+	virtual bool injectPlayer(const std::string fileName) = 0;
 };
 
 #endif
