@@ -32,7 +32,7 @@
 
 #include <string>
 
-extern std::shared_ptr<Sav> save;
+inline std::unique_ptr<Sav> save;
 
 namespace SaveUtils {
 	/* Read. */
@@ -51,7 +51,7 @@ namespace SaveUtils {
 		*reinterpret_cast<T*>(Buffer + offset) = data;
 
 		if (saveWrite) {
-			if (save != nullptr) save->changesMade(true);
+			if (save) save->changesMade(true);
 		}
 
 	}

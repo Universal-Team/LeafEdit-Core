@@ -34,6 +34,17 @@
 #include <cstring>
 
 /*
+	NOTES for Wild World:
+
+	- The last 3-4 bytes of a savecopy CAN change when storing Letters into the Letter Storage for WHATEVER Reason.
+
+		Should we add a check for that? Like.. ignore the last 3 - 4 bytes?
+		Also how to handle it.. when updating the checksum?
+
+		Unsure yet, research and experimenting needs to be made.
+*/
+
+/*
 	AC:NL Array for the Save Header.
 	This is used to check if the save is an ACNL save.
 */
