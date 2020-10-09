@@ -29,25 +29,20 @@
 
 #include "PatternWA.hpp"
 #include "Shop.hpp"
-
 #include <memory>
-
-class PatternWA;
 
 class ShopWA : public Shop {
 protected:
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> ShopData;
 public:
-	virtual ~ShopWA() { }
+	virtual ~ShopWA() { };
 	ShopWA(std::shared_ptr<u8[]> shopData, u32 offset) :
-		Shop(shopData, offset), Offset(offset), data(shopData) { }
+		Shop(shopData, offset), Offset(offset), ShopData(shopData) { };
 
 	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
 private:
-	u8* shopPointer() const {
-		return data.get() + Offset;
-	}
+	u8* shopPointer() const { return this->ShopData.get() + this->Offset; };
 };
 
 #endif

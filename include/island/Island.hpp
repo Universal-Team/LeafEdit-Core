@@ -30,24 +30,21 @@
 #include "Acre.hpp"
 #include "Item.hpp"
 #include "types.hpp"
-
 #include <memory>
 #include <vector>
 
-class Acre;
-class Item;
-
 class Island {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> IslandData;
 public:
-	virtual ~Island() { }
-	Island(std::shared_ptr<u8[]> islandData) : data(islandData) { }
+	virtual ~Island() { };
+	Island(std::shared_ptr<u8[]> islandData) :
+		IslandData(islandData) { };
 	Island(const Island& island) = delete;
 	Island& operator=(const Island& island) = delete;
 
 	virtual std::unique_ptr<Acre> acre(int Acre) const = 0;
-	
+
 	virtual std::unique_ptr<Item> item(u32 index) const = 0;
 };
 

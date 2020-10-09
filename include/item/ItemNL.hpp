@@ -28,17 +28,16 @@
 #define _LEAFEDIT_CORE_ITEM_NL_HPP
 
 #include "Item.hpp"
-
 #include <memory>
 
 class ItemNL : public Item {
 protected:
+	std::shared_ptr<u8[]> ItemData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
-	virtual ~ItemNL() { }
+	virtual ~ItemNL() { };
 	ItemNL(std::shared_ptr<u8[]> itemData, u32 offset) :
-		Item(itemData, offset), Offset(offset), data(itemData) { }
+		Item(itemData, offset), ItemData(itemData), Offset(offset) { };
 
 	u32 maxItems() const override { return 0; };
 
@@ -57,13 +56,11 @@ public:
 	std::string name() const override;
 
 	ItemType itemtype() const override;
-	
+
 	FurnitureDirection rotation() const override;
 	void rotation(FurnitureDirection Direction) override;
 private:
-	u8* itemPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *itemPointer() const { return this->ItemData.get() + this->Offset; }
 };
 
 #endif

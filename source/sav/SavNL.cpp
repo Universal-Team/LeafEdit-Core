@@ -35,7 +35,7 @@
 std::unique_ptr<Player> SavNL::player(int player) const {
 	if (player > 3) return nullptr; // Player goes out of scope.
 
-	return std::make_unique<PlayerNL>(this->dataPointer, 0xA0 + (player * 0x9F10), player);
+	return std::make_unique<PlayerNL>(this->SaveData, 0xA0 + (player * 0x9F10), player);
 }
 
 /*
@@ -46,33 +46,25 @@ std::unique_ptr<Player> SavNL::player(int player) const {
 std::unique_ptr<Villager> SavNL::villager(int villager) const {
 	if (villager > 9) return nullptr; // Villager goes out of scope.
 
-	return std::make_unique<VillagerNL>(this->dataPointer, 0x027d10 + (villager * 0x24f8));
+	return std::make_unique<VillagerNL>(this->SaveData, 0x027d10 + (villager * 0x24f8));
 }
 
 /*
 	Return the Town.
 */
-std::unique_ptr<Town> SavNL::town() const {
-	return std::make_unique<TownNL>(this->dataPointer);
-}
+std::unique_ptr<Town> SavNL::town() const { return std::make_unique<TownNL>(this->SaveData); }
 
 /*
 	Return the Island.
 */
-std::unique_ptr<Island> SavNL::island() const {
-	return std::make_unique<IslandNL>(this->dataPointer);
-}
+std::unique_ptr<Island> SavNL::island() const { return std::make_unique<IslandNL>(this->SaveData); }
 
 /*
 	Return the shops.
 */
-std::unique_ptr<Shop> SavNL::shop() const {
-	return std::make_unique<ShopNL>(this->dataPointer, 0);
-}
+std::unique_ptr<Shop> SavNL::shop() const { return std::make_unique<ShopNL>(this->SaveData, 0); }
 
 /*
 	Last call before writing to file. Update Checksum.
 */
-void SavNL::Finish(void) {
-	Checksum::FixNLCRC32s(this->savePointer());
-}
+void SavNL::Finish(void) { Checksum::FixNLCRC32s(this->savePointer()); }

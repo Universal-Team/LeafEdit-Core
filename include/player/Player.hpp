@@ -31,22 +31,23 @@
 #include "Letter.hpp"
 #include "Pattern.hpp"
 #include "types.hpp"
-
 #include <memory>
 
-class Item;
-class Letter;
 class Pattern;
 
 class Player {
 protected:
-	std::shared_ptr<u8[]> data;
-	u32 offset;
+	std::shared_ptr<u8[]> PlayerData;
+	u32 Offset;
 public:
-	virtual ~Player() { }
-	Player(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) : data(playerData), offset(playerOffset) { }
+	virtual ~Player() { };
+
+	Player(std::shared_ptr<u8[]> data, u32 offset, u8 index) :
+		PlayerData(data), Offset(offset) { };
+
 	Player(const Player& player) = delete;
 	Player& operator=(const Player& player) = delete;
+
 	virtual u32 getPlayerSize() const = 0;
 
 	virtual u8 face() const = 0;
@@ -108,9 +109,17 @@ public:
 	virtual u8 *tpcImage() const = 0;
 	virtual bool hasTPC() const = 0;
 
-	/* Dump & Inject. */
+	/*
+		Dump & Inject.
+	*/
 	virtual void dumpPlayer(const std::string fileName) = 0;
 	virtual bool injectPlayer(const std::string fileName) = 0;
+
+
+	virtual u8 acornFestival() const = 0;
+	virtual void acornFestival(u8 v) = 0;
+	virtual u8 bed() const = 0;
+	virtual void bed(u8 v) = 0;
 };
 
 #endif

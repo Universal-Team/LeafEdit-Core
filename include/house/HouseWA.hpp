@@ -28,37 +28,32 @@
 #define _LEAFEDIT_CORE_HOUSE_WA_HPP
 
 #include "House.hpp"
-
 #include <memory>
 
 class RoomWA : public Room {
 protected:
+	std::shared_ptr<u8[]> RoomData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
-	virtual ~RoomWA() { }
+	virtual ~RoomWA() { };
 	RoomWA(std::shared_ptr<u8[]> roomData, u32 offset) :
-		Room(roomData, offset), Offset(offset), data(roomData) { }
+		Room(roomData, offset), RoomData(roomData), Offset(offset) { };
 private:
-	u8* roomPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *roomPointer() const { return this->RoomData.get() + this->Offset; };
 };
 
 class HouseWA : public House {
 protected:
+	std::shared_ptr<u8[]> HouseData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
-	virtual ~HouseWA() { }
+	virtual ~HouseWA() { };
 	HouseWA(std::shared_ptr<u8[]> houseData, u32 offset) :
-		House(houseData, offset), Offset(offset), data(houseData) { }
+		House(houseData, offset), HouseData(houseData), Offset(offset) { };
 
 	std::unique_ptr<Room> room(int room) const override;
 private:
-	u8* housePointer() const {
-		return data.get() + Offset;
-	}
+	u8 *housePointer() const { return this->HouseData.get() + this->Offset; };
 };
 
 #endif

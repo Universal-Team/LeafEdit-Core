@@ -29,18 +29,16 @@
 
 #include "Item.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class Item;
 
 class Letter {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> LetterData;
 	u32 Offset;
 public:
-	virtual ~Letter() { }
-	Letter(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Letter() { };
+	Letter(std::shared_ptr<u8[]> data, u32 offset) :
+		LetterData(data), Offset(offset) { };
 	Letter(const Letter& letter) = delete;
 	Letter& operator=(const Letter& letter) = delete;
 

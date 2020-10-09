@@ -32,9 +32,7 @@
 	Get and Set for the HairStyle.
 	(ranges from 0 to 0x1F).
 */
-u8 PlayerHHD::hairstyle() const {
-	return this->playerPointer()[0xC];
-}
+u8 PlayerHHD::hairstyle() const { return this->playerPointer()[0xC]; }
 void PlayerHHD::hairstyle(u8 v) {
 	if (v >= 0x0 && v <= 0x1F) this->playerPointer()[0xC] = v;
 }
@@ -43,9 +41,7 @@ void PlayerHHD::hairstyle(u8 v) {
 	Get and Set for the Tan aka skin color.
 	(ranges from 0 to 7).
 */
-u8 PlayerHHD::tan() const {
-	return this->playerPointer()[0xD];
-}
+u8 PlayerHHD::tan() const { return this->playerPointer()[0xD]; }
 void PlayerHHD::tan(u8 v) {
 	if (v >= 0x0 && v <= 0x7) this->playerPointer()[0xD] = v;
 }
@@ -54,9 +50,7 @@ void PlayerHHD::tan(u8 v) {
 	Get and Set for the HairColor.
 	(ranges from 0 to 0xF).
 */
-u8 PlayerHHD::haircolor() const {
-	return this->playerPointer()[0xE];
-}
+u8 PlayerHHD::haircolor() const { return this->playerPointer()[0xE]; }
 void PlayerHHD::haircolor(u8 v) {
 	if (v >= 0x0 && v <= 0xF) this->playerPointer()[0xE] = v;
 }
@@ -65,9 +59,7 @@ void PlayerHHD::haircolor(u8 v) {
 	Get and Set for the Face.
 	(ranges from 0 to 0xC).
 */
-u8 PlayerHHD::face() const {
-	return this->playerPointer()[0xF];
-}
+u8 PlayerHHD::face() const { return this->playerPointer()[0xF]; }
 void PlayerHHD::face(u8 v) {
 	if (v >= 0x0 && v <= 0xC) this->playerPointer()[0xF] = v;
 }
@@ -76,9 +68,7 @@ void PlayerHHD::face(u8 v) {
 	Get and Set for the EyeColor.
 	(ranges from 0 to 5).
 */
-u8 PlayerHHD::eyecolor() const {
-	return this->playerPointer()[0x10];
-}
+u8 PlayerHHD::eyecolor() const { return this->playerPointer()[0x10]; }
 void PlayerHHD::eyecolor(u8 v) {
 	if (v >= 0x0 && v <= 0x5) this->playerPointer()[0x10] = v;
 }
@@ -87,9 +77,7 @@ void PlayerHHD::eyecolor(u8 v) {
 	Get and Set for the HeadWear.
 	(ranges from 0x266A to 0x273E).
 */
-u16 PlayerHHD::headwear() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x12);
-}
+u16 PlayerHHD::headwear() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x12); }
 void PlayerHHD::headwear(u16 v) {
 	if (v >= 0x266A && v <= 0x273E) SaveUtils::Write<u16>(this->playerPointer(), 0x12, v);
 }
@@ -98,9 +86,7 @@ void PlayerHHD::headwear(u16 v) {
 	Get and Set for the accessoires.
 	(ranges from 0x273F to 0x2794).
 */
-u16 PlayerHHD::accessories() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x16);
-}
+u16 PlayerHHD::accessories() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x16); }
 void PlayerHHD::accessories(u16 v) {
 	if (v >= 0x273F && v <= 0x2794) SaveUtils::Write<u16>(this->playerPointer(), 0x16, v);
 }
@@ -109,9 +95,7 @@ void PlayerHHD::accessories(u16 v) {
 	Get and Set for the Shirt.
 	(ranges from 0x2324 to 0x2566).
 */
-u16 PlayerHHD::shirt() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x1A);
-}
+u16 PlayerHHD::shirt() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x1A); }
 void PlayerHHD::shirt(u16 v) {
 	if (v >= 0x2324 && v <= 0x2566) SaveUtils::Write<u16>(this->playerPointer(), 0x1A, v);
 }
@@ -120,9 +104,7 @@ void PlayerHHD::shirt(u16 v) {
 	Get and Set for the Pants.
 	(ranges from 0x2567 to 0x25E2).
 */
-u16 PlayerHHD::pants() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x1E);
-}
+u16 PlayerHHD::pants() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x1E); }
 void PlayerHHD::pants(u16 v) {
 	if (v >= 0x2567 && v <= 0x25E2) SaveUtils::Write<u16>(this->playerPointer(), 0x1E, v);
 }
@@ -131,9 +113,7 @@ void PlayerHHD::pants(u16 v) {
 	Get and Set for the Socks.
 	(ranges from 0x25E3 to 0x2606).
 */
-u16 PlayerHHD::socks() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x22);
-}
+u16 PlayerHHD::socks() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x22); }
 void PlayerHHD::socks(u16 v) {
 	if (v >= 0x25E3 && v <= 0x2606) SaveUtils::Write<u16>(this->playerPointer(), 0x22, v);
 }
@@ -142,9 +122,7 @@ void PlayerHHD::socks(u16 v) {
 	Get and Set for the shoes.
 	(ranges from 0x2607 to 0x2644).
 */
-u16 PlayerHHD::shoes() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x26);
-}
+u16 PlayerHHD::shoes() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x26); }
 void PlayerHHD::shoes(u16 v) {
 	if (v >= 0x2607 && v <= 0x2644) SaveUtils::Write<u16>(this->playerPointer(), 0x26, v);
 }
@@ -153,9 +131,7 @@ void PlayerHHD::shoes(u16 v) {
 	Get and Set for the Tools.
 	(ranges from 0x3221 to 0x3277).
 */
-u16 PlayerHHD::tools() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x2A);
-}
+u16 PlayerHHD::tools() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x2A); }
 void PlayerHHD::tools(u16 v) {
 	if (v >= 0x3221 && v <= 0x3277) SaveUtils::Write<u16>(this->playerPointer(), 0x2A, v);
 }
@@ -163,9 +139,7 @@ void PlayerHHD::tools(u16 v) {
 /*
 	Get and Set for the Player ID.
 */
-u16 PlayerHHD::playerid() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x3F528);
-}
+u16 PlayerHHD::playerid() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x3F528); }
 void PlayerHHD::playerid(u16 v) {
 	SaveUtils::Write<u16>(this->playerPointer(), 0x3F528, v);
 }
@@ -173,13 +147,8 @@ void PlayerHHD::playerid(u16 v) {
 /*
 	Get and Set for the Player Name.
 */
-std::u16string PlayerHHD::name() const {
-	return StringUtils::ReadUTF16String(this->playerPointer(), 0x3F52A, 8);
-}
-
-void PlayerHHD::name(std::u16string v) {
-	StringUtils::WriteUTF16String(this->playerPointer(), v, 0x3F52A, 8);
-}
+std::u16string PlayerHHD::name() const { return StringUtils::ReadUTF16String(this->playerPointer(), 0x3F52A, 8); }
+void PlayerHHD::name(std::u16string v) { StringUtils::WriteUTF16String(this->playerPointer(), v, 0x3F52A, 8); }
 
 /*
 	Return the Player Pattern.
@@ -189,7 +158,7 @@ void PlayerHHD::name(std::u16string v) {
 std::unique_ptr<Pattern> PlayerHHD::pattern(u32 slot) const {
 	if (slot > 119) return nullptr;
 
-	return std::make_unique<PatternHHD>(this->playerData, (0x1A0 + 0x1BFA88) + 0x30 + (0x870 * slot));
+	return std::make_unique<PatternHHD>(this->PlayerData, (0x1A0 + 0x1BFA88) + 0x30 + (0x870 * slot));
 }
 
 /*
@@ -298,12 +267,12 @@ void PlayerHHD::unlockEmotions() {
 		0x46, 0x47, 0x48, 0x4A
 	};
 
-	for(int i = 0; i < 48; i++) {
+	for(u8 i = 0; i < 48; i++) {
 		this->playerPointer()[0x40D54 + i] = Emotions[i];
 	}
 }
 void PlayerHHD::lockEmotions() {
-	for(int i = 0; i < 48; i++) {
+	for(u8 i = 0; i < 48; i++) {
 		this->playerPointer()[0x40D54 + i] = 0;
 	}
 }

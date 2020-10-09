@@ -29,6 +29,7 @@
 
 #include "itemKind.hpp"
 #include "types.hpp"
+#include <memory>
 
 class ItemWhiteList {
 public:

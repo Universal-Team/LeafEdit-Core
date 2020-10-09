@@ -31,7 +31,10 @@
 #include <cstring>
 #include <string>
 
-static constexpr u32 crcTable_1[256] = { /* Polynomial: 0x1EDC6F41, 0xFFFFFFFF initial value, 0xFFFFFFFF xor, Input Reflection, Output Reflection. */
+static constexpr u32 crcTable_1[256] = {
+	/*
+		Polynomial: 0x1EDC6F41, 0xFFFFFFFF initial value, 0xFFFFFFFF xor, Input Reflection, Output Reflection.
+	*/
 	0x00000000, 0xF26B8303, 0xE13B70F7, 0x1350F3F4, 0xC79A971F,
 	0x35F1141C, 0x26A1E7E8, 0xD4CA64EB, 0x8AD958CF, 0x78B2DBCC,
 	0x6BE22838, 0x9989AB3B, 0x4D43CFD0, 0xBF284CD3, 0xAC78BF27,
@@ -86,7 +89,10 @@ static constexpr u32 crcTable_1[256] = { /* Polynomial: 0x1EDC6F41, 0xFFFFFFFF i
 	0xAD7D5351
 };
 
-static constexpr u32 crcTable_2[256] = { /* Polynomial: 0x04C11DB7, 0x00000000 initial value, 0xFFFFFFFF xor, No Input Reflection, No Output Reflection. */
+static constexpr u32 crcTable_2[256] = {
+	/*
+		Polynomial: 0x04C11DB7, 0x00000000 initial value, 0xFFFFFFFF xor, No Input Reflection, No Output Reflection.
+	*/
 	0x00000000, 0x04C11DB7, 0x09823B6E, 0x0D4326D9, 0x130476DC,
 	0x17C56B6B, 0x1A864DB2, 0x1E475005, 0x2608EDB8, 0x22C9F00F,
 	0x2F8AD6D6, 0x2B4BCB61, 0x350C9B64, 0x31CD86D3, 0x3C8EA00A,
@@ -185,7 +191,7 @@ u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	ChecksumType type: The type of the checksum.
 */
 bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type) {
-	if (type == CRC_NORMAL) {
+	if (type == ChecksumType::CRC_NORMAL) {
 		return CalculateCRC32Normal(buf + startOffset + 4, size) == crc;
 	}
 
@@ -202,14 +208,14 @@ bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, Checksum
 */
 u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType type) {
 	u32 crc32 = 0;
-	if (type == CRC_NORMAL) {
+	if (type == ChecksumType::CRC_NORMAL) {
 		crc32 = CalculateCRC32Normal(rawData + startOffset + 4, size);
 
 	} else {
 		crc32 = CalculateCRC32Reflected(rawData + startOffset + 4, size);
 	}
 
-	SaveUtils::Write<u32>(rawData, startOffset, crc32); // write calculated crc32.
+	SaveUtils::Write<u32>(rawData, startOffset, crc32); // Write calculated crc32.
 	return crc32;
 }
 
@@ -221,7 +227,9 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
-	/* Rehash players. */
+	/*
+		Rehash players.
+	*/
 	for (int i = 0; i < 4; i++) {
 		UpdateCRC32(data, 0xA0 + (0xA480 * i), 0x6B84); // Players Checksum1.
 		UpdateCRC32(data, 0xA0 + (0xA480 * i) + 0x6B88, 0x38F4); // Players Checksum2.
@@ -234,9 +242,9 @@ void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x71924, 0xBE4); // Unknown2 Checksum.
 	UpdateCRC32(data, 0x73954, 0x16188); // LetterStorage Checksum.
 
-	UpdateCRC32(data, 0x5033C, 0x28F0, CRC_NORMAL); // Unknown3 Checksum.
-	UpdateCRC32(data, 0x52C30, 0x7F0, CRC_NORMAL); // Unknown4 Checksum.
-	UpdateCRC32(data, 0x7250C, 0x1444, CRC_NORMAL); // Unknown5 Checksum.
+	UpdateCRC32(data, 0x5033C, 0x28F0, ChecksumType::CRC_NORMAL); // Unknown3 Checksum.
+	UpdateCRC32(data, 0x52C30, 0x7F0, ChecksumType::CRC_NORMAL); // Unknown4 Checksum.
+	UpdateCRC32(data, 0x7250C, 0x1444, ChecksumType::CRC_NORMAL); // Unknown5 Checksum.
 }
 
 /*
@@ -247,7 +255,9 @@ void Checksum::FixWACRC32s(u8 *data) {
 void Checksum::FixNLCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
-	/* Rehash players. */
+	/*
+		Rehash players.
+	*/
 	for (int i = 0; i < 4; i++) {
 		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i), 0x6B64); // Players Checksum1.
 		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i) + 0x6B68, 0x33A4); // Players Checksum2.
@@ -303,22 +313,16 @@ bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint c
 */
 void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
 	switch(region) {
-		case WWRegion::USA_REV0:
-		case WWRegion::USA_REV1:
-		case WWRegion::EUR_REV1:
+		case WWRegion::EUR_USA:
 			SaveUtils::Write<u16>(saveBuffer, 0x15FDC, CalculateWW(buffer, size, 0xAFEE));
 			break;
 
-		case WWRegion::JPN_REV0:
-		case WWRegion::JPN_REV1:
+		case WWRegion::JPN:
 			SaveUtils::Write<u16>(saveBuffer, 0x12220, CalculateWW(buffer, size, 0x9110));
 			break;
 
-		case WWRegion::KOR_REV1:
+		case WWRegion::KOR:
 			SaveUtils::Write<u16>(saveBuffer, 0x173F8, CalculateWW(buffer, size, 0xB9FC));
-			break;
-
-		case WWRegion::UNKNOWN:
 			break;
 	}
 }

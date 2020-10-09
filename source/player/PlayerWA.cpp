@@ -27,124 +27,79 @@
 #include "PlayerWA.hpp"
 #include "saveUtils.hpp"
 #include "stringUtils.hpp"
-
 #include <cstring>
 #include <unistd.h>
 
 /*
 	Get and Set for the Face.
 */
-u8 PlayerWA::face() const {
-	return this->playerPointer()[0x06];
-}
-void PlayerWA::face(u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x06, v);
-}
+u8 PlayerWA::face() const { return this->playerPointer()[0x06]; }
+void PlayerWA::face(u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x06, v); }
 
 /*
 	Get and Set for the Tan aka skin color.
 */
-u16 PlayerWA::tan() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x08);
-}
-void PlayerWA::tan(u16 v) {
-	SaveUtils::Write<u16>(this->playerPointer(), 0x08, v);
-}
+u16 PlayerWA::tan() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x08); }
+void PlayerWA::tan(u16 v) { SaveUtils::Write<u16>(this->playerPointer(), 0x08, v); }
 
 /*
 	Get and Set for the Gender.
 */
-u8 PlayerWA::gender() const {
-	return this->playerPointer()[0x55BA];
-}
-void PlayerWA::gender(u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x55BA, v);
-}
+u8 PlayerWA::gender() const { return this->playerPointer()[0x55BA]; }
+void PlayerWA::gender(u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x55BA, v); }
 
 /*
 	Get and Set for the HairStyle.
 */
-u8 PlayerWA::hairstyle() const {
-	return this->playerPointer()[0x04];
-}
-void PlayerWA::hairstyle(u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x04, v);
-}
+u8 PlayerWA::hairstyle() const { return this->playerPointer()[0x04]; }
+void PlayerWA::hairstyle(u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x04, v); }
 
 /*
 	Get and Set for the HairColor.
 */
-u8 PlayerWA::haircolor() const {
-	return this->playerPointer()[0x05];
-}
-void PlayerWA::haircolor(u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x05, v);
-}
+u8 PlayerWA::haircolor() const { return this->playerPointer()[0x05]; }
+void PlayerWA::haircolor(u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x05, v); }
 
 /*
 	Get and Set for the EyeColor.
 */
-u8 PlayerWA::eyecolor() const {
-	return this->playerPointer()[0x07];
-}
-void PlayerWA::eyecolor(u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x07, v);
-}
+u8 PlayerWA::eyecolor() const { return this->playerPointer()[0x07]; }
+void PlayerWA::eyecolor(u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x07, v); }
 
 /*
 	Get and Set for the Player Badges.
 */
-u8 PlayerWA::badge(int badge) const {
-	return this->playerPointer()[0x569C + badge];
-}
-void PlayerWA::badge(int badge, u8 v) {
-	SaveUtils::Write<u8>(this->playerPointer(), 0x569C + badge, v);
-}
+u8 PlayerWA::badge(int badge) const { return this->playerPointer()[0x569C + badge]; }
+void PlayerWA::badge(int badge, u8 v) { SaveUtils::Write<u8>(this->playerPointer(), 0x569C + badge, v); }
 
 /*
 	Get and Set for the Player ID.
 */
-u16 PlayerWA::playerid() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x55A6);
-}
-void PlayerWA::playerid(u16 v) {
-	SaveUtils::Write<u16>(this->playerPointer(), 0x55A6, v);
-}
+u16 PlayerWA::playerid() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x55A6); }
+void PlayerWA::playerid(u16 v) { SaveUtils::Write<u16>(this->playerPointer(), 0x55A6, v); }
 
 /*
 	Get and Set for the Town ID.
 */
-u16 PlayerWA::townid() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x55BC);
-}
-void PlayerWA::townid(u16 v) {
-	SaveUtils::Write<u16>(this->playerPointer(), 0x55BC, v);
-}
+u16 PlayerWA::townid() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x55BC); }
+void PlayerWA::townid(u16 v) { SaveUtils::Write<u16>(this->playerPointer(), 0x55BC, v); }
 
 /*
 	Get and Set for the Town Name.
 */
-std::u16string PlayerWA::townname() const {
-	return StringUtils::UTF8toUTF16("?");
-}
+std::u16string PlayerWA::townname() const { return StringUtils::UTF8toUTF16("?"); }
 void PlayerWA::townname(std::u16string v) { }
 
 /*
 	Return if the Player exist.
 */
-bool PlayerWA::exist() const {
-	return SaveUtils::Read<u16>(this->playerPointer(), 0x55A6) != 0;
-}
+bool PlayerWA::exist() const { return SaveUtils::Read<u16>(this->playerPointer(), 0x55A6) != 0; }
 
 /*
 	Get and Set for the Player Name.
 */
-std::u16string PlayerWA::name() const {
-	return StringUtils::ReadUTF16String(this->playerPointer(), 0x55A8, 8);
-}
-void PlayerWA::name(std::u16string v) {
-	StringUtils::WriteUTF16String(this->playerPointer(), v, 0x55A8, 8);
-}
+std::u16string PlayerWA::name() const { return StringUtils::ReadUTF16String(this->playerPointer(), 0x55A8, 8); }
+void PlayerWA::name(std::u16string v) { StringUtils::WriteUTF16String(this->playerPointer(), v, 0x55A8, 8); }
 
 /*
 	Get and Set for the Wallet Amount.
@@ -218,7 +173,7 @@ void PlayerWA::coupons(u32 v) {
 std::unique_ptr<Letter> PlayerWA::letter(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<LetterWA>(this->data, this->offset + 0x7008 + (0x280 * slot));
+	return std::make_unique<LetterWA>(this->PlayerData, this->Offset + 0x7008 + (0x280 * slot));
 }
 
 /*
@@ -229,7 +184,7 @@ std::unique_ptr<Letter> PlayerWA::letter(int slot) const {
 std::unique_ptr<Item> PlayerWA::pocket(int slot) const {
 	if (slot > 15) return nullptr;
 
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x6BD0 + slot * 4);
+	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x6BD0 + slot * 4);
 }
 
 /*
@@ -240,7 +195,7 @@ std::unique_ptr<Item> PlayerWA::pocket(int slot) const {
 std::unique_ptr<Item> PlayerWA::dresser(int slot) const {
 	if (slot > 179) return nullptr;
 
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x92F0 + slot * 4);
+	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x92F0 + slot * 4);
 }
 
 /*
@@ -251,7 +206,7 @@ std::unique_ptr<Item> PlayerWA::dresser(int slot) const {
 std::unique_ptr<Item> PlayerWA::islandbox(int slot) const {
 	if (slot > 39) return nullptr;
 
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x6F10 + slot * 4);
+	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x6F10 + slot * 4);
 }
 
 /*
@@ -262,7 +217,7 @@ std::unique_ptr<Item> PlayerWA::islandbox(int slot) const {
 std::unique_ptr<Item> PlayerWA::storage(int slot) const {
 	if (slot > 359) return nullptr;
 
-	return std::make_unique<ItemWA>(this->data, (this->Index * 360) + 0x07A778 + slot * 4);
+	return std::make_unique<ItemWA>(this->PlayerData, (this->Index * 360) + 0x07A778 + slot * 4);
 }
 
 /*
@@ -273,7 +228,7 @@ std::unique_ptr<Item> PlayerWA::storage(int slot) const {
 std::unique_ptr<Pattern> PlayerWA::pattern(int slot) const {
 	if (slot > 9) return nullptr;
 
-	return std::make_unique<PatternWA>(this->data, this->offset + 0x2C + slot * 0x870);
+	return std::make_unique<PatternWA>(this->PlayerData, this->Offset + 0x2C + slot * 0x870);
 }
 
 /*

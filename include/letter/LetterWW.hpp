@@ -29,20 +29,17 @@
 
 #include "ItemWW.hpp"
 #include "Letter.hpp"
-
 #include <memory>
-
-class ItemWW;
 
 class LetterWW : public Letter {
 protected:
+	std::shared_ptr<u8[]> LetterData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
-	WWRegion region;
+	WWRegion SaveRegion;
 public:
-	virtual ~LetterWW() { }
+	virtual ~LetterWW() { };
 	LetterWW(std::shared_ptr<u8[]> letterData, u32 offset, WWRegion saveregion) :
-		Letter(letterData, offset), Offset(offset), data(letterData), region(saveregion) { }
+		Letter(letterData, offset), LetterData(letterData), Offset(offset), SaveRegion(saveregion) { };
 
 	u16 playerid(bool sender) const override;
 	void playerid(u16 v, bool sender) override;
@@ -85,9 +82,7 @@ public:
 
 	std::unique_ptr<Item> item() const override;
 private:
-	u8* letterPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *letterPointer() const { return this->LetterData.get() + this->Offset; };
 };
 
 #endif

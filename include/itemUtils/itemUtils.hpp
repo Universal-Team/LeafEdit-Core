@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ITEMUTILS_HPP
 
 #include "types.hpp"
-
 #include <string>
 #include <vector>
 
@@ -39,6 +38,6 @@ namespace ItemUtils {
 	/* Get an Item's name. */
 	std::string getName(u16 ID);
 	std::string getWWName(int category, u8 index);
-}
+};
 
 #endif

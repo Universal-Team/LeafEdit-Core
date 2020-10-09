@@ -30,41 +30,32 @@
 #include "ItemWW.hpp"
 #include "Villager.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class ItemWW;
 
 class VillagerWW : public Villager {
 protected:
-	std::shared_ptr<u8[]> data;
-	WWRegion region;
-	u32 offset;
+	std::shared_ptr<u8[]> VillagerData;
+	u32 Offset;
+	WWRegion SaveRegion;
 public:
-	virtual ~VillagerWW() { }
+	virtual ~VillagerWW() { };
 	VillagerWW(std::shared_ptr<u8[]> villagerData, u32 villagerOffset, WWRegion Region) :
-			Villager(villagerData, villagerOffset), data(villagerData), region(Region), offset(villagerOffset) { }
+			Villager(villagerData, villagerOffset), VillagerData(villagerData), Offset(villagerOffset), SaveRegion(Region) { };
 
 	u32 getVillagerSize() const override {
-		switch(this->region) {
-			case WWRegion::USA_REV0:
-			case WWRegion::USA_REV1:
-			case WWRegion::EUR_REV1:
+		switch(this->SaveRegion) {
+			case WWRegion::EUR_USA:
 				return 0x700;
 
-			case WWRegion::JPN_REV0:
-			case WWRegion::JPN_REV1:
+			case WWRegion::JPN:
 				return 0x5C0;
 
-			case WWRegion::KOR_REV1:
+			case WWRegion::KOR:
 				return 0x7EC;
-
-			case WWRegion::UNKNOWN:
-				return 0;
 		}
 
 		return 0;
-	}
+	};
 
 	u16 id() const override;
 	void id(u16 v) override;
@@ -73,7 +64,7 @@ public:
 
 	u8 personality() const override;
 	void personality(u8 v) override;
-	
+
 	/*
 		Items.
 		NOTE: Carpet, Wallpaper, Umbrella & Song is an uint8_t index. [u8]
@@ -92,15 +83,13 @@ public:
 
 	u8 carpetWW() const override;
 	void carpetWW(u8 crp) override;
-	
+
 	u8 umbrellaWW() const override;
 	void umbrellaWW(u8 umbr) override;
 
 	std::unique_ptr<Item> furniture(int slot) const override;
 private:
-	u8* villagerPointer() const {
-		return data.get() + offset;
-	}
+	u8 *villagerPointer() const { return this->VillagerData.get() + this->Offset; };
 };
 
 #endif

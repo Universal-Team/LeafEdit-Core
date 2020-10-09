@@ -29,17 +29,15 @@
 
 #include "PatternHHD.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class PatternHHD;
 
 class PlayerHHD {
 protected:
-	std::shared_ptr<u8[]> playerData;
+	std::shared_ptr<u8[]> PlayerData;
 public:
-	~PlayerHHD() { }
-	PlayerHHD(std::shared_ptr<u8[]> data) : playerData(data) { }
+	~PlayerHHD() { };
+	PlayerHHD(std::shared_ptr<u8[]> data) :
+		PlayerData(data) { };
 
 	PlayerHHD(const PlayerHHD& p) = delete;
 	PlayerHHD& operator=(const PlayerHHD& p) = delete;
@@ -94,9 +92,7 @@ public:
 	void unlockEmotions();
 	void lockEmotions();
 private:
-	u8 *playerPointer() const {
-		return this->playerData.get() + 0x1A0 + 0x1BFA88;
-	}
+	u8 *playerPointer() const { return this->PlayerData.get() + 0x1A0 + 0x1BFA88; };
 };
 
 #endif

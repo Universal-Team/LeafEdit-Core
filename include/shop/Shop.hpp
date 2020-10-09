@@ -28,16 +28,15 @@
 #define _LEAFEDIT_CORE_SHOP_HPP
 
 #include "types.hpp"
-
 #include <memory>
 
 class Shop {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> ShopData;
 	u32 Offset;
 public:
-	virtual ~Shop() { }
-	Shop(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Shop() { };
+	Shop(std::shared_ptr<u8[]> data, u32 offset) : ShopData(data), Offset(offset) { };
 	Shop(const Shop& shop) = delete;
 	Shop& operator=(const Shop& shop) = delete;
 

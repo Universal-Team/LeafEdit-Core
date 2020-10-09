@@ -52,5 +52,6 @@ void SaveUtils::SetBit(u8 *data, int offset, u8 bitIndex, bool bit) {
 	bitIndex &= 7; // ensure bit access is 0-7.
 	data[offset] &= ~(1 << bitIndex);
 	data[offset] |= (bit ? 1 : 0) << bitIndex;
-	if (save) save->changesMade();
+
+	if (save) save->setChangesMade();
 }

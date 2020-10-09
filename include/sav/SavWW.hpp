@@ -35,43 +35,41 @@
 #include "TownWW.hpp"
 #include "types.hpp"
 #include "VillagerWW.hpp"
-
 #include <string>
-
-class Island;
-class PlayerWW;
-class ShopWW;
-class TownWW;
-class VillagerWW;
 
 class SavWW : public Sav {
 protected:
-	std::shared_ptr<u8[]> dataPointer;
-	WWRegion region;
-	u32 saveSize;
+	std::shared_ptr<u8[]> SaveData;
+	WWRegion SaveRegion;
+	u32 SaveSize;
 public:
-	SavWW(std::shared_ptr<u8[]> dt, WWRegion Region, u32 ssize) : Sav(dt, ssize), dataPointer(dt), region(Region), saveSize(ssize) { }
-	virtual ~SavWW() { }
+	virtual ~SavWW() { };
+	SavWW(std::shared_ptr<u8[]> data, WWRegion Region, u32 ssize) :
+		Sav(data, ssize), SaveData(data), SaveRegion(Region), SaveSize(ssize) { };
+
 	void Finish(void) override;
 
-	/* Get core class contents. */
+	/*
+		Get main core class contents.
+	*/
 	std::unique_ptr<Player> player(int player) const override;
 	std::unique_ptr<Villager> villager(int villager) const override;
 	std::unique_ptr<Town> town() const override;
 	std::unique_ptr<Island> island() const override;
 	std::unique_ptr<Shop> shop() const override;
 
-	/* Special Getter's for AC:HHD. Return nullptr on that for the main series. */
+	/*
+		Special Getter's for AC:HHD.
+		Return nullptr on that for the main series.
+	*/
 	std::unique_ptr<PlayerHHD> playerhhd() const override { return nullptr; };
 
-	SaveType getType() const override { return SaveType::WW; }
-	WWRegion getRegion() const override { return region; }
+	SaveType getType() const override { return SaveType::WW; };
+	WWRegion getRegion() const override { return this->SaveRegion; };
 
-	int maxVillager() const override { return 7; }
+	int maxVillager() const override { return 7; };
 private:
-	u8 *savePointer() const {
-		return dataPointer.get();
-	}
+	u8 *savePointer() const { return this->SaveData.get(); };
 };
 
 #endif

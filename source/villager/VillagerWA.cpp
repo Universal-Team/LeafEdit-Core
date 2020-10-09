@@ -30,12 +30,8 @@
 /*
 	Get and Set the Villager ID.
 */
-u16 VillagerWA::id() const {
-	return SaveUtils::Read<u16>(this->villagerPointer(), 0x0);
-}
-void VillagerWA::id(u16 v) {
-	SaveUtils::Write<u16>(this->villagerPointer(), 0x0, v);
-}
+u16 VillagerWA::id() const { return SaveUtils::Read<u16>(this->villagerPointer(), 0x0); }
+void VillagerWA::id(u16 v) { SaveUtils::Write<u16>(this->villagerPointer(), 0x0, v); }
 
 /*
 	Return if the Villager exist.
@@ -48,47 +44,33 @@ bool VillagerWA::exist() const {
 /*
 	Get and Set for the Villager Personality.
 */
-u8 VillagerWA::personality() const {
-	return this->villagerPointer()[0x2];
-}
-void VillagerWA::personality(u8 v) {
-	SaveUtils::Write<u8>(this->villagerPointer(), 0x2, v);
-}
+u8 VillagerWA::personality() const { return this->villagerPointer()[0x2]; }
+void VillagerWA::personality(u8 v) { SaveUtils::Write<u8>(this->villagerPointer(), 0x2, v); }
 
 /*
 	Return the Villager Song.
 */
-std::unique_ptr<Item> VillagerWA::song() const {
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x2472);
-}
+std::unique_ptr<Item> VillagerWA::song() const { return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x2472); }
 
 /*
 	Return the Villager Shirt.
 */
-std::unique_ptr<Item> VillagerWA::shirt() const {
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x246E);
-}
+std::unique_ptr<Item> VillagerWA::shirt() const { return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x246E); }
 
 /*
 	Return the Villager Wallpaper.
 */
-std::unique_ptr<Item> VillagerWA::wallpaper() const {
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x2476);
-}
+std::unique_ptr<Item> VillagerWA::wallpaper() const { return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x2476); }
 
 /*
 	Return the Villager Carpet.
 */
-std::unique_ptr<Item> VillagerWA::carpet() const {
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x247A);
-}
+std::unique_ptr<Item> VillagerWA::carpet() const { return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x247A); }
 
 /*
 	Return the Villager Umbrella.
 */
-std::unique_ptr<Item> VillagerWA::umbrella() const {
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x247E);
-}
+std::unique_ptr<Item> VillagerWA::umbrella() const { return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x247E); }
 
 /*
 	Return the Villager Furniture.
@@ -98,5 +80,5 @@ std::unique_ptr<Item> VillagerWA::umbrella() const {
 std::unique_ptr<Item> VillagerWA::furniture(int slot) const {
 	if (slot > 15) return nullptr;
 
-	return std::make_unique<ItemWA>(this->data, this->offset + 0x2482 + slot * 4);
+	return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x2482 + slot * 4);
 }

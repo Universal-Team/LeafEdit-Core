@@ -30,19 +30,18 @@
 #include "PatternImage.hpp"
 #include "Player.hpp"
 #include "types.hpp"
-
 #include <memory>
 
-class PatternImage;
 class Player;
 
 class Pattern {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> PatternData;
 	u32 Offset;
 public:
-	virtual ~Pattern() { }
-	Pattern(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Pattern() { };
+	Pattern(std::shared_ptr<u8[]> data, u32 offset) :
+		PatternData(data), Offset(offset) { };
 	Pattern(const Pattern& pattern) = delete;
 	Pattern& operator=(const Pattern& pattern) = delete;
 
@@ -63,16 +62,20 @@ public:
 
 	virtual std::u16string origtownname() const = 0;
 	virtual void origtownname(std::u16string v) = 0;
-	
+
 	virtual u8 designtype() const = 0;
 	virtual void designtype(u8 v) = 0;
 
-	/* Pattern Misc. */
+	/*
+		Pattern Misc.
+	*/
 	virtual void ownPattern(std::unique_ptr<Player> player) = 0;
 	virtual void dumpPattern(const std::string fileName) = 0;
 	virtual void injectPattern(const std::string fileName) = 0;
 
-	/* Pattern Image. */
+	/*
+		Pattern Image.
+	*/
 	virtual std::unique_ptr<PatternImage> image(const int pattern) const = 0;
 };
 

@@ -28,10 +28,11 @@
 #define _LEAFEDIT_CORE_PATTERN_IMAGE_HPP
 
 #include "types.hpp"
-
 #include <memory>
 
-/* Pixel struct. */
+/*
+	Pixel struct.
+*/
 struct pixel {
 	u8 left: 4; // 0000.
 	u8 right: 4; // 1111.
@@ -39,8 +40,8 @@ struct pixel {
 
 class PatternImage {
 public:
-	virtual ~PatternImage() { }
-	PatternImage() { }
+	virtual ~PatternImage() { };
+	PatternImage() { };
 
 	virtual bool isValid() const = 0;
 

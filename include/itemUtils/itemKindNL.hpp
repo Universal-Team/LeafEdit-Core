@@ -98,8 +98,8 @@ private:
 	/* Real Max Item ID is 0x31B4 (excludes wrap paper) but for checks, ID -= 0x2000 from orig item ID. */
 	static constexpr u16 maxID = 0x11B4; // is that right? TODO: CHECK!!!!
 
-	ItemKindNL::ItemBin_s* GetItemBinSlot(u16 ItemID);
-	ItemKind_s* GetItemKindSlot(u16 ItemID);
+	ItemKindNL::ItemBin_s *GetItemBinSlot(u16 ItemID);
+	ItemKind_s *GetItemKindSlot(u16 ItemID);
 };
 
 #endif

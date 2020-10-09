@@ -30,19 +30,16 @@
 #include "Pattern.hpp"
 #include "PatternImageNL.hpp"
 #include "Player.hpp"
-
 #include <memory>
-
-class PatternImageNL;
 
 class PatternNL : public Pattern {
 protected:
+	std::shared_ptr<u8[]> PatternData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
-	virtual ~PatternNL() { }
+	virtual ~PatternNL() { };
 	PatternNL(std::shared_ptr<u8[]> patternData, u32 offset) :
-		Pattern(patternData, offset), Offset(offset), data(patternData) { }
+		Pattern(patternData, offset), PatternData(patternData), Offset(offset) { };
 
 	std::u16string name() const override;
 	void name(std::u16string v) override;
@@ -61,21 +58,23 @@ public:
 
 	std::u16string origtownname() const override;
 	void origtownname(std::u16string v) override;
-	
+
 	u8 designtype() const override;
 	void designtype(u8 v) override;
 
-	/* Pattern Misc. */
+	/*
+		Pattern Misc.
+	*/
 	void ownPattern(std::unique_ptr<Player> player) override;
 	void dumpPattern(const std::string fileName) override;
 	void injectPattern(const std::string fileName) override;
 
-	/* Pattern Image. */
+	/*
+		Pattern Image.
+	*/
 	std::unique_ptr<PatternImage> image(const int pattern) const override;
 private:
-	u8* patternPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *patternPointer() const { return this->PatternData.get() + this->Offset; };
 };
 
 #endif

@@ -33,24 +33,19 @@
 #include "PatternNL.hpp"
 #include "Player.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class ItemNL;
-class LetterNL;
-class PatternNL;
 
 class PlayerNL : public Player {
 protected:
-	std::shared_ptr<u8[]> data;
-	u32 offset;
-	int Index;
+	std::shared_ptr<u8[]> PlayerData;
+	u32 Offset;
+	u8 Index;
 public:
-	virtual ~PlayerNL() { }
-	PlayerNL(std::shared_ptr<u8[]> playerData, u32 playerOffset, int index) :
-			 Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), Index(index) { }
+	virtual ~PlayerNL() { };
+	PlayerNL(std::shared_ptr<u8[]> playerData, u32 playerOffset, u8 index) :
+			 Player(playerData, playerOffset, index), PlayerData(playerData), Offset(playerOffset), Index(index) { };
 
-	u32 getPlayerSize() const override { return 0x9F10; }
+	u32 getPlayerSize() const override { return 0x9F10; };
 
 	u8 face() const override;
 	void face(u8 v) override;
@@ -111,16 +106,23 @@ public:
 	u8 *tpcImage() const override;
 	bool hasTPC() const override { return true; }
 
-	/* Dump & Inject. */
+	/*
+		Dump & Inject.
+	*/
 	void dumpPlayer(const std::string fileName) override;
 	bool injectPlayer(const std::string fileName) override;
+
+	u8 acornFestival() const override { return 0; };
+	void acornFestival(u8 v) override { };
+	u8 bed() const override { return 0; };
+	void bed(u8 v) override { };
 private:
-	/* EncryptedInt32 Variables. */
+	/*
+		EncryptedInt32 Variables.
+	*/
 	mutable EncryptedInt32 walletValue, bankValue, islandValue;
 
-	u8* playerPointer() const {
-		return data.get() + offset;
-	}
+	u8 *playerPointer() const { return this->PlayerData.get() + this->Offset; };
 };
 
 #endif

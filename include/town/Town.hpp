@@ -31,25 +31,21 @@
 #include "Item.hpp"
 #include "Pattern.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class Acre;
-class Item;
-class Pattern;
 
 class Town {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> TownData;
 public:
-	virtual ~Town() { }
-	Town(std::shared_ptr<u8[]> townData) : data(townData) { }
+	virtual ~Town() { };
+	Town(std::shared_ptr<u8[]> townData) :
+		TownData(townData) { };
 	Town(const Town& town) = delete;
 	Town& operator=(const Town& town) = delete;
 
 	virtual u8 grasstype() const = 0;
 	virtual void grasstype(u8 v) = 0;
-	
+
 	virtual std::u16string name() const = 0;
 	virtual void name(std::u16string v) = 0;
 

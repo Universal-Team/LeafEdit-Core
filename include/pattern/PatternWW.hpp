@@ -30,20 +30,17 @@
 #include "Pattern.hpp"
 #include "PatternImageWW.hpp"
 #include "Player.hpp"
-
 #include <memory>
-
-class PatternImageWW;
 
 class PatternWW : public Pattern {
 protected:
+	std::shared_ptr<u8[]> PatternData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
-	WWRegion region;
+	WWRegion SaveRegion;
 public:
-	virtual ~PatternWW() { }
+	virtual ~PatternWW() { };
 	PatternWW(std::shared_ptr<u8[]> patternData, u32 offset, WWRegion Region) :
-		Pattern(patternData, offset), Offset(offset), data(patternData), region(Region) { }
+		Pattern(patternData, offset), PatternData(patternData), Offset(offset), SaveRegion(Region) { };
 
 	std::u16string name() const override;
 	void name(std::u16string v) override;
@@ -66,38 +63,34 @@ public:
 	u8 designtype() const override;
 	void designtype(u8 v) override;
 
-	/* Pattern Misc. */
+	/*
+		Pattern Misc.
+	*/
 	void ownPattern(std::unique_ptr<Player> player) override;
 	void dumpPattern(const std::string fileName) override;
 	void injectPattern(const std::string fileName) override;
 
-	/* Pattern Image. */
+	/*
+		Pattern Image.
+	*/
 	std::unique_ptr<PatternImage> image(const int pattern) const override;
 private:
-	u8* patternPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *patternPointer() const { return this->PatternData.get() + this->Offset; };
 
 	u32 getPatternSize() const {
-		switch(this->region) {
-			case WWRegion::USA_REV0:
-			case WWRegion::USA_REV1:
-			case WWRegion::EUR_REV1:
+		switch(this->SaveRegion) {
+			case WWRegion::EUR_USA:
 				return 0x228;
 
-			case WWRegion::JPN_REV0:
-			case WWRegion::JPN_REV1:
+			case WWRegion::JPN:
 				return 0x220;
 
-			case WWRegion::KOR_REV1:
+			case WWRegion::KOR:
 				return 0x234;
-
-			case WWRegion::UNKNOWN:
-				return 0;
 		}
 
 		return 0;
-	}
+	};
 };
 
 #endif

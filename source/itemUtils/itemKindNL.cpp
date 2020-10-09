@@ -64,7 +64,7 @@ s32 ItemKindNL::IsNormalItem(u16 itemID) {
 
 	u16 ItemID: The Item ID.
 */
-ItemKindNL::ItemBin_s* ItemKindNL::GetItemBinSlot(u16 ItemID) {
+ItemKindNL::ItemBin_s *ItemKindNL::GetItemBinSlot(u16 ItemID) {
 	ItemKindNL::ItemBin_s *ItemSlot = new ItemKindNL::ItemBin_s;
 
 	s32 chk = this->IsNormalItem(ItemID);
@@ -74,10 +74,12 @@ ItemKindNL::ItemBin_s* ItemKindNL::GetItemBinSlot(u16 ItemID) {
 		return nullptr;
 
 	} else if (this->GetItemBin()) {
-		/* chk <= maxID. */
+		/*
+			chk <= maxID.
+		*/
 		fseek(this->GetItemBin(), sizeof(ItemKindNL::ItemBin_s) * chk, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void*>(ItemSlot), 1, sizeof(ItemKindNL::ItemBin_s), this->GetItemBin())) >= 0) {
+		if ((fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindNL::ItemBin_s), this->GetItemBin())) >= 0) {
 			return ItemSlot;
 		}
 	}
@@ -91,7 +93,7 @@ ItemKindNL::ItemBin_s* ItemKindNL::GetItemBinSlot(u16 ItemID) {
 
 	u16 ItemID: The Item ID.
 */
-ItemKind_s* ItemKindNL::GetItemKindSlot(u16 ItemID) {
+ItemKind_s *ItemKindNL::GetItemKindSlot(u16 ItemID) {
 	ItemKind_s *KindSlot = new ItemKind_s;
 	ItemKindNL::ItemBin_s *ItemSlot = this->GetItemBinSlot(ItemID);
 

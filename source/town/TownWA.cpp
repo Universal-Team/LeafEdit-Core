@@ -31,22 +31,14 @@
 /*
 	Get and Set the Grasstype.
 */
-u8 TownWA::grasstype() const {
-	return this->townPointer()[0x053481];
-}
-void TownWA::grasstype(u8 v) {
-	SaveUtils::Write<u8>(this->townPointer(), 0x053481, v);
-}
+u8 TownWA::grasstype() const { return this->townPointer()[0x053481]; }
+void TownWA::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x053481, v); }
 
 /*
 	Get and Set the Town Name.
 */
-std::u16string TownWA::name() const {
-	return StringUtils::ReadUTF16String(this->townPointer(), 0x0621BA, 8);
-}
-void TownWA::name(std::u16string v) {
-	StringUtils::WriteUTF16String(this->townPointer(), v, 0x0621BA, 8);
-}
+std::u16string TownWA::name() const { return StringUtils::ReadUTF16String(this->townPointer(), 0x0621BA, 8); }
+void TownWA::name(std::u16string v) { StringUtils::WriteUTF16String(this->townPointer(), v, 0x0621BA, 8); }
 
 /*
 	Return a Town Acre.
@@ -56,7 +48,7 @@ void TownWA::name(std::u16string v) {
 std::unique_ptr<Acre> TownWA::acre(int Acre) const {
 	if (Acre > 41) return nullptr; // Acre Index goes out of scope.
 
-	return std::make_unique<AcreWA>(this->data, 0x053484 + Acre *2);
+	return std::make_unique<AcreWA>(this->TownData, 0x053484 + Acre *2);
 }
 
 /*
@@ -67,15 +59,13 @@ std::unique_ptr<Acre> TownWA::acre(int Acre) const {
 std::unique_ptr<Item> TownWA::item(u32 index) const {
 	if (index > 5119) return nullptr; // Item Index goes out of scope.
 
-	return std::make_unique<ItemWA>(this->data, 0x0534D8 + index * 4);
+	return std::make_unique<ItemWA>(this->TownData, 0x0534D8 + index * 4);
 }
 
 /*
 	Return if Town exist.
 */
-bool TownWA::exist() const {
-	return true; // TODO?
-}
+bool TownWA::exist() const { return true; }
 
 /*
 	Get and Set the Turnip prices.
@@ -102,9 +92,7 @@ void TownWA::turnipPrices(bool isAM, int day, u32 v) {
 /*
 	Return the Townflag pattern.
 */
-std::unique_ptr<Pattern> TownWA::townflag() const {
-	return std::make_unique<PatternWA>(this->data, 0x70F1C);
-}
+std::unique_ptr<Pattern> TownWA::townflag() const { return std::make_unique<PatternWA>(this->TownData, 0x70F1C); }
 
 /*
 	Get and Set, if item is buried.

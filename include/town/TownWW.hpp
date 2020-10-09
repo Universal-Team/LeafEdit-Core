@@ -32,21 +32,16 @@
 #include "PatternWW.hpp"
 #include "Town.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class AcreWW;
-class ItemWW;
-class PatternWW;
 
 class TownWW : public Town {
 protected:
-	WWRegion region;
-	std::shared_ptr<u8[]> data;
+	WWRegion SaveRegion;
+	std::shared_ptr<u8[]> TownData;
 public:
-	virtual ~TownWW() { }
+	virtual ~TownWW() { };
 	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) :
-		Town(townData), region(Region), data(townData) { }
+		Town(townData), SaveRegion(Region), TownData(townData) { };
 
 	u8 grasstype() const override;
 	void grasstype(u8 v) override;
@@ -71,9 +66,7 @@ public:
 	std::unique_ptr<Item> recycleItem(int slot) const override;
 	std::unique_ptr<Item> lostFoundItem(int slot) const override;
 private:
-	u8* townPointer() const {
-		return data.get();
-	}
+	u8 *townPointer() const { return this->TownData.get(); };
 };
 
 #endif

@@ -32,6 +32,4 @@
 
 	int room: The room.
 */
-std::unique_ptr<Room> HouseNL::room(int room) const {
-	return nullptr;
-}
+std::unique_ptr<Room> HouseNL::room(int room) const { return nullptr; }

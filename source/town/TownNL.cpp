@@ -31,12 +31,8 @@
 /*
 	Get and Set the Grasstype.
 */
-u8 TownNL::grasstype() const {
-	return this->townPointer()[0x80 + 0x04DA01];
-}
-void TownNL::grasstype(u8 v) {
-	SaveUtils::Write<u8>(this->townPointer(), 0x80 + 0x04DA01, v);
-}
+u8 TownNL::grasstype() const { return this->townPointer()[0x80 + 0x04DA01]; }
+void TownNL::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x80 + 0x04DA01, v); }
 
 /*
 	Get and Set the Town Name.
@@ -56,7 +52,7 @@ void TownNL::name(std::u16string v) {
 std::unique_ptr<Acre> TownNL::acre(int Acre) const {
 	if (Acre > 41) return nullptr; // Acre Index goes out of scope.
 
-	return std::make_unique<AcreNL>(this->data, 0x80 + 0x04DA04 + Acre * 2);
+	return std::make_unique<AcreNL>(this->TownData, 0x80 + 0x04DA04 + Acre * 2);
 }
 
 /*
@@ -67,15 +63,13 @@ std::unique_ptr<Acre> TownNL::acre(int Acre) const {
 std::unique_ptr<Item> TownNL::item(u32 index) const {
 	if (index > 5119) return nullptr; // Item Index goes out of scope.
 
-	return std::make_unique<ItemNL>(this->data, 0x80 + 0x04DA58 + index * 4);
+	return std::make_unique<ItemNL>(this->TownData, 0x80 + 0x04DA58 + index * 4);
 }
 
 /*
 	Return if Town exist.
 */
-bool TownNL::exist() const {
-	return true; // TODO?
-}
+bool TownNL::exist() const { return true; }
 
 /*
 	Get and Set the Turnip prices.
@@ -102,9 +96,7 @@ void TownNL::turnipPrices(bool isAM, int day, u32 v) {
 /*
 	Return the Townflag pattern.
 */
-std::unique_ptr<Pattern> TownNL::townflag() const {
-	return std::make_unique<PatternNL>(this->data, 0x6B4EC);
-}
+std::unique_ptr<Pattern> TownNL::townflag() const { return std::make_unique<PatternNL>(this->TownData, 0x6B4EC); }
 
 /*
 	Get and Set, if item is buried.

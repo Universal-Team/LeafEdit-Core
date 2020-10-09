@@ -87,27 +87,8 @@ constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 */
 std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion region) {
 	std::u16string output;
-	const std::array<char16_t, 256> *characters;
 
-	switch(region) {
-		case WWRegion::USA_REV0:
-		case WWRegion::USA_REV1:
-		case WWRegion::EUR_REV1:
-			characters = &wwCharacterDictionary;
-			break;
-
-		case WWRegion::JPN_REV0:
-		case WWRegion::JPN_REV1:
-			characters = &wwCharacterDictionaryJapanese;
-			break;
-
-		case WWRegion::KOR_REV1:
-		case WWRegion::UNKNOWN:
-			return output;
-
-		default:
-			return output;
-	}
+	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
 
 	for (char16_t character : input) {
 		if ((*characters)[character] == '\0') break;
@@ -130,27 +111,7 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 */
 std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion region) {
 	std::string output;
-	const std::array<char16_t, 256> *characters;
-
-	switch(region) {
-		case WWRegion::USA_REV0:
-		case WWRegion::USA_REV1:
-		case WWRegion::EUR_REV1:
-			characters = &wwCharacterDictionary;
-			break;
-
-		case WWRegion::JPN_REV0:
-		case WWRegion::JPN_REV1:
-			characters = &wwCharacterDictionaryJapanese;
-			break;
-
-		case WWRegion::KOR_REV1:
-		case WWRegion::UNKNOWN:
-			return "";
-
-		default:
-			return "";
-	}
+	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
 
 	for(char16_t character : input) {
 		auto it = std::find(characters->begin(), characters->end(), character);
@@ -233,9 +194,7 @@ std::u16string StringUtils::UTF8toUTF16(const std::string &src) {
 
 	const std::u16string &src: The UTF-16 Text.
 */
-std::string StringUtils::UTF16toUTF8(const std::u16string &src) {
-	return utf16DataToUtf8(src.data(), src.size());
-}
+std::string StringUtils::UTF16toUTF8(const std::u16string &src) { return utf16DataToUtf8(src.data(), src.size()); }
 
 /*
 	Read an UTF-8 String from a save buffer.
@@ -249,6 +208,7 @@ std::string StringUtils::UTF16toUTF8(const std::u16string &src) {
 */
 std::u16string StringUtils::ReadUTF8String(u8 *data, u32 offset, u32 maxSize, WWRegion region) {
 	std::string str(reinterpret_cast<char *>(data + offset), maxSize);
+
 	return wwToUnicode(str, region);
 }
 

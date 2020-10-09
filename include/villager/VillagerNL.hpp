@@ -30,21 +30,18 @@
 #include "ItemNL.hpp"
 #include "Villager.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class ItemNL;
 
 class VillagerNL : public Villager {
 protected:
-	std::shared_ptr<u8[]> data;
-	u32 offset;
+	std::shared_ptr<u8[]> VillagerData;
+	u32 Offset;
 public:
-	virtual ~VillagerNL() { }
+	virtual ~VillagerNL() { };
 	VillagerNL(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) :
-		Villager(villagerData, villagerOffset), data(villagerData), offset(villagerOffset) { }
-		
-	u32 getVillagerSize() const override { return 0x24F8; }
+		Villager(villagerData, villagerOffset), VillagerData(villagerData), Offset(villagerOffset) { };
+
+	u32 getVillagerSize() const override { return 0x24F8; };
 
 	u16 id() const override;
 	void id(u16 v) override;
@@ -54,14 +51,18 @@ public:
 	u8 personality() const override;
 	void personality(u8 v) override;
 
-	/* Items. */
+	/*
+		Items.
+	*/
 	std::unique_ptr<Item> song() const override;
 	std::unique_ptr<Item> shirt() const override;
 	std::unique_ptr<Item> wallpaper() const override;
 	std::unique_ptr<Item> carpet() const override;
 	std::unique_ptr<Item> umbrella() const override;
 
-	/* Only for AC:WW. */
+	/*
+		Only for AC:WW.
+	*/
 	u8 songWW() const override { return 0; };
 	void songWW(u8 sng) override { };
 
@@ -70,15 +71,13 @@ public:
 
 	u8 carpetWW() const override { return 0; };
 	void carpetWW(u8 crp) override { };
-	
+
 	u8 umbrellaWW() const override { return 0; };
 	void umbrellaWW(u8 umbr) override { };
-	
+
 	std::unique_ptr<Item> furniture(int slot) const override;
 private:
-	u8* villagerPointer() const {
-		return data.get() + offset;
-	}
+	u8 *villagerPointer() const { return this->VillagerData.get() + this->Offset; };
 };
 
 #endif

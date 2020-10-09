@@ -33,20 +33,15 @@
 #include "PatternWA.hpp"
 #include "Town.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class AcreWA;
-class ItemWA;
-class PatternWA;
 
 class TownWA : public Town {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> TownData;
 public:
-	virtual ~TownWA() { }
+	virtual ~TownWA() { };
 	TownWA(std::shared_ptr<u8[]> townData) :
-		Town(townData), data(townData) { }
+		Town(townData), TownData(townData) { };
 
 	u8 grasstype() const override;
 	void grasstype(u8 v) override;
@@ -68,12 +63,10 @@ public:
 	bool itemBuried(int index) const override;
 	void itemBuried(int index, bool buried) override;
 
-	std::unique_ptr<Item> recycleItem(int slot) const override { return nullptr; }
-	std::unique_ptr<Item> lostFoundItem(int slot) const override { return nullptr; }
+	std::unique_ptr<Item> recycleItem(int slot) const override { return nullptr; };
+	std::unique_ptr<Item> lostFoundItem(int slot) const override { return nullptr; };
 private:
-	u8* townPointer() const {
-		return data.get();
-	}
+	u8 *townPointer() const { return this->TownData.get(); };
 
 	mutable EncryptedInt32 v_turnipPrices[12];
 };

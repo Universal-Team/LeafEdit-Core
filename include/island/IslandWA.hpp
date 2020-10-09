@@ -31,27 +31,21 @@
 #include "Island.hpp"
 #include "ItemWA.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class AcreWA;
-class ItemWA;
 
 class IslandWA : public Island {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> IslandData;
 public:
-	virtual ~IslandWA() { }
+	virtual ~IslandWA() { };
 	IslandWA(std::shared_ptr<u8[]> islandData) :
-		Island(islandData), data(islandData) { }
+		Island(islandData), IslandData(islandData) { };
 
 	std::unique_ptr<Acre> acre(int Acre) const override;
 
 	std::unique_ptr<Item> item(u32 index) const override;
 private:
-	u8* islandPointer() const {
-		return data.get();
-	}
+	u8 *islandPointer() const { return this->IslandData.get(); };
 };
 
 #endif

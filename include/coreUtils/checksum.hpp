@@ -29,27 +29,33 @@
 
 #include "types.hpp"
 
-typedef enum {
+enum class ChecksumType {
 	CRC_REFLECTED = 0, // Most common in AC:NL checksums.
 	CRC_NORMAL = 1
-} ChecksumType;
+};
 
 namespace Checksum {
-	/* New Leaf stuff. */
+	/*
+		New Leaf + Welcome amiibo stuff.
+	*/
 	u32 CalculateCRC32Reflected(u8 *buf, u32 size);
 	u32 CalculateCRC32Normal(u8 *buf, u32 size);
-	bool VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type = CRC_REFLECTED);
-	u32 UpdateCRC32(u8 *data, u32 startOffset, u32 size, ChecksumType type = CRC_REFLECTED);
+	bool VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type = ChecksumType::CRC_REFLECTED);
+	u32 UpdateCRC32(u8 *data, u32 startOffset, u32 size, ChecksumType type = ChecksumType::CRC_REFLECTED);
 	void FixWACRC32s(u8 *data);
 	void FixNLCRC32s(u8 *data);
-	
-	/* Wild World stuff. */
+
+	/*
+		Wild World stuff.
+	*/
 	u16 CalculateWW(const u16 *buffer, u64 size, uint checksumOffset);
 	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset);
 	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size);
 
-	/* AC:HHD part. */
+	/*
+		AC:HHD stuff.
+	*/
 	void FixHHDChecksum(u8 *data);
-}
+};
 
 #endif

@@ -28,16 +28,16 @@
 #define _LEAFEDIT_CORE_HOUSE_HPP
 
 #include "types.hpp"
-
 #include <memory>
 
 class Room {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> RoomData;
 	u32 Offset;
 public:
-	virtual ~Room() { }
-	Room(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Room() { };
+	Room(std::shared_ptr<u8[]> data, u32 offset) :
+		RoomData(data), Offset(offset) { };
 	Room(const Room& room) = delete;
 	Room& operator=(const Room& room) = delete;
 
@@ -47,11 +47,12 @@ public:
 
 class House {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> HouseData;
 	u32 Offset;
 public:
-	virtual ~House() { }
-	House(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~House() { };
+	House(std::shared_ptr<u8[]> data, u32 offset) :
+		HouseData(data), Offset(offset) { };
 	House(const House& house) = delete;
 	House& operator=(const House& house) = delete;
 

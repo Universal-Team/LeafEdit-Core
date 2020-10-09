@@ -29,26 +29,21 @@
 
 #include "PatternNL.hpp"
 #include "Shop.hpp"
-
 #include <memory>
 #include <vector>
-
-class PatternNL;
 
 class ShopNL : public Shop {
 protected:
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> ShopData;
 public:
-	virtual ~ShopNL() { }
+	virtual ~ShopNL() { };
 	ShopNL(std::shared_ptr<u8[]> shopData, u32 offset) :
-		Shop(shopData, offset), Offset(offset), data(shopData) { }
+		Shop(shopData, offset), Offset(offset), ShopData(shopData) { };
 
 	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
 private:
-	u8* shopPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *shopPointer() const { return this->ShopData.get() + this->Offset; };
 };
 
 #endif

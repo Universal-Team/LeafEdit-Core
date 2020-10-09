@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ITEM_HPP
 
 #include "types.hpp"
-
 #include <map>
 #include <memory>
 #include <vector>
@@ -82,25 +81,33 @@ enum class ItemType {
 
 class Item {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> ItemData;
 	u32 Offset;
 public:
-	virtual ~Item() {}
-	Item(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Item() { };
+	Item(std::shared_ptr<u8[]> dt, u32 offset) :
+		ItemData(dt), Offset(offset) { };
 	Item(const Item& item) = delete;
 	Item& operator=(const Item& item) = delete;
 
 	virtual u32 maxItems() const = 0;
+
 	virtual u16 id() const = 0;
 	virtual void id(u16 v) = 0;
+
 	virtual u16 flags() const = 0;
 	virtual void flags(u16 v) = 0;
+
 	virtual u8 flag1() const = 0;
 	virtual void flag1(u8 v) = 0;
+
 	virtual u8 flag2() const = 0;
 	virtual void flag2(u8 v) = 0;
+
 	virtual std::string name() const = 0;
+
 	virtual ItemType itemtype() const = 0;
+
 	virtual FurnitureDirection rotation() const = 0;
 	virtual void rotation(FurnitureDirection Direction) = 0;
 };

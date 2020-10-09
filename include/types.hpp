@@ -27,8 +27,6 @@
 #ifndef _LEAFEDIT_CORE_TYPES_HPP
 #define _LEAFEDIT_CORE_TYPES_HPP
 
-#include "logging.hpp" // To log core and in app stuff.
-
 #include <3ds.h>
 #include <stdint.h>
 
@@ -42,7 +40,9 @@ typedef int16_t s16;
 typedef int32_t s32;
 typedef int64_t s64;
 
-/* SaveTypes. */
+/*
+	SaveTypes.
+*/
 enum class SaveType {
 	WW,
 	NL,
@@ -51,15 +51,13 @@ enum class SaveType {
 	UNUSED
 };
 
-/* Save Regions. (Mainly for AC:WW) */
+/*
+	Save Regions. (Mainly for AC:WW)
+*/
 enum class WWRegion {
-	JPN_REV0,
-	JPN_REV1,
-	USA_REV0,
-	USA_REV1,
-	EUR_REV1,
-	KOR_REV1,
-	UNKNOWN
+	EUR_USA, // EUR + USA are the same.
+	JPN,
+	KOR
 };
 
 #endif

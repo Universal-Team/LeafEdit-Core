@@ -33,21 +33,19 @@
 
 class AcreWW : public Acre {
 protected:
+	std::shared_ptr<u8[]> AcreData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
 	virtual ~AcreWW() { }
 	AcreWW(std::shared_ptr<u8[]> acreData, u32 offset) :
-		Acre(acreData, offset), Offset(offset), data(acreData) { }
-		
+		Acre(acreData, offset), AcreData(acreData), Offset(offset) { };
+
 	u32 maxAcre() const { return 131; };
 
 	u8 id() const override;
 	void id(u8 v) override;
 private:
-	u8* acrePointer() const {
-		return data.get() + Offset;
-	}
+	u8 *acrePointer() const { return this->AcreData.get() + this->Offset; };
 };
 
 #endif

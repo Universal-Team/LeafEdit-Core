@@ -29,7 +29,6 @@
 
 #include "Sav.hpp"
 #include "types.hpp"
-
 #include <string>
 
 inline std::unique_ptr<Sav> save;
@@ -37,9 +36,7 @@ inline std::unique_ptr<Sav> save;
 namespace SaveUtils {
 	/* Read. */
 	template <typename T>
-	T Read(u8 * Buffer, u32 offset) {
-		return *(T *)(Buffer + offset);
-	}
+	T Read(u8 * Buffer, u32 offset) { return *(T *)(Buffer + offset); };
 
 	/* Get and set a bit. */
 	bool GetBit(const u8 *data, int offset, u8 bitIndex);
@@ -51,10 +48,9 @@ namespace SaveUtils {
 		*reinterpret_cast<T*>(Buffer + offset) = data;
 
 		if (saveWrite) {
-			if (save) save->changesMade(true);
+			if (save) save->setChangesMade(true);
 		}
-
-	}
-}
+	};
+};
 
 #endif

@@ -95,8 +95,8 @@ private:
 	/* Real Max Item ID is 0x372B (excludes wrap paper) but for checks, ID -= 0x2000 from orig item ID. */
 	static constexpr u16 maxID = 0x172B;
 
-	ItemKindWA::ItemBin_s* GetItemBinSlot(u16 ItemID);
-	ItemKind_s* GetItemKindSlot(u16 ItemID);
+	ItemKindWA::ItemBin_s *GetItemBinSlot(u16 ItemID);
+	ItemKind_s *GetItemKindSlot(u16 ItemID);
 };
 
 #endif

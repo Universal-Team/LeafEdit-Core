@@ -32,44 +32,33 @@
 #include "PatternWW.hpp"
 #include "Player.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class ItemWW;
-class LetterWW;
-class PatternWW;
 
 class PlayerWW : public Player {
 protected:
-	std::shared_ptr<u8[]> data;
-	u32 offset;
-	WWRegion region;
-	int Index;
+	std::shared_ptr<u8[]> PlayerData;
+	u32 Offset;
+	WWRegion SaveRegion;
+	u8 Index;
 public:
 	virtual ~PlayerWW() { }
-	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, int index) :
-			Player(playerData, playerOffset, index), data(playerData), offset(playerOffset), region(Region), Index(index) { }
+	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, u8 index) :
+			Player(playerData, playerOffset, index), PlayerData(playerData), Offset(playerOffset), SaveRegion(Region), Index(index) { }
 
 	u32 getPlayerSize() const override {
-		switch(this->region) {
-			case WWRegion::USA_REV0:
-			case WWRegion::USA_REV1:
-			case WWRegion::EUR_REV1:
+		switch(this->SaveRegion) {
+			case WWRegion::EUR_USA:
 				return 0x228C;
 
-			case WWRegion::JPN_REV0:
-			case WWRegion::JPN_REV1:
+			case WWRegion::JPN:
 				return 0x1D10;
 
-			case WWRegion::KOR_REV1:
+			case WWRegion::KOR:
 				return 0x249C;
-
-			case WWRegion::UNKNOWN:
-				return 0;
 		}
 
 		return 0;
-	}
+	};
 
 
 	u8 face() const override;
@@ -131,13 +120,18 @@ public:
 	u8 *tpcImage() const override;
 	bool hasTPC() const override { return false; }
 
-	/* Dump & Inject. */
+	/*
+		Dump & Inject.
+	*/
 	void dumpPlayer(const std::string fileName) override;
 	bool injectPlayer(const std::string fileName) override;
+
+	u8 acornFestival() const override;
+	void acornFestival(u8 v) override;
+	u8 bed() const override;
+	void bed(u8 v) override;
 private:
-	u8* playerPointer() const {
-		return data.get() + offset;
-	}
+	u8 *playerPointer() const { return this->PlayerData.get() + this->Offset; };
 };
 
 #endif

@@ -26,8 +26,8 @@
 
 #include "itemUtils.hpp"
 #include "stringDB.hpp"
-
 #include <string>
+#include <tuple>
 #include <vector>
 
 extern std::vector<std::tuple<u16, std::string, std::string>> itemDB;
@@ -42,9 +42,7 @@ std::string ItemUtils::getName(u16 ID) {
 	if (itemDB.empty()) return "???"; // Database empty.
 
 	for (auto const& entry : itemDB) {
-		if (std::get<0>(entry) == ID) {
-			return std::get<1>(entry);
-		}
+		if (std::get<0>(entry) == ID) return std::get<1>(entry);
 	}
 
 	return std::string("???");

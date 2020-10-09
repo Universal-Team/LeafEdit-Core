@@ -42,9 +42,7 @@ u8 PatternImageWW::getPaletteColor(u8 plt) const {
 /*
 	Return the Palette Index.
 */
-int PatternImageWW::getWWPaletteIndex() const {
-	return (u8)(((this->paletteData()[0]) & 0xF0) >> 4);
-}
+int PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()[0]) & 0xF0) >> 4); }
 
 /*
 	Set the Palette Index instead of color for the palette.
@@ -93,6 +91,4 @@ void PatternImageWW::setPixel(int index, int color) {
 /*
 	Same as above, just with X & Y position instead of index.
 */
-void PatternImageWW::setPixel(int x, int y, int color) {
-	this->setPixel((x + (y * 32)), color);
-}
+void PatternImageWW::setPixel(int x, int y, int color) { this->setPixel((x + (y * 32)), color); }

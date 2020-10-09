@@ -29,22 +29,20 @@
 
 #include "Item.hpp"
 #include "types.hpp"
-
 #include <memory>
-
-class Item;
 
 class Villager {
 protected:
-	std::shared_ptr<u8[]> data;
-	u32 offset;
+	std::shared_ptr<u8[]> VillagerData;
+	u32 Offset;
 public:
-	virtual ~Villager() { }
-	Villager(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) : data(villagerData), offset(villagerOffset) { }
+	virtual ~Villager() { };
+	Villager(std::shared_ptr<u8[]> villagerData, u32 villagerOffset) :
+		VillagerData(villagerData), Offset(villagerOffset) { };
 	Villager(const Villager& villager) = delete;
 	Villager& operator=(const Villager& villager) = delete;
 	virtual u32 getVillagerSize() const = 0;
-	
+
 	virtual u16 id() const = 0;
 	virtual void id(u16 v) = 0;
 
@@ -53,14 +51,18 @@ public:
 	virtual u8 personality() const = 0;
 	virtual void personality(u8 v) = 0;
 
-	/* Items. */
+	/*
+		Items.
+	*/
 	virtual std::unique_ptr<Item> song() const = 0;
 	virtual std::unique_ptr<Item> shirt() const = 0;
 	virtual std::unique_ptr<Item> wallpaper() const = 0;
 	virtual std::unique_ptr<Item> carpet() const = 0;
 	virtual std::unique_ptr<Item> umbrella() const = 0;
 
-	/* AC:WW Indexes. */
+	/*
+		AC:WW Indexes.
+	*/
 	virtual u8 songWW() const = 0;
 	virtual void songWW(u8 sng) = 0;
 
@@ -69,7 +71,7 @@ public:
 
 	virtual u8 carpetWW() const = 0;
 	virtual void carpetWW(u8 crp) = 0;
-	
+
 	virtual u8 umbrellaWW() const = 0;
 	virtual void umbrellaWW(u8 umbr) = 0;
 

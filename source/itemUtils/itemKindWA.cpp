@@ -64,7 +64,7 @@ s32 ItemKindWA::IsNormalItem(u16 itemID) {
 
 	u16 ItemID: The Item ID.
 */
-ItemKindWA::ItemBin_s* ItemKindWA::GetItemBinSlot(u16 ItemID) {
+ItemKindWA::ItemBin_s *ItemKindWA::GetItemBinSlot(u16 ItemID) {
 	ItemKindWA::ItemBin_s *ItemSlot = new ItemKindWA::ItemBin_s;
 	s32 chk = this->IsNormalItem(ItemID);
 
@@ -76,7 +76,7 @@ ItemKindWA::ItemBin_s* ItemKindWA::GetItemBinSlot(u16 ItemID) {
 		/* chk <= maxID. */
 		fseek(this->GetItemBin(), sizeof(ItemKindWA::ItemBin_s) * chk, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void*>(ItemSlot), 1, sizeof(ItemKindWA::ItemBin_s), this->GetItemBin())) >= 0) {
+		if ((fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindWA::ItemBin_s), this->GetItemBin())) >= 0) {
 			return ItemSlot;
 		}
 	}
@@ -90,7 +90,7 @@ ItemKindWA::ItemBin_s* ItemKindWA::GetItemBinSlot(u16 ItemID) {
 
 	u16 ItemID: The Item ID.
 */
-ItemKind_s* ItemKindWA::GetItemKindSlot(u16 ItemID) {
+ItemKind_s *ItemKindWA::GetItemKindSlot(u16 ItemID) {
 	ItemKind_s *KindSlot = new ItemKind_s;
 	ItemBin_s *ItemSlot = this->GetItemBinSlot(ItemID);
 
@@ -125,7 +125,9 @@ ItemKind_s* ItemKindWA::GetItemKindSlot(u16 ItemID) {
 	u16 Flags: The Item's flags.
 */
 u16 ItemKindWA::GetAxeDamageValue(u16 ItemID, u16 Flags) {
-	/* Used for Normal Axe and Silver Axe. */
+	/*
+		Used for Normal Axe and Silver Axe.
+	*/
 	if (ItemID != 0x334D && ItemID != 0x334E) return 0;
 
 	return (Flags & 0xF);
@@ -172,7 +174,7 @@ bool ItemKindWA::IsInvWhiteListed(u16 ItemID) {
 	u16 ItemID: The Item ID.
 */
 u8 ItemKindWA::GetCategory(u16 ItemID) {
-	ItemKindWA::ItemBin_s* ItemSlot = this->GetItemBinSlot(ItemID);
+	ItemKindWA::ItemBin_s *ItemSlot = this->GetItemBinSlot(ItemID);
 
 	if (!ItemSlot) return 0x9B;
 
@@ -190,7 +192,7 @@ u8 ItemKindWA::GetCategory(u16 ItemID) {
 	u16 Flags: The Item's flags.
 */
 u16 ItemKindWA::GetIconID(u16 ItemID, u16 Flags) {
-	ItemKindWA::ItemBin_s* ItemSlot = this->GetItemBinSlot(ItemID);
+	ItemKindWA::ItemBin_s *ItemSlot = this->GetItemBinSlot(ItemID);
 	if (!ItemSlot) return 0;
 
 	u16 IconID = ItemSlot->ItemIcon;

@@ -35,21 +35,15 @@
 std::unique_ptr<Pattern> ShopWW::ableSisterPattern(int pattern) const {
 	if (pattern > 7) return nullptr;
 
-	switch(this->region) {
-		case WWRegion::USA_REV0:
-		case WWRegion::USA_REV1:
-		case WWRegion::EUR_REV1:
-			return std::make_unique<PatternWW>(this->data, this->Offset + 0xFAFC + pattern * 0x228, this->region);
+	switch(this->SaveRegion) {
+		case WWRegion::EUR_USA:
+			return std::make_unique<PatternWW>(this->ShopData, this->Offset + 0xFAFC + pattern * 0x228, this->SaveRegion);
 
-		case WWRegion::JPN_REV0:
-		case WWRegion::JPN_REV1:
-			return std::make_unique<PatternWW>(this->data, this->Offset + 0xDAF8 + pattern * 0x220, this->region);
+		case WWRegion::JPN:
+			return std::make_unique<PatternWW>(this->ShopData, this->Offset + 0xDAF8 + pattern * 0x220, this->SaveRegion);
 
-		case WWRegion::KOR_REV1:
-			return std::make_unique<PatternWW>(this->data, this->Offset + 0x10AD0 + pattern * 0x234, this->region);
-
-		case WWRegion::UNKNOWN:
-			return nullptr;
+		case WWRegion::KOR:
+			return std::make_unique<PatternWW>(this->ShopData, this->Offset + 0x10AD0 + pattern * 0x234, this->SaveRegion);
 	}
 
 	return nullptr;

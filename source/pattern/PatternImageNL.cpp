@@ -92,6 +92,4 @@ void PatternImageNL::setPixel(int index, int color) {
 /*
 	Same as above, just with X & Y position instead of index.
 */
-void PatternImageNL::setPixel(int x, int y, int color) {
-	this->setPixel((x + (y * 32)), color);
-}
+void PatternImageNL::setPixel(int x, int y, int color) { this->setPixel((x + (y * 32)), color); }

@@ -29,19 +29,16 @@
 
 #include "ItemWA.hpp"
 #include "Letter.hpp"
-
 #include <memory>
-
-class ItemWA;
 
 class LetterWA : public Letter {
 protected:
+	std::shared_ptr<u8[]> LetterData;
 	u32 Offset;
-	std::shared_ptr<u8[]> data;
 public:
-	virtual ~LetterWA() { }
+	virtual ~LetterWA() { };
 	LetterWA(std::shared_ptr<u8[]> letterData, u32 offset) :
-		Letter(letterData, offset), Offset(offset), data(letterData) { }
+		Letter(letterData, offset), LetterData(letterData), Offset(offset) { };
 
 	u16 playerid(bool sender) const override;
 	void playerid(u16 v, bool sender) override;
@@ -84,9 +81,7 @@ public:
 
 	std::unique_ptr<Item> item() const override;
 private:
-	u8* letterPointer() const {
-		return data.get() + Offset;
-	}
+	u8 *letterPointer() const { return this->LetterData.get() + this->Offset; };
 };
 
 #endif

@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ACRE_HPP
 
 #include "types.hpp"
-
 #include <memory>
 
 #define WWACRE_SIZE	1
@@ -36,11 +35,13 @@
 
 class Acre {
 protected:
-	std::shared_ptr<u8[]> data;
+	std::shared_ptr<u8[]> AcreData;
 	u32 Offset;
 public:
-	virtual ~Acre() { }
-	Acre(std::shared_ptr<u8[]> dt, u32 offset) : data(dt), Offset(offset) { }
+	virtual ~Acre() { };
+	Acre(std::shared_ptr<u8[]> data, u32 offset) :
+		AcreData(data), Offset(offset) { };
+
 	Acre(const Acre& acre) = delete;
 	Acre& operator=(const Acre& acre) = delete;
 
