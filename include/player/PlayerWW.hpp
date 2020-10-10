@@ -38,12 +38,12 @@ class PlayerWW : public Player {
 protected:
 	std::shared_ptr<u8[]> PlayerData;
 	u32 Offset;
-	WWRegion SaveRegion;
 	u8 Index;
+	WWRegion SaveRegion;
 public:
 	virtual ~PlayerWW() { }
 	PlayerWW(std::shared_ptr<u8[]> playerData, u32 playerOffset, WWRegion Region, u8 index) :
-			Player(playerData, playerOffset, index), PlayerData(playerData), Offset(playerOffset), SaveRegion(Region), Index(index) { }
+			Player(playerData, playerOffset, index), PlayerData(playerData), Offset(playerOffset), Index(index), SaveRegion(Region) { }
 
 	u32 getPlayerSize() const override {
 		switch(this->SaveRegion) {
@@ -76,11 +76,11 @@ public:
 	u8 haircolor() const override;
 	void haircolor(u8 v) override;
 
-	u8 eyecolor() const override;
-	void eyecolor(u8 v) override;
+	u8 eyecolor() const override { return 0; };
+	void eyecolor(u8 v) override { };
 
-	u8 badge(int badge) const override;
-	void badge(int badge, u8 v) override;
+	u8 badge(int badge) const override { return 0; };
+	void badge(int badge, u8 v) override { };
 
 	u16 playerid() const override;
 	void playerid(u16 v) override;
@@ -102,11 +102,11 @@ public:
 	u32 bank() const override;
 	void bank(u32 v) override;
 
-	u32 islandmedals() const override;
-	void islandmedals(u32 v) override;
+	u32 islandmedals() const override { return 0; };
+	void islandmedals(u32 v) override { };
 
-	u32 coupons() const override;
-	void coupons(u32 v) override;
+	u32 coupons() const override { return 0; };
+	void coupons(u32 v) override { };
 
 	std::unique_ptr<Letter> letter(int slot) const override;
 
@@ -117,8 +117,8 @@ public:
 
 	std::unique_ptr<Pattern> pattern(int slot) const override;
 
-	u8 *tpcImage() const override;
-	bool hasTPC() const override { return false; }
+	u8 *tpcImage() const override { return nullptr; };
+	bool hasTPC() const override { return false; };
 
 	/*
 		Dump & Inject.

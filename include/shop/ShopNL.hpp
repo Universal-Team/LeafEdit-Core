@@ -34,12 +34,12 @@
 
 class ShopNL : public Shop {
 protected:
-	u32 Offset;
 	std::shared_ptr<u8[]> ShopData;
+	u32 Offset;
 public:
 	virtual ~ShopNL() { };
 	ShopNL(std::shared_ptr<u8[]> shopData, u32 offset) :
-		Shop(shopData, offset), Offset(offset), ShopData(shopData) { };
+		Shop(shopData, offset), ShopData(shopData), Offset(offset) { };
 
 	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
 private:

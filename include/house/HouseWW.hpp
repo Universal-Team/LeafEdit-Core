@@ -35,10 +35,11 @@ class RoomWW : public Room {
 protected:
 	std::shared_ptr<u8[]> RoomData;
 	u32 Offset;
+	WWRegion SaveRegion;
 public:
 	virtual ~RoomWW() { };
-	RoomWW(std::shared_ptr<u8[]> roomData, u32 offset) :
-		Room(roomData, offset), RoomData(roomData), Offset(offset) { };
+	RoomWW(std::shared_ptr<u8[]> roomData, u32 offset, WWRegion region) :
+		Room(roomData, offset), RoomData(roomData), Offset(offset), SaveRegion(region) { };
 private:
 	u8 *roomPointer() const { return this->RoomData.get() + this->Offset; };
 };
@@ -47,10 +48,11 @@ class HouseWW : public House {
 protected:
 	std::shared_ptr<u8[]> HouseData;
 	u32 Offset;
+	WWRegion SaveRegion;
 public:
 	virtual ~HouseWW() { };
-	HouseWW(std::shared_ptr<u8[]> houseData, u32 offset) :
-		House(houseData, offset), HouseData(houseData), Offset(offset) { };
+	HouseWW(std::shared_ptr<u8[]> houseData, u32 offset, WWRegion region) :
+		House(houseData, offset), HouseData(houseData), Offset(offset), SaveRegion(region) { };
 
 	std::unique_ptr<Room> room(int room) const override;
 private:

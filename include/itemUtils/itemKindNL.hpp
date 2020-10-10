@@ -58,10 +58,10 @@ public:
 	u16 GetIconID(u16 ItemID, u16 Flags = 0) override;
 	s32 GetSpritesheetID(u16 ItemID, u16 Flags = 0) override;
 
-	FILE *GetItemBin() const { return this->g_ItemBin; }
-	FILE *GetItemKind() const { return this->g_ItemKindBin; }
+	FILE *GetItemBin() const { return this->ItemBin; }
+	FILE *GetItemKind() const { return this->ItemKindBin; }
 private:
-	FILE *g_ItemBin = nullptr, *g_ItemKindBin = nullptr;
+	FILE *ItemBin = nullptr, *ItemKindBin = nullptr;
 
 	struct ItemBin_s {
 		u16 ItemIcon;

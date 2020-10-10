@@ -33,16 +33,16 @@ ItemKindWA::~ItemKindWA() { this->closeItemBins(); }
 	Load the Item Bin's.
 */
 void ItemKindWA::loadItemBins() {
-	this->g_ItemBin = fopen("romfs:/ItemBins/ItemWA.bin", "rb");
-	this->g_ItemKindBin = fopen("romfs:/ItemBins/KindWA.bin", "rb");
+	this->ItemBin = fopen("romfs:/ItemBins/ItemWA.bin", "rb");
+	this->ItemKindBin = fopen("romfs:/ItemBins/KindWA.bin", "rb");
 }
 
 /*
 	Close the Item Bin's.. if not closed.
 */
 void ItemKindWA::closeItemBins() {
-	if (this->g_ItemBin) fclose(this->g_ItemBin);
-	if (this->g_ItemKindBin) fclose(this->g_ItemKindBin);
+	if (this->ItemBin) fclose(this->ItemBin);
+	if (this->ItemKindBin) fclose(this->ItemKindBin);
 }
 
 /*

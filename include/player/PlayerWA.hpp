@@ -104,7 +104,7 @@ public:
 	std::unique_ptr<Pattern> pattern(int slot) const override;
 
 	u8 *tpcImage() const override;
-	bool hasTPC() const override { return true; }
+	bool hasTPC() const override { return true; };
 
 	/*
 		Dump & Inject.
@@ -117,12 +117,12 @@ public:
 	u8 bed() const override { return 0; };
 	void bed(u8 v) override { };
 private:
+	u8 *playerPointer() const { return this->PlayerData.get() + this->Offset; };
+
 	/*
 		EncryptedInt32 Variables.
 	*/
-	mutable EncryptedInt32 walletValue, bankValue, islandValue, couponValue;
-
-	u8 *playerPointer() const { return this->PlayerData.get() + this->Offset; };
+	mutable EncryptedInt32 WalletValue, BankValue, IslandValue, CouponValue;
 };
 
 #endif

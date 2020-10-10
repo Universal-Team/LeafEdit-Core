@@ -68,7 +68,7 @@ public:
 private:
 	u8 *townPointer() const { return this->TownData.get(); };
 
-	mutable EncryptedInt32 v_turnipPrices[12];
+	mutable EncryptedInt32 TurnipPrices[12];
 };
 
 #endif

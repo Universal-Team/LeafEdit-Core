@@ -36,12 +36,12 @@
 
 class TownWW : public Town {
 protected:
-	WWRegion SaveRegion;
 	std::shared_ptr<u8[]> TownData;
+	WWRegion SaveRegion;
 public:
 	virtual ~TownWW() { };
 	TownWW(std::shared_ptr<u8[]> townData, WWRegion Region) :
-		Town(townData), SaveRegion(Region), TownData(townData) { };
+		Town(townData), TownData(townData), SaveRegion(Region) { };
 
 	u8 grasstype() const override;
 	void grasstype(u8 v) override;

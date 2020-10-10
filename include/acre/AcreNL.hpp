@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ACRE_NL_HPP
 
 #include "Acre.hpp"
-
 #include <memory>
 
 class AcreNL : public Acre {

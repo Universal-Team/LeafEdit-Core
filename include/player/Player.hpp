@@ -41,7 +41,6 @@ protected:
 	u32 Offset;
 public:
 	virtual ~Player() { };
-
 	Player(std::shared_ptr<u8[]> data, u32 offset, u8 index) :
 		PlayerData(data), Offset(offset) { };
 

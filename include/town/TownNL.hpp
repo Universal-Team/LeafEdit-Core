@@ -66,9 +66,9 @@ public:
 	std::unique_ptr<Item> recycleItem(int slot) const override { return nullptr; };
 	std::unique_ptr<Item> lostFoundItem(int slot) const override { return nullptr; };
 private:
-	u8 *townPointer() const { return this->TownData.get(); }
+	u8 *townPointer() const { return this->TownData.get(); };
 
-	mutable EncryptedInt32 v_turnipPrices[12];
+	mutable EncryptedInt32 TurnipPrices[12];
 };
 
 #endif

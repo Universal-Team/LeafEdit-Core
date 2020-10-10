@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_STRING_DB_HPP
 
 #include "types.hpp"
-
 #include <string>
 #include <vector>
 

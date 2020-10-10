@@ -76,15 +76,16 @@ bool TownWA::exist() const { return true; }
 u32 TownWA::turnipPrices(bool isAM, int day) const {
 	if (day > 5) return 0; // Out of scope.
 
-	this->v_turnipPrices[isAM ? day : 6 + day] = EncryptedInt32(SaveUtils::Read<u64>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 : 0x06ADE0 + day * 16 + 8));
-	return this->v_turnipPrices[isAM ? day : 6 + day].value;
+	this->TurnipPrices[isAM ? day : 6 + day] = EncryptedInt32(SaveUtils::Read<u64>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 : 0x06ADE0 + day * 16 + 8));
+	return this->TurnipPrices[isAM ? day : 6 + day].value;
 }
 void TownWA::turnipPrices(bool isAM, int day, u32 v) {
 	if (day > 5) return; // Out of scope.
 
-	this->v_turnipPrices[isAM ? day : 6 + day].value = v; // Set Value.
+	this->TurnipPrices[isAM ? day : 6 + day].value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
-	this->v_turnipPrices[isAM ? day : 6 + day].encrypt(encryptedInt, encryptionData);
+	this->TurnipPrices[isAM ? day : 6 + day].encrypt(encryptedInt, encryptionData);
+
 	SaveUtils::Write<u32>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 : 0x06ADE0 + day * 16 + 8, encryptedInt);
 	SaveUtils::Write<u32>(this->townPointer(), isAM ? 0x06ADE0 + day * 16 + 0x4 : 0x06ADE0 + day * 16 + 8 + 0x4, encryptionData);
 }

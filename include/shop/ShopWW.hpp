@@ -33,13 +33,13 @@
 
 class ShopWW : public Shop {
 protected:
-	u32 Offset;
 	std::shared_ptr<u8[]> ShopData;
+	u32 Offset;
 	WWRegion SaveRegion;
 public:
 	virtual ~ShopWW() { };
 	ShopWW(std::shared_ptr<u8[]> shopData, u32 offset, WWRegion rg) :
-		Shop(shopData, offset), Offset(offset), ShopData(shopData), SaveRegion(rg) { };
+		Shop(shopData, offset), ShopData(shopData), Offset(offset), SaveRegion(rg) { };
 
 	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
 private:

@@ -196,20 +196,6 @@ void PlayerWW::haircolor(u8 v) {
 }
 
 /*
-	Get and Set for the EyeColor.
-	EyeColor is handled on facetype for Wild World.
-*/
-u8 PlayerWW::eyecolor() const { return 0; }
-void PlayerWW::eyecolor(u8 v) { }
-
-/*
-	Get and Set for the Player Badges.
-	Does not exist on Wild World.
-*/
-u8 PlayerWW::badge(int badge) const { return 0; }
-void PlayerWW::badge(int badge, u8 v) { }
-
-/*
 	Get and Set for the Player ID.
 */
 u16 PlayerWW::playerid() const {
@@ -427,20 +413,6 @@ void PlayerWW::bank(u32 v) {
 }
 
 /*
-	Get and Set for the Meow-Coupon amount.
-	Does not exist on Wild World.
-*/
-u32 PlayerWW::islandmedals() const { return 0; }
-void PlayerWW::islandmedals(u32 v) { }
-
-/*
-	Get and Set for the Meow-Coupon amount.
-	Does not exist on Wild World.
-*/
-u32 PlayerWW::coupons() const { return 0; }
-void PlayerWW::coupons(u32 v) { }
-
-/*
 	Return a Player Letter.
 
 	int slot: The slot of the letter.
@@ -528,12 +500,6 @@ std::unique_ptr<Pattern> PlayerWW::pattern(int slot) const {
 	return nullptr;
 
 }
-
-/*
-	Return a TPC Image buffer pointer.
-	Does not exist on Wild World.
-*/
-u8* PlayerWW::tpcImage() const { return nullptr; }
 
 /*
 	Dump a player to file.

@@ -40,12 +40,12 @@
 class SavWW : public Sav {
 protected:
 	std::shared_ptr<u8[]> SaveData;
-	WWRegion SaveRegion;
 	u32 SaveSize;
+	WWRegion SaveRegion;
 public:
 	virtual ~SavWW() { };
 	SavWW(std::shared_ptr<u8[]> data, WWRegion Region, u32 ssize) :
-		Sav(data, ssize), SaveData(data), SaveRegion(Region), SaveSize(ssize) { };
+		Sav(data, ssize), SaveData(data), SaveSize(ssize), SaveRegion(Region) { };
 
 	void Finish(void) override;
 

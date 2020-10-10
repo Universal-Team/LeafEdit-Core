@@ -42,9 +42,9 @@ protected:
 	std::shared_ptr<u8[]> SaveData;
 	u32 SaveSize;
 public:
+	virtual ~SavHHD() { };
 	SavHHD(std::shared_ptr<u8[]> dt, u32 ssize) :
 		Sav(dt, ssize), SaveData(dt), SaveSize(ssize) { };
-	virtual ~SavHHD() { };
 	void Finish(void) override;
 
 	/*

@@ -43,12 +43,18 @@ class Sav {
 protected:
 	std::shared_ptr<u8[]> SaveData;
 	u32 SaveLength;
+	bool Changes;
 public:
 	virtual ~Sav() { };
 	Sav(std::shared_ptr<u8[]> data, u32 length) :
-		SaveData(data), SaveLength(length) { this->setChangesMade(false); };
+		SaveData(data), SaveLength(length), Changes(false) { this->setChangesMade(false); };
 	Sav(const Sav& save) = delete;
 	Sav& operator=(const Sav& save) = delete;
+
+	/*
+		Call this when finished editing.
+	*/
+	virtual void Finish(void) = 0;
 
 	/*
 		Get Sav Contents.
@@ -63,11 +69,6 @@ public:
 		Special Getter's for AC:HHD.
 	*/
 	virtual std::unique_ptr<PlayerHHD> playerhhd() const = 0;
-
-	/*
-		Call this when finished editing.
-	*/
-	virtual void Finish(void) = 0;
 
 	/*
 		Call this when getting the SaveType.
@@ -89,7 +90,6 @@ public:
 	virtual SaveType getType() const = 0;
 	virtual WWRegion getRegion() const = 0;
 
-	bool Changes = false;
 	void setChangesMade(bool v = true) { if (v != this->Changes) this->Changes = v; };
 	bool changesMade() const { return this->Changes; };
 

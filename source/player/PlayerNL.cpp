@@ -106,13 +106,13 @@ void PlayerNL::name(std::u16string v) { StringUtils::WriteUTF16String(this->play
 	Get and Set for the Wallet Amount.
 */
 u32 PlayerNL::wallet() const {
-	this->walletValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6E38));
-	return walletValue.value;
+	this->WalletValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6E38));
+	return this->WalletValue.value;
 }
 void PlayerNL::wallet(u32 v) {
-	this->walletValue.value = v; // Set Value.
+	this->WalletValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
-	this->walletValue.encrypt(encryptedInt, encryptionData);
+	this->WalletValue.encrypt(encryptedInt, encryptionData);
 
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6E38, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6E3C, encryptionData);
@@ -122,13 +122,13 @@ void PlayerNL::wallet(u32 v) {
 	Get and Set for the Bank Amount.
 */
 u32 PlayerNL::bank() const {
-	this->bankValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6B6C));
-	return bankValue.value;
+	this->BankValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6B6C));
+	return this->BankValue.value;
 }
 void PlayerNL::bank(u32 v) {
-	this->bankValue.value = v; // Set Value.
+	this->BankValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
-	this->bankValue.encrypt(encryptedInt, encryptionData);
+	this->BankValue.encrypt(encryptedInt, encryptionData);
 
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B6C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B70, encryptionData);
@@ -138,24 +138,17 @@ void PlayerNL::bank(u32 v) {
 	Get and Set for the Island Medal amount.
 */
 u32 PlayerNL::islandmedals() const {
-	this->islandValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6B7C));
-	return islandValue.value;
+	this->IslandValue = EncryptedInt32(SaveUtils::Read<u64>(this->playerPointer(), 0x6B7C));
+	return this->IslandValue.value;
 }
 void PlayerNL::islandmedals(u32 v) {
-	this->islandValue.value = v; // Set Value.
+	this->IslandValue.value = v; // Set Value.
 	u32 encryptedInt = 0, encryptionData = 0;
-	this->islandValue.encrypt(encryptedInt, encryptionData);
+	this->IslandValue.encrypt(encryptedInt, encryptionData);
 
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B7C, encryptedInt);
 	SaveUtils::Write<u32>(this->playerPointer(), 0x6B80, encryptionData);
 }
-
-/*
-	Get and Set for the Meow-Coupon amount.
-	Does not exist on regular New Leaf.
-*/
-u32 PlayerNL::coupons() const { return 0; }
-void PlayerNL::coupons(u32 v) { }
 
 /*
 	Return a Player Letter.

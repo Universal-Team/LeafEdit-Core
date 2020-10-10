@@ -42,7 +42,7 @@ u8 PatternImageWW::getPaletteColor(u8 plt) const {
 /*
 	Return the Palette Index.
 */
-int PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()[0]) & 0xF0) >> 4); }
+u8 PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()[0]) & 0xF0) >> 4); }
 
 /*
 	Set the Palette Index instead of color for the palette.
@@ -50,7 +50,7 @@ int PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData(
 	int index: The new palette index. (0 - 14)
 	u8 color: The color index. (Unused)
 */
-void PatternImageWW::setPaletteColor(int index, u8 color) {
+void PatternImageWW::setPaletteColor(u8 index, u8 color) {
 	if (index > 14) return;
 
 	this->paletteData()[0] = (u8)(((index) << 4) & 0xF0);
@@ -62,7 +62,7 @@ void PatternImageWW::setPaletteColor(int index, u8 color) {
 	int index: The pixel index of the pattern.
 */
 pixel PatternImageWW::getPixel(int index) const {
-	if (this->valid) {
+	if (this->Valid) {
 		if (this->pixelPointer()) {
 			return this->pixelPointer()[index];
 		}
@@ -77,10 +77,10 @@ pixel PatternImageWW::getPixel(int index) const {
 	int index: The pixel index of the pattern.
 	int color: The color index.
 */
-void PatternImageWW::setPixel(int index, int color) {
+void PatternImageWW::setPixel(int index, u8 color) {
 	if (color > 15 || index > 0x3FF) return; // Out of scope.
 
-	if (this->valid) {
+	if (this->Valid) {
 		if (this->pixelPointer()) {
 			if (index % 2 == 0) this->pixelPointer()[index / 2].left = color;
 			else this->pixelPointer()[index / 2].right = color;
@@ -91,4 +91,4 @@ void PatternImageWW::setPixel(int index, int color) {
 /*
 	Same as above, just with X & Y position instead of index.
 */
-void PatternImageWW::setPixel(int x, int y, int color) { this->setPixel((x + (y * 32)), color); }
+void PatternImageWW::setPixel(u8 x, u8 y, u8 color) { this->setPixel((x + (y * 32)), color); }

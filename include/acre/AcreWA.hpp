@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ACRE_WA_HPP
 
 #include "Acre.hpp"
-
 #include <memory>
 
 class AcreWA : public Acre {

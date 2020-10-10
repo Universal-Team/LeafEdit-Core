@@ -60,7 +60,7 @@ public:
 	FurnitureDirection rotation() const override;
 	void rotation(FurnitureDirection Direction) override;
 private:
-	u8* itemPointer() const { return this->ItemData.get() + this->Offset; };
+	u8 *itemPointer() const { return this->ItemData.get() + this->Offset; };
 };
 
 #endif

@@ -32,31 +32,31 @@
 class PatternImageWW : public PatternImage {
 protected:
 	std::shared_ptr<u8[]> PatternData;
-	u32 PtrnOffset;
-	u32 PltOffset;
+	u32 PatternOffset;
+	u32 PaletteOffset;
 public:
 	virtual ~PatternImageWW() { };
 	PatternImageWW(std::shared_ptr<u8[]> data, u32 patternOffset, u32 paletteOffset) :
-		PatternImage(), PatternData(data), PtrnOffset(patternOffset), PltOffset(paletteOffset) { };
+		PatternImage(), PatternData(data), PatternOffset(patternOffset), PaletteOffset(paletteOffset) { };
 
-	bool isValid() const override { return this->valid; };
+	bool isValid() const override { return this->Valid; };
 
 	u8 getPaletteColor(u8 plt) const override;
 
-	int getWWPaletteIndex() const override;
+	u8 getWWPaletteIndex() const override;
 
-	void setPaletteColor(int index, u8 color) override;
+	void setPaletteColor(u8 index, u8 color) override;
 
 	pixel getPixel(int pixel) const override;
 
-	void setPixel(int index, int color) override;
+	void setPixel(int index, u8 color) override;
 
-	void setPixel(int x, int y, int color) override;
+	void setPixel(u8 x, u8 y, u8 color) override;
 private:
-	bool valid = true;
+	bool Valid = true;
 
-	pixel *pixelPointer() const { return (pixel *)(this->PatternData.get() + this->PtrnOffset); };
-	u8 *paletteData() const { return this->PatternData.get() + this->PltOffset; };
+	pixel *pixelPointer() const { return (pixel *)(this->PatternData.get() + this->PatternOffset); };
+	u8 *paletteData() const { return this->PatternData.get() + this->PaletteOffset; };
 };
 
 #endif

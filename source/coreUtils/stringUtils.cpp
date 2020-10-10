@@ -86,6 +86,7 @@ constexpr std::array<char16_t, 256> wwCharacterDictionaryJapanese = {
 	NOTE: For Korean, please use UTF-16. This is only for EUR | USA | JPN.
 */
 std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion region) {
+	if (region == WWRegion::KOR) return StringUtils::UTF8toUTF16("?"); // Korean should not be supported there.
 	std::u16string output;
 
 	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
@@ -110,6 +111,8 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 	NOTE: For Korean, please use UTF-16. This is only for EUR | USA | JPN.
 */
 std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion region) {
+	if (region == WWRegion::KOR) return "?"; // Korean should not be supported there.
+
 	std::string output;
 	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
 

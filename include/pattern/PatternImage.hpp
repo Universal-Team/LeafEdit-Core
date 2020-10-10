@@ -47,15 +47,15 @@ public:
 
 	virtual u8 getPaletteColor(u8 plt) const = 0;
 
-	virtual int getWWPaletteIndex() const = 0;
+	virtual u8 getWWPaletteIndex() const = 0;
 
-	virtual void setPaletteColor(int index, u8 color) = 0;
+	virtual void setPaletteColor(u8 index, u8 color) = 0;
 
 	virtual pixel getPixel(int pixel) const = 0;
 
-	virtual void setPixel(int index, int color) = 0;
+	virtual void setPixel(int index, u8 color) = 0;
 
-	virtual void setPixel(int x, int y, int color) = 0;
+	virtual void setPixel(u8 x, u8 y, u8 color) = 0;
 };
 
 #endif

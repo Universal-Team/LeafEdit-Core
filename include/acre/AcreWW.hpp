@@ -28,7 +28,6 @@
 #define _LEAFEDIT_CORE_ACRE_WW_HPP
 
 #include "Acre.hpp"
-
 #include <memory>
 
 class AcreWW : public Acre {
@@ -36,7 +35,7 @@ protected:
 	std::shared_ptr<u8[]> AcreData;
 	u32 Offset;
 public:
-	virtual ~AcreWW() { }
+	virtual ~AcreWW() { };
 	AcreWW(std::shared_ptr<u8[]> acreData, u32 offset) :
 		Acre(acreData, offset), AcreData(acreData), Offset(offset) { };
 
