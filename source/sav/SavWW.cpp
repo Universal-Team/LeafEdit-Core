@@ -31,9 +31,9 @@
 /*
 	Return a Player.
 
-	int player: The player index.
+	u8 player: The player index.
 */
-std::unique_ptr<Player> SavWW::player(int player) const {
+std::unique_ptr<Player> SavWW::player(u8 player) const {
 	if (player > 3) return nullptr; // Player goes out of scope.
 
 	switch (this->SaveRegion) {
@@ -53,9 +53,9 @@ std::unique_ptr<Player> SavWW::player(int player) const {
 /*
 	Return a Villager.
 
-	int villager: The villager index.
+	u8 villager: The villager index.
 */
-std::unique_ptr<Villager> SavWW::villager(int villager) const {
+std::unique_ptr<Villager> SavWW::villager(u8 villager) const {
 	if (villager > 7) return nullptr; // Villager goes out of scope.
 
 	switch (this->SaveRegion) {
@@ -94,17 +94,17 @@ std::unique_ptr<Shop> SavWW::shop() const { return std::make_unique<ShopWW>(this
 void SavWW::Finish(void) {
 	switch (this->SaveRegion) {
 		case WWRegion::EUR_USA:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x15FE0 / sizeof(u16));
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x15FE0 / sizeof(u16));
 			memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
 			break;
 
 		case WWRegion::JPN:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x12224 / sizeof(u16));
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x12224 / sizeof(u16));
 			memcpy(this->savePointer() + 0x12224, this->savePointer(), 0x12224); // Copy SaveData to the second save copy.
 			break;
 
 		case WWRegion::KOR:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16*>(this->savePointer()), 0x173FC / sizeof(u16));
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x173FC / sizeof(u16));
 			memcpy(this->savePointer() + 0x173FC, this->savePointer(), 0x173FC); // Copy SaveData to the second save copy.
 			break;
 	}

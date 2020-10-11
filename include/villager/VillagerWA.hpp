@@ -71,7 +71,7 @@ public:
 	u8 umbrellaWW() const override { return 0; };
 	void umbrellaWW(u8 umbr) override { };
 
-	std::unique_ptr<Item> furniture(int slot) const override;
+	std::unique_ptr<Item> furniture(u8 slot) const override;
 private:
 	u8 *villagerPointer() const { return this->VillagerData.get() + this->Offset; };
 };

@@ -41,9 +41,9 @@ public:
 	IslandWA(std::shared_ptr<u8[]> islandData) :
 		Island(islandData), IslandData(islandData) { };
 
-	std::unique_ptr<Acre> acre(int Acre) const override;
+	std::unique_ptr<Acre> acre(u8 Acre) const override;
 
-	std::unique_ptr<Item> item(u32 index) const override;
+	std::unique_ptr<Item> item(u16 index) const override;
 private:
 	u8 *islandPointer() const { return this->IslandData.get(); };
 };

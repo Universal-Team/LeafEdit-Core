@@ -59,8 +59,8 @@ public:
 	/*
 		Get Sav Contents.
 	*/
-	virtual std::unique_ptr<Player> player(int player) const = 0;
-	virtual std::unique_ptr<Villager> villager(int villager) const = 0;
+	virtual std::unique_ptr<Player> player(u8 player) const = 0;
+	virtual std::unique_ptr<Villager> villager(u8 villager) const = 0;
 	virtual std::unique_ptr<Town> town() const = 0;
 	virtual std::unique_ptr<Island> island() const = 0;
 	virtual std::unique_ptr<Shop> shop() const = 0;
@@ -79,7 +79,7 @@ public:
 	/*
 		Get max Values.
 	*/
-	virtual int maxVillager() const = 0;
+	virtual u8 maxVillager() const = 0;
 
 	/*
 		return Sav stuff.

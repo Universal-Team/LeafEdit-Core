@@ -49,21 +49,21 @@ public:
 	virtual std::u16string name() const = 0;
 	virtual void name(std::u16string v) = 0;
 
-	virtual std::unique_ptr<Acre> acre(int Acre) const = 0;
-	virtual std::unique_ptr<Item> item(u32 index) const = 0;
+	virtual std::unique_ptr<Acre> acre(u8 Acre) const = 0;
+	virtual std::unique_ptr<Item> item(u16 index) const = 0;
 
 	virtual bool exist() const = 0;
 
-	virtual u32 turnipPrices(bool isAM, int day) const = 0;
-	virtual void turnipPrices(bool isAM, int day, u32 v) = 0;
+	virtual u32 turnipPrices(bool isAM, u8 day) const = 0;
+	virtual void turnipPrices(bool isAM, u8 day, u32 v) = 0;
 
 	virtual std::unique_ptr<Pattern> townflag() const = 0;
 
-	virtual bool itemBuried(int index) const = 0;
-	virtual void itemBuried(int index, bool buried) = 0;
+	virtual bool itemBuried(u16 index) const = 0;
+	virtual void itemBuried(u16 index, bool buried) = 0;
 
-	virtual std::unique_ptr<Item> recycleItem(int slot) const = 0;
-	virtual std::unique_ptr<Item> lostFoundItem(int slot) const = 0;
+	virtual std::unique_ptr<Item> recycleItem(u8 slot) const = 0;
+	virtual std::unique_ptr<Item> lostFoundItem(u8 slot) const = 0;
 };
 
 #endif

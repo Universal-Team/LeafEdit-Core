@@ -43,7 +43,7 @@ typedef int64_t s64;
 /*
 	SaveTypes.
 */
-enum class SaveType {
+enum class SaveType : u8 {
 	WW,
 	NL,
 	WA,
@@ -54,7 +54,7 @@ enum class SaveType {
 /*
 	Save Regions. (Mainly for AC:WW)
 */
-enum class WWRegion {
+enum class WWRegion : u8 {
 	EUR_USA, // EUR + USA are the same.
 	JPN,
 	KOR

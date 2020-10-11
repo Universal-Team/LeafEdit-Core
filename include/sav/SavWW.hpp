@@ -52,8 +52,8 @@ public:
 	/*
 		Get main core class contents.
 	*/
-	std::unique_ptr<Player> player(int player) const override;
-	std::unique_ptr<Villager> villager(int villager) const override;
+	std::unique_ptr<Player> player(u8 player) const override;
+	std::unique_ptr<Villager> villager(u8 villager) const override;
 	std::unique_ptr<Town> town() const override;
 	std::unique_ptr<Island> island() const override;
 	std::unique_ptr<Shop> shop() const override;
@@ -67,7 +67,7 @@ public:
 	SaveType getType() const override { return SaveType::WW; };
 	WWRegion getRegion() const override { return this->SaveRegion; };
 
-	int maxVillager() const override { return 7; };
+	u8 maxVillager() const override { return 7; };
 private:
 	u8 *savePointer() const { return this->SaveData.get(); };
 };

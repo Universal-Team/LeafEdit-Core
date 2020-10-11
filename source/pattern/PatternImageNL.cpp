@@ -60,9 +60,9 @@ void PatternImageNL::setPaletteColor(u8 index, u8 color) {
 /*
 	Return a pixel struct for the Left & Right pixel buffer.
 
-	int index: The pixel index of the pattern.
+	u16 index: The pixel index of the pattern.
 */
-pixel PatternImageNL::getPixel(int index) const {
+pixel PatternImageNL::getPixel(u16 index) const {
 	if (this->Valid) {
 		if (this->pixelPointer()) {
 			return this->pixelPointer()[index];
@@ -75,10 +75,10 @@ pixel PatternImageNL::getPixel(int index) const {
 /*
 	Set a pixel's color to the Pattern Image.
 
-	int index: The pixel index of the pattern.
-	int color: The color index.
+	u16 index: The pixel index of the pattern.
+	u8 color: The color index.
 */
-void PatternImageNL::setPixel(int index, u8 color) {
+void PatternImageNL::setPixel(u16 index, u8 color) {
 	if (color > 14 || index > 0x3FF) return; // Out of scope.
 
 	if (this->Valid) {

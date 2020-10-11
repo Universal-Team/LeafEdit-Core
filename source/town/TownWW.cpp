@@ -91,9 +91,9 @@ void TownWW::name(std::u16string v) {
 /*
 	Return a Town Acre.
 
-	int Acre: Acre Index.
+	u8 Acre: Acre Index.
 */
-std::unique_ptr<Acre> TownWW::acre(int Acre) const {
+std::unique_ptr<Acre> TownWW::acre(u8 Acre) const {
 	if (Acre > 35) return nullptr; // Acre Index goes out of scope.
 
 	switch(this->SaveRegion) {
@@ -113,9 +113,9 @@ std::unique_ptr<Acre> TownWW::acre(int Acre) const {
 /*
 	Return a Town Map Item.
 
-	u32 index: The Town Map Item index.
+	u16 index: The Town Map Item index.
 */
-std::unique_ptr<Item> TownWW::item(u32 index) const {
+std::unique_ptr<Item> TownWW::item(u16 index) const {
 	if (index > 4095) return nullptr; // Item Index goes out of scope.
 
 	switch(this->SaveRegion) {
@@ -144,11 +144,11 @@ bool TownWW::exist() const {
 	Get and Set the Turnip prices.
 
 	bool isAM: If the price is AM (true) or PM (false).
-	int day: The day index.
+	u8 day: The day index.
 
 	^ Both parameters are ignored, cause only one price seem to exist there.
 */
-u32 TownWW::turnipPrices(bool isAM, int day) const {
+u32 TownWW::turnipPrices(bool isAM, u8 day) const {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			return this->townPointer()[0x15F5D];
@@ -162,7 +162,7 @@ u32 TownWW::turnipPrices(bool isAM, int day) const {
 
 	return 0;
 }
-void TownWW::turnipPrices(bool isAM, int day, u32 v) {
+void TownWW::turnipPrices(bool isAM, u8 day, u32 v) {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			SaveUtils::Write<u8>(this->townPointer(), 0x15F5D, (u8)v);
@@ -199,9 +199,9 @@ std::unique_ptr<Pattern> TownWW::townflag() const {
 /*
 	Get and Set, if item is buried.
 
-	int index: Town Map Item index.
+	u16 index: Town Map Item index.
 */
-bool TownWW::itemBuried(int index) const {
+bool TownWW::itemBuried(u16 index) const {
 	if (index > 4095) return false;
 
 	u32 offset = 0;
@@ -221,7 +221,7 @@ bool TownWW::itemBuried(int index) const {
 
 	return SaveUtils::GetBit(this->townPointer(), offset, (index % 256) % 8);
 }
-void TownWW::itemBuried(int index, bool buried) {
+void TownWW::itemBuried(u16 index, bool buried) {
 	if (index > 4095) return;
 
 	/* Check, if already buried or not. */
@@ -253,9 +253,9 @@ void TownWW::itemBuried(int index, bool buried) {
 /*
 	Return the Recycle bin (or whatever you would call that box inside the Townhall there) Items.
 
-	int slot: The slot of the item.
+	u8 slot: The slot of the item.
 */
-std::unique_ptr<Item> TownWW::recycleItem(int slot) const {
+std::unique_ptr<Item> TownWW::recycleItem(u8 slot) const {
 	if (slot > 14) return nullptr; // Item Index goes out of scope.
 
 	switch(this->SaveRegion) {
@@ -275,9 +275,9 @@ std::unique_ptr<Item> TownWW::recycleItem(int slot) const {
 /*
 	Return the Lost and Found Items.
 
-	int slot: The slot of the item.
+	u8 slot: The slot of the item.
 */
-std::unique_ptr<Item> TownWW::lostFoundItem(int slot) const {
+std::unique_ptr<Item> TownWW::lostFoundItem(u8 slot) const {
 	if (slot > 14) return nullptr; // Item Index goes out of scope.
 
 	switch(this->SaveRegion) {

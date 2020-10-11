@@ -43,9 +43,9 @@ public:
 	Island(const Island& island) = delete;
 	Island& operator=(const Island& island) = delete;
 
-	virtual std::unique_ptr<Acre> acre(int Acre) const = 0;
+	virtual std::unique_ptr<Acre> acre(u8 Acre) const = 0;
 
-	virtual std::unique_ptr<Item> item(u32 index) const = 0;
+	virtual std::unique_ptr<Item> item(u16 index) const = 0;
 };
 
 #endif

@@ -76,7 +76,7 @@ public:
 	/*
 		Pattern Image.
 	*/
-	virtual std::unique_ptr<PatternImage> image(const int pattern) const = 0;
+	virtual std::unique_ptr<PatternImage> image(u8 pattern) const = 0;
 };
 
 #endif

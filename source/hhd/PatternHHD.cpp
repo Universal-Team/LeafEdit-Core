@@ -86,14 +86,7 @@ void PatternHHD::ownPattern(std::unique_ptr<Player> player) { return; }
 */
 void PatternHHD::dumpPattern(const std::string fileName) {
 	/* Get Pattern size. 0x9 for default pattern, else pro pattern. */
-	u32 size = 0;
-
-	if (this->patternPointer()[0x69] == 0x09) {
-		size = 620;
-
-	} else {
-		size = 2160;
-	}
+	const u32 size = this->patternPointer()[0x69] == 0x09 ? 620 : 2160;
 
 	/* Open File. */
 	FILE* ptrn = fopen(fileName.c_str(), "wb");
@@ -144,8 +137,8 @@ void PatternHHD::injectPattern(const std::string fileName) {
 /*
 	Return a Pattern Image of the pattern.
 
-	const int pattern: The Pattern index. Used for "pro pattern".
+	u8 pattern: The Pattern index. Used for "pro pattern".
 */
-std::unique_ptr<PatternImage> PatternHHD::image(const int pattern) const {
+std::unique_ptr<PatternImage> PatternHHD::image(u8 pattern) const {
 	return std::make_unique<PatternImageNL>(this->PatternData, (this->Offset + 0x6C + (pattern * 0x200)), this->Offset + 0x58);
 }

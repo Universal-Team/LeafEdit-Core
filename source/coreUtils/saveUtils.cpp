@@ -32,10 +32,10 @@
 	Get a bit.
 
 	const u8 *data: The save buffer.
-	int offset: The offset.
+	u32 offset: The offset.
 	u8 bitIndex: The index of the bit.
 */
-bool SaveUtils::GetBit(const u8 *data, int offset, u8 bitIndex) {
+bool SaveUtils::GetBit(const u8 *data, u32 offset, u8 bitIndex) {
 	bitIndex &= 7; // ensure bit access is 0-7.
 	return (data[offset] >> bitIndex & 1) != 0;
 }
@@ -44,11 +44,11 @@ bool SaveUtils::GetBit(const u8 *data, int offset, u8 bitIndex) {
 	Set a bit.
 
 	const u8 *data: The save buffer.
-	int offset: The offset.
+	u32 offset: The offset.
 	u8 bitIndex: The index of the bit.
 	bool bit: if the bit is 1 (true) or 0 (false).
 */
-void SaveUtils::SetBit(u8 *data, int offset, u8 bitIndex, bool bit) {
+void SaveUtils::SetBit(u8 *data, u32 offset, u8 bitIndex, bool bit) {
 	bitIndex &= 7; // ensure bit access is 0-7.
 	data[offset] &= ~(1 << bitIndex);
 	data[offset] |= (bit ? 1 : 0) << bitIndex;

@@ -30,9 +30,9 @@
 /*
 	Return a Player.
 
-	int player: The player index.
+	u8 player: The player index.
 */
-std::unique_ptr<Player> SavWA::player(int player) const {
+std::unique_ptr<Player> SavWA::player(u8 player) const {
 	if (player > 3) return nullptr; // Player goes out of scope.
 
 	return std::make_unique<PlayerWA>(this->SaveData, 0xA0 + (player * 0xA480), player);
@@ -41,9 +41,9 @@ std::unique_ptr<Player> SavWA::player(int player) const {
 /*
 	Return a Villager.
 
-	int villager: The villager index.
+	u8 villager: The villager index.
 */
-std::unique_ptr<Villager> SavWA::villager(int villager) const {
+std::unique_ptr<Villager> SavWA::villager(u8 villager) const {
 	if (villager > 9) return nullptr; // Villager goes out of scope.
 
 	return std::make_unique<VillagerWA>(this->SaveData, 0x0292D0 + (villager * 0x2518));

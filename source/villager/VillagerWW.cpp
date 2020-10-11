@@ -263,9 +263,9 @@ void VillagerWW::umbrellaWW(u8 umbr) {
 /*
 	Return the Villager Furniture.
 
-	int slot: The Furniture index.
+	u8 slot: The Furniture index.
 */
-std::unique_ptr<Item> VillagerWW::furniture(int slot) const {
+std::unique_ptr<Item> VillagerWW::furniture(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	switch(this->SaveRegion) {

@@ -41,7 +41,7 @@ public:
 	ShopWW(std::shared_ptr<u8[]> shopData, u32 offset, WWRegion rg) :
 		Shop(shopData, offset), ShopData(shopData), Offset(offset), SaveRegion(rg) { };
 
-	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
+	std::unique_ptr<Pattern> ableSisterPattern(u8 pattern) const override;
 private:
 	u8 *shopPointer() const { return this->ShopData.get() + this->Offset; };
 };

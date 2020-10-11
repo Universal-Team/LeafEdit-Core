@@ -30,9 +30,9 @@
 /*
 	Return the able sister pattern.
 
-	int pattern: Pattern Index.
+	u8 pattern: Pattern Index.
 */
-std::unique_ptr<Pattern> ShopWW::ableSisterPattern(int pattern) const {
+std::unique_ptr<Pattern> ShopWW::ableSisterPattern(u8 pattern) const {
 	if (pattern > 7) return nullptr;
 
 	switch(this->SaveRegion) {

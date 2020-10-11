@@ -153,9 +153,9 @@ void PlayerNL::islandmedals(u32 v) {
 /*
 	Return a Player Letter.
 
-	int slot: The slot of the letter.
+	u8 slot: The slot of the letter.
 */
-std::unique_ptr<Letter> PlayerNL::letter(int slot) const {
+std::unique_ptr<Letter> PlayerNL::letter(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	return std::make_unique<LetterNL>(this->PlayerData, this->Offset + 0x6F38 + (0x280 * slot));
@@ -164,9 +164,9 @@ std::unique_ptr<Letter> PlayerNL::letter(int slot) const {
 /*
 	Return an item of the Player Pocket.
 
-	int slot: The slot of the Pocket.
+	u8 slot: The slot of the Pocket.
 */
-std::unique_ptr<Item> PlayerNL::pocket(int slot) const {
+std::unique_ptr<Item> PlayerNL::pocket(u8 slot) const {
 	if (slot > 15) return nullptr;
 
 	return std::make_unique<ItemNL>(this->PlayerData, this->Offset + 0x6BB0 + slot * 4);
@@ -175,9 +175,9 @@ std::unique_ptr<Item> PlayerNL::pocket(int slot) const {
 /*
 	Return an item of the Player Dresser.
 
-	int slot: The slot of the Dresser.
+	u8 slot: The slot of the Dresser.
 */
-std::unique_ptr<Item> PlayerNL::dresser(int slot) const {
+std::unique_ptr<Item> PlayerNL::dresser(u8 slot) const {
 	if (slot > 179) return nullptr;
 
 	return std::make_unique<ItemNL>(this->PlayerData, this->Offset + 0x8E18 + slot * 4);
@@ -186,9 +186,9 @@ std::unique_ptr<Item> PlayerNL::dresser(int slot) const {
 /*
 	Return an item of the Player Islandbox.
 
-	int slot: The slot of the islandbox.
+	u8 slot: The slot of the islandbox.
 */
-std::unique_ptr<Item> PlayerNL::islandbox(int slot) const {
+std::unique_ptr<Item> PlayerNL::islandbox(u8 slot) const {
 	if (slot > 39) return nullptr;
 
 	return std::make_unique<ItemNL>(this->PlayerData, this->Offset + 0x6E40 + slot * 4);
@@ -197,9 +197,9 @@ std::unique_ptr<Item> PlayerNL::islandbox(int slot) const {
 /*
 	Return a Player Pattern.
 
-	int slot: The slot of the pattern.
+	u8 slot: The slot of the pattern.
 */
-std::unique_ptr<Pattern> PlayerNL::pattern(int slot) const {
+std::unique_ptr<Pattern> PlayerNL::pattern(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	return std::make_unique<PatternNL>(this->PlayerData, this->Offset + 0x2C + slot * 0x870);
@@ -208,7 +208,7 @@ std::unique_ptr<Pattern> PlayerNL::pattern(int slot) const {
 /*
 	Return a TPC Image buffer pointer.
 */
-u8* PlayerNL::tpcImage() const {
+u8 *PlayerNL::tpcImage() const {
 	u8 *TPCBuffer = nullptr;
 
 	if (SaveUtils::Read<u32>(this->playerPointer(), 0x5720) == 1) {

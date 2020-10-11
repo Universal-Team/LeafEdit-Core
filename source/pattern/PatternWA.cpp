@@ -72,9 +72,7 @@ void PatternWA::origtownname(std::u16string v) { StringUtils::WriteUTF16String(t
 	std::unique_ptr<Player> player: A pointer to the player.
 */
 void PatternWA::ownPattern(std::unique_ptr<Player> player) {
-	/*
-		Only set if player is not nullptr.
-	*/
+	/* Only set if player is not nullptr. */
 	if (player) {
 		this->creatorid(player->playerid());
 		this->creatorname(player->name());
@@ -96,21 +94,14 @@ void PatternWA::designtype(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 
 	const std::string fileName: Where to place the dump at.
 */
 void PatternWA::dumpPattern(const std::string fileName) {
-	/*
-		Get Pattern size.
-		0x9 for default pattern, else pro pattern.
-	*/
+	/* Get Pattern size. 0x9 for default pattern, else pro pattern. */
 	const u32 size = this->patternPointer()[0x69] == 0x09 ? 620 : 2160;
 
-	/*
-		Open File.
-	*/
+	/* Open File. */
 	FILE* ptrn = fopen(fileName.c_str(), "wb");
 
 	if (ptrn) {
-		/*
-			Write to file and close.
-		*/
+		/* Write to file and close. */
 		fwrite(this->patternPointer(), 1, size, ptrn);
 		fclose(ptrn);
 	}
@@ -124,9 +115,7 @@ void PatternWA::dumpPattern(const std::string fileName) {
 void PatternWA::injectPattern(const std::string fileName) {
 	if ((access(fileName.c_str(), F_OK) != 0))	return; // File not found. Do NOTHING.
 
-	/*
-		Open file and get size.
-	*/
+	/* Open file and get size. */
 	FILE* ptrn = fopen(fileName.c_str(), "rb");
 
 	if (ptrn) {
@@ -134,32 +123,22 @@ void PatternWA::injectPattern(const std::string fileName) {
 		u32 size = ftell(ptrn);
 		fseek(ptrn, 0, SEEK_SET);
 
-		/*
-			Check for size.
-		*/
+		/* Check for size. */
 		if (size == 620 || size == 2160) {
-			/*
-				Create Buffer with the size and read the file.
-			*/
+			/* Create Buffer with the size and read the file. */
 			u8 *patternData = new u8[size];
 			fread(patternData, 1, size, ptrn);
 
-			/*
-				Set Buffer data to save.
-			*/
+			/* Set Buffer data to save. */
 			for(int i = 0; i < (int)size; i++){
 				SaveUtils::Write<u8>(this->patternPointer(), i, patternData[i]);
 			}
 
-			/*
-				Delete Buffer.
-			*/
+			/* Delete Buffer. */
 			delete[] patternData;
 		}
 
-		/*
-			Close File, cause we don't need it.
-		*/
+		/* Close File, cause we don't need it. */
 		fclose(ptrn);
 	}
 }
@@ -167,8 +146,8 @@ void PatternWA::injectPattern(const std::string fileName) {
 /*
 	Return a Pattern Image of the pattern.
 
-	const int pattern: The Pattern index. Used for "pro pattern".
+	u8 pattern: The Pattern index. Used for "pro pattern".
 */
-std::unique_ptr<PatternImage> PatternWA::image(const int pattern) const {
+std::unique_ptr<PatternImage> PatternWA::image(u8 pattern) const {
 	return std::make_unique<PatternImageNL>(this->PatternData, (this->Offset + 0x6C + (pattern * 0x200)), this->Offset + 0x58);
 }

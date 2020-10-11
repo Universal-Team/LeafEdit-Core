@@ -225,9 +225,7 @@ void PatternWW::origtownname(std::u16string v) {
 	std::unique_ptr<Player> player: A pointer to the player.
 */
 void PatternWW::ownPattern(std::unique_ptr<Player> player) {
-	/*
-		Only set if player is not nullptr.
-	*/
+	/* Only set if player is not nullptr. */
 	if (player) {
 		this->creatorGender(player->gender());
 		this->creatorid(player->playerid());
@@ -276,15 +274,11 @@ void PatternWW::designtype(u8 v) {
 	const std::string fileName: Where to place the dump at.
 */
 void PatternWW::dumpPattern(const std::string fileName) {
-	/*
-		Open File.
-	*/
+	/* Open File. */
 	FILE* ptrn = fopen(fileName.c_str(), "wb");
 
 	if (ptrn) {
-		/*
-			Write to file and close.
-		*/
+		/* Write to file and close. */
 		fwrite(this->patternPointer(), 1, this->getPatternSize(), ptrn);
 		fclose(ptrn);
 	}
@@ -298,9 +292,7 @@ void PatternWW::dumpPattern(const std::string fileName) {
 void PatternWW::injectPattern(const std::string fileName) {
 	if ((access(fileName.c_str(), F_OK) != 0)) return; // File not found. Do NOTHING.
 
-	/*
-		Open file and get size.
-	*/
+	/* Open file and get size. */
 	FILE* ptrn = fopen(fileName.c_str(), "rb");
 
 	if (ptrn) {
@@ -312,23 +304,17 @@ void PatternWW::injectPattern(const std::string fileName) {
 			u8 *patternData = new u8[size];
 			fread(patternData, 1, size, ptrn);
 
-			/*
-				Set Buffer data to save.
-			*/
+			/* Set Buffer data to save. */
 			for(int i = 0; i < (int)size; i++) {
 				SaveUtils::Write<u8>(this->patternPointer(), i, patternData[i]);
 			}
 
-			/*
-				Delete Buffer.
-			*/
+			/* Delete Buffer. */
 			delete[] patternData;
 
 		}
 
-		/*
-			Close File, cause we don't need it.
-		*/
+		/* Close File, cause we don't need it. */
 		fclose(ptrn);
 	}
 }
@@ -336,9 +322,9 @@ void PatternWW::injectPattern(const std::string fileName) {
 /*
 	Return a Pattern Image of the pattern.
 
-	const int pattern: The Pattern index. Unused for Wild World.
+	u8 pattern: The Pattern index. Unused for Wild World.
 */
-std::unique_ptr<PatternImage> PatternWW::image(const int pattern) const {
+std::unique_ptr<PatternImage> PatternWW::image(u8 pattern) const {
 	u32 patternOffset = this->Offset, pltOffset = this->Offset;
 
 	switch(this->SaveRegion) {

@@ -30,9 +30,9 @@
 /*
 	Return the able sister pattern.
 
-	int pattern: Pattern Index.
+	u8 pattern: Pattern Index.
 */
-std::unique_ptr<Pattern> ShopNL::ableSisterPattern(int pattern) const {
+std::unique_ptr<Pattern> ShopNL::ableSisterPattern(u8 pattern) const {
 	if (pattern > 7) return nullptr;
 
 	return std::make_unique<PatternNL>(this->ShopData, 0x5C934 + pattern * 0x870);

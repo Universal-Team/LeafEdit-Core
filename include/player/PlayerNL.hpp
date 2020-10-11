@@ -94,14 +94,14 @@ public:
 	u32 coupons() const override { return 0; };
 	void coupons(u32 v) override { };
 
-	std::unique_ptr<Letter> letter(int slot) const override;
+	std::unique_ptr<Letter> letter(u8 slot) const override;
 
-	std::unique_ptr<Item> pocket(int slot) const override;
-	std::unique_ptr<Item> dresser(int slot) const override;
-	std::unique_ptr<Item> islandbox(int slot) const override;
-	std::unique_ptr<Item> storage(int slot) const override { return nullptr; };
+	std::unique_ptr<Item> pocket(u8 slot) const override;
+	std::unique_ptr<Item> dresser(u8 slot) const override;
+	std::unique_ptr<Item> islandbox(u8 slot) const override;
+	std::unique_ptr<Item> storage(u16 slot) const override { return nullptr; };
 
-	std::unique_ptr<Pattern> pattern(int slot) const override;
+	std::unique_ptr<Pattern> pattern(u8 slot) const override;
 
 	u8 *tpcImage() const override;
 	bool hasTPC() const override { return true; };
@@ -119,9 +119,7 @@ public:
 private:
 	u8 *playerPointer() const { return this->PlayerData.get() + this->Offset; };
 
-	/*
-		EncryptedInt32 Variables.
-	*/
+	/* EncryptedInt32 Variables. */
 	mutable EncryptedInt32 WalletValue, BankValue, IslandValue;
 };
 

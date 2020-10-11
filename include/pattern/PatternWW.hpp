@@ -73,7 +73,7 @@ public:
 	/*
 		Pattern Image.
 	*/
-	std::unique_ptr<PatternImage> image(const int pattern) const override;
+	std::unique_ptr<PatternImage> image(u8 pattern) const override;
 private:
 	u8 *patternPointer() const { return this->PatternData.get() + this->Offset; };
 

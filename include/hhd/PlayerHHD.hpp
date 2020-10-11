@@ -84,7 +84,7 @@ public:
 	std::u16string name() const;
 	void name(std::u16string v);
 
-	std::unique_ptr<Pattern> pattern(u32 slot) const;
+	std::unique_ptr<Pattern> pattern(u8 slot) const;
 
 	/* Misc. */
 	void unlockHandbooks();

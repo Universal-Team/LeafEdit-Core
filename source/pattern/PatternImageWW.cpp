@@ -47,7 +47,7 @@ u8 PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()
 /*
 	Set the Palette Index instead of color for the palette.
 
-	int index: The new palette index. (0 - 14)
+	u8 index: The new palette index. (0 - 14)
 	u8 color: The color index. (Unused)
 */
 void PatternImageWW::setPaletteColor(u8 index, u8 color) {
@@ -59,9 +59,9 @@ void PatternImageWW::setPaletteColor(u8 index, u8 color) {
 /*
 	Return a pixel struct for the Left & Right pixel buffer.
 
-	int index: The pixel index of the pattern.
+	u16 index: The pixel index of the pattern.
 */
-pixel PatternImageWW::getPixel(int index) const {
+pixel PatternImageWW::getPixel(u16 index) const {
 	if (this->Valid) {
 		if (this->pixelPointer()) {
 			return this->pixelPointer()[index];
@@ -74,10 +74,10 @@ pixel PatternImageWW::getPixel(int index) const {
 /*
 	Set a pixel's color to the Pattern Image.
 
-	int index: The pixel index of the pattern.
-	int color: The color index.
+	u16 index: The pixel index of the pattern.
+	u8 color: The color index.
 */
-void PatternImageWW::setPixel(int index, u8 color) {
+void PatternImageWW::setPixel(u16 index, u8 color) {
 	if (color > 15 || index > 0x3FF) return; // Out of scope.
 
 	if (this->Valid) {

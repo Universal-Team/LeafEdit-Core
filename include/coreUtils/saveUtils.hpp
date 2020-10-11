@@ -36,15 +36,15 @@ inline std::unique_ptr<Sav> save;
 namespace SaveUtils {
 	/* Read. */
 	template <typename T>
-	T Read(u8 * Buffer, u32 offset) { return *(T *)(Buffer + offset); };
+	T Read(u8 *Buffer, u32 offset) { return *(T *)(Buffer + offset); };
 
 	/* Get and set a bit. */
-	bool GetBit(const u8 *data, int offset, u8 bitIndex);
-	void SetBit(u8 *data, int offset, u8 bitIndex, bool bit);
+	bool GetBit(const u8 *data, u32 offset, u8 bitIndex);
+	void SetBit(u8 *data, u32 offset, u8 bitIndex, bool bit);
 
 	/* Write. */
 	template <typename T>
-	void Write(u8 * Buffer, u32 offset, T data, const bool saveWrite = true) {
+	void Write(u8 *Buffer, u32 offset, T data, const bool saveWrite = true) {
 		*reinterpret_cast<T*>(Buffer + offset) = data;
 
 		if (saveWrite) {

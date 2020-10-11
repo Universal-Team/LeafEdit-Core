@@ -51,9 +51,9 @@ public:
 
 	virtual void setPaletteColor(u8 index, u8 color) = 0;
 
-	virtual pixel getPixel(int pixel) const = 0;
+	virtual pixel getPixel(u16 pixel) const = 0;
 
-	virtual void setPixel(int index, u8 color) = 0;
+	virtual void setPixel(u16 index, u8 color) = 0;
 
 	virtual void setPixel(u8 x, u8 y, u8 color) = 0;
 };

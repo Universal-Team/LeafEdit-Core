@@ -73,7 +73,7 @@ void PatternNL::origtownname(std::u16string v) { StringUtils::WriteUTF16String(t
 	std::unique_ptr<Player> player: A pointer to the player.
 */
 void PatternNL::ownPattern(std::unique_ptr<Player> player) {
-	/* Only set if player is not nullptr! */
+	/* Only set if player is not nullptr. */
 	if (player) {
 		this->creatorid(player->playerid());
 		this->creatorname(player->name());
@@ -147,8 +147,8 @@ void PatternNL::injectPattern(const std::string fileName) {
 /*
 	Return a Pattern Image of the pattern.
 
-	const int pattern: The Pattern index. Used for "pro pattern".
+	u8 pattern: The Pattern index. Used for "pro pattern".
 */
-std::unique_ptr<PatternImage> PatternNL::image(const int pattern) const {
+std::unique_ptr<PatternImage> PatternNL::image(u8 pattern) const {
 	return std::make_unique<PatternImageNL>(this->PatternData, (this->Offset + 0x6C + (pattern * 0x200)), this->Offset + 0x58);
 }

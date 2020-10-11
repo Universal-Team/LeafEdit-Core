@@ -168,9 +168,9 @@ void PlayerWA::coupons(u32 v) {
 /*
 	Return a Player Letter.
 
-	int slot: The slot of the letter.
+	u8 slot: The slot of the letter.
 */
-std::unique_ptr<Letter> PlayerWA::letter(int slot) const {
+std::unique_ptr<Letter> PlayerWA::letter(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	return std::make_unique<LetterWA>(this->PlayerData, this->Offset + 0x7008 + (0x280 * slot));
@@ -179,9 +179,9 @@ std::unique_ptr<Letter> PlayerWA::letter(int slot) const {
 /*
 	Return an item of the Player Pocket.
 
-	int slot: The slot of the Pocket.
+	u8 slot: The slot of the Pocket.
 */
-std::unique_ptr<Item> PlayerWA::pocket(int slot) const {
+std::unique_ptr<Item> PlayerWA::pocket(u8 slot) const {
 	if (slot > 15) return nullptr;
 
 	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x6BD0 + slot * 4);
@@ -190,9 +190,9 @@ std::unique_ptr<Item> PlayerWA::pocket(int slot) const {
 /*
 	Return an item of the Player Dresser.
 
-	int slot: The slot of the Dresser.
+	u8 slot: The slot of the Dresser.
 */
-std::unique_ptr<Item> PlayerWA::dresser(int slot) const {
+std::unique_ptr<Item> PlayerWA::dresser(u8 slot) const {
 	if (slot > 179) return nullptr;
 
 	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x92F0 + slot * 4);
@@ -201,9 +201,9 @@ std::unique_ptr<Item> PlayerWA::dresser(int slot) const {
 /*
 	Return an item of the Player Islandbox.
 
-	int slot: The slot of the islandbox.
+	u8 slot: The slot of the islandbox.
 */
-std::unique_ptr<Item> PlayerWA::islandbox(int slot) const {
+std::unique_ptr<Item> PlayerWA::islandbox(u8 slot) const {
 	if (slot > 39) return nullptr;
 
 	return std::make_unique<ItemWA>(this->PlayerData, this->Offset + 0x6F10 + slot * 4);
@@ -212,9 +212,9 @@ std::unique_ptr<Item> PlayerWA::islandbox(int slot) const {
 /*
 	Return an item of the Player Storage.
 
-	int slot: The slot of the storage.
+	u16 slot: The slot of the storage.
 */
-std::unique_ptr<Item> PlayerWA::storage(int slot) const {
+std::unique_ptr<Item> PlayerWA::storage(u16 slot) const {
 	if (slot > 359) return nullptr;
 
 	return std::make_unique<ItemWA>(this->PlayerData, (this->Index * 360) + 0x07A778 + slot * 4);
@@ -223,9 +223,9 @@ std::unique_ptr<Item> PlayerWA::storage(int slot) const {
 /*
 	Return a Player Pattern.
 
-	int slot: The slot of the pattern.
+	u8 slot: The slot of the pattern.
 */
-std::unique_ptr<Pattern> PlayerWA::pattern(int slot) const {
+std::unique_ptr<Pattern> PlayerWA::pattern(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	return std::make_unique<PatternWA>(this->PlayerData, this->Offset + 0x2C + slot * 0x870);
@@ -234,7 +234,7 @@ std::unique_ptr<Pattern> PlayerWA::pattern(int slot) const {
 /*
 	Return a TPC Image buffer pointer.
 */
-u8* PlayerWA::tpcImage() const {
+u8 *PlayerWA::tpcImage() const {
 	u8 *TPCBuffer = nullptr;
 
 	if (SaveUtils::Read<u32>(this->playerPointer(), 0x5734) == 1) {

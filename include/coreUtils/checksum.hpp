@@ -29,9 +29,9 @@
 
 #include "types.hpp"
 
-enum class ChecksumType {
-	CRC_REFLECTED = 0, // Most common in AC:NL checksums.
-	CRC_NORMAL = 1
+enum class ChecksumType : u8 {
+	CRC_REFLECTED, // Most common in AC:NL checksums.
+	CRC_NORMAL
 };
 
 namespace Checksum {
@@ -48,8 +48,8 @@ namespace Checksum {
 	/*
 		Wild World stuff.
 	*/
-	u16 CalculateWW(const u16 *buffer, u64 size, uint checksumOffset);
-	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset);
+	u16 CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset);
+	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, u16 checksumOffset);
 	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size);
 
 	/*

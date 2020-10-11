@@ -47,9 +47,9 @@ void TownNL::name(std::u16string v) {
 /*
 	Return a Town Acre.
 
-	int Acre: Acre Index.
+	u8 Acre: Acre Index.
 */
-std::unique_ptr<Acre> TownNL::acre(int Acre) const {
+std::unique_ptr<Acre> TownNL::acre(u8 Acre) const {
 	if (Acre > 41) return nullptr; // Acre Index goes out of scope.
 
 	return std::make_unique<AcreNL>(this->TownData, 0x80 + 0x04DA04 + Acre * 2);
@@ -58,9 +58,9 @@ std::unique_ptr<Acre> TownNL::acre(int Acre) const {
 /*
 	Return a Town Map Item.
 
-	u32 index: The Town Map Item index.
+	u16 index: The Town Map Item index.
 */
-std::unique_ptr<Item> TownNL::item(u32 index) const {
+std::unique_ptr<Item> TownNL::item(u16 index) const {
 	if (index > 5119) return nullptr; // Item Index goes out of scope.
 
 	return std::make_unique<ItemNL>(this->TownData, 0x80 + 0x04DA58 + index * 4);
@@ -75,15 +75,15 @@ bool TownNL::exist() const { return true; }
 	Get and Set the Turnip prices.
 
 	bool isAM: If the price is AM (true) or PM (false).
-	int day: The day index.
+	u8 day: The day index.
 */
-u32 TownNL::turnipPrices(bool isAM, int day) const {
+u32 TownNL::turnipPrices(bool isAM, u8 day) const {
 	if (day > 5) return 0; // Out of scope.
 
 	this->TurnipPrices[isAM ? day : 6 + day] = EncryptedInt32(SaveUtils::Read<u64>(this->townPointer(), isAM ? (0x80 + 0x06535C) + day * 16 : (0x80 + 0x06535C) + day * 16 + 8));
 	return this->TurnipPrices[isAM ? day : 6 + day].value;
 }
-void TownNL::turnipPrices(bool isAM, int day, u32 v) {
+void TownNL::turnipPrices(bool isAM, u8 day, u32 v) {
 	if (day > 5) return; // Out of scope.
 
 	this->TurnipPrices[isAM ? day : 6 + day].value = v; // Set Value.
@@ -102,15 +102,15 @@ std::unique_ptr<Pattern> TownNL::townflag() const { return std::make_unique<Patt
 /*
 	Get and Set, if item is buried.
 
-	int index: Town Map Item index.
+	u16 index: Town Map Item index.
 */
-bool TownNL::itemBuried(int index) const {
+bool TownNL::itemBuried(u16 index) const {
 	if (index > 5119) return false;
 
 	return this->townPointer()[(0x80 + 0x04DA58 + index * 4) + 3] == 0x80; // That is basically Item Flag 2.. but I don't want to init the item class there.
 }
 
-void TownNL::itemBuried(int index, bool buried) {
+void TownNL::itemBuried(u16 index, bool buried) {
 	if (index > 5119) return;
 
 	/* Check, if already buried or not. */

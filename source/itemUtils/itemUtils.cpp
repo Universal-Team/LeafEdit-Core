@@ -51,10 +51,10 @@ std::string ItemUtils::getName(u16 ID) {
 /*
 	Get an Animal Crossing: Wild World's index Item's name.
 
-	int category: The item category.
+	u8 category: The item category.
 	u8 index: The index.
 */
-std::string ItemUtils::getWWName(int category, u8 index) {
+std::string ItemUtils::getWWName(u8 category, u8 index) {
 	std::vector<std::tuple<u16, std::string, std::string>> temp = StringDB::searchTuple("", {itemCategories[category]}, itemDB, true);
 
 	if (temp.empty()) return "???"; // Database empty.

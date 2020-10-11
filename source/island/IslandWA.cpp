@@ -29,9 +29,9 @@
 /*
 	Return an Island Acre.
 
-	int Acre: The Acre index.
+	u8 Acre: The Acre index.
 */
-std::unique_ptr<Acre> IslandWA::acre(int Acre) const {
+std::unique_ptr<Acre> IslandWA::acre(u8 Acre) const {
 	if (Acre > 15) return nullptr;
 
 	return std::make_unique<AcreWA>(this->IslandData, 0x06FEB8 + Acre * 2);
@@ -40,9 +40,9 @@ std::unique_ptr<Acre> IslandWA::acre(int Acre) const {
 /*
 	Return an Island Map item.
 
-	u32 index: The map index.
+	u16 index: The map index.
 */
-std::unique_ptr<Item> IslandWA::item(u32 index) const {
+std::unique_ptr<Item> IslandWA::item(u16 index) const {
 	if (index > 1023) return nullptr;
 
 	return std::make_unique<ItemWA>(this->IslandData, 0x06FED8 + index * 4);

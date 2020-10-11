@@ -415,9 +415,9 @@ void PlayerWW::bank(u32 v) {
 /*
 	Return a Player Letter.
 
-	int slot: The slot of the letter.
+	u8 slot: The slot of the letter.
 */
-std::unique_ptr<Letter> PlayerWW::letter(int slot) const {
+std::unique_ptr<Letter> PlayerWW::letter(u8 slot) const {
 	if (slot > 9) return nullptr;
 
 	switch(this->SaveRegion) {
@@ -437,9 +437,9 @@ std::unique_ptr<Letter> PlayerWW::letter(int slot) const {
 /*
 	Return an item of the Player Pocket.
 
-	int slot: The slot of the Pocket.
+	u8 slot: The slot of the Pocket.
 */
-std::unique_ptr<Item> PlayerWW::pocket(int slot) const {
+std::unique_ptr<Item> PlayerWW::pocket(u8 slot) const {
 	if (slot > 14) return nullptr;
 
 	switch(this->SaveRegion) {
@@ -459,20 +459,20 @@ std::unique_ptr<Item> PlayerWW::pocket(int slot) const {
 /*
 	Return an item of the Player Dresser.
 
-	int slot: The slot of the Dresser.
+	u8 slot: The slot of the Dresser.
 */
-std::unique_ptr<Item> PlayerWW::dresser(int slot) const {
+std::unique_ptr<Item> PlayerWW::dresser(u8 slot) const {
 	if (slot > 89) return nullptr;
 
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
-			return std::make_unique<ItemWW>(this->PlayerData, 0x15430 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->PlayerData, 0x15430 + (0xB4 * Index) + slot * 2);
 
 		case WWRegion::JPN:
-			return std::make_unique<ItemWW>(this->PlayerData, 0x11764 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->PlayerData, 0x11764 + (0xB4 * Index) + slot * 2);
 
 		case WWRegion::KOR:
-			return std::make_unique<ItemWW>(this->PlayerData, 0x16800 + 0xB4 * Index + slot * 2);
+			return std::make_unique<ItemWW>(this->PlayerData, 0x16800 + (0xB4 * Index) + slot * 2);
 	}
 
 	return nullptr;
@@ -481,9 +481,9 @@ std::unique_ptr<Item> PlayerWW::dresser(int slot) const {
 /*
 	Return a Player Pattern.
 
-	int slot: The slot of the pattern.
+	u8 slot: The slot of the pattern.
 */
-std::unique_ptr<Pattern> PlayerWW::pattern(int slot) const {
+std::unique_ptr<Pattern> PlayerWW::pattern(u8 slot) const {
 	if (slot > 7) return nullptr;
 
 	switch(this->SaveRegion) {

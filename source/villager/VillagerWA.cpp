@@ -75,9 +75,9 @@ std::unique_ptr<Item> VillagerWA::umbrella() const { return std::make_unique<Ite
 /*
 	Return the Villager Furniture.
 
-	int slot: The Furniture index.
+	u8 slot: The Furniture index.
 */
-std::unique_ptr<Item> VillagerWA::furniture(int slot) const {
+std::unique_ptr<Item> VillagerWA::furniture(u8 slot) const {
 	if (slot > 15) return nullptr;
 
 	return std::make_unique<ItemWA>(this->VillagerData, this->Offset + 0x2482 + slot * 4);

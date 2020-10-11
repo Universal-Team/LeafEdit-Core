@@ -56,7 +56,7 @@ public:
 	House(const House& house) = delete;
 	House& operator=(const House& house) = delete;
 
-	virtual std::unique_ptr<Room> room(int room) const = 0;
+	virtual std::unique_ptr<Room> room(u8 room) const = 0;
 };
 
 #endif

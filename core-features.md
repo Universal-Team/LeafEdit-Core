@@ -69,6 +69,8 @@ Here you can see all core features of LeafEdit-Core, which are already implement
 - [x] Storage Items
 - [x] Pattern Images
 - [x] TPC Image
+- [x] AC:WW Acorn Festival
+- [x] AC:WW Attic bed (JPN only as of now.)
 
 ## Room
 

@@ -37,7 +37,7 @@ namespace ItemUtils {
 
 	/* Get an Item's name. */
 	std::string getName(u16 ID);
-	std::string getWWName(int category, u8 index);
+	std::string getWWName(u8 category, u8 index);
 };
 
 #endif

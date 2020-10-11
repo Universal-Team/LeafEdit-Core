@@ -79,28 +79,20 @@ void StringDB::LoadItemDatabase(SaveType save) {
 	std::string itemName;
 
 	while (std::getline(itemDatabase, currentLine)) {
-		/*
-			Push category.
-		*/
+		/* Push category. */
 		if (currentLine.find("//") == 0) {
 			categoryName = currentLine.substr(2);
 			itemCategories.push_back({categoryName});
 
-		/*
-			confirm we don't have any comments.
-		*/
+		/* confirm we don't have any comments. */
 		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) {
 			itemIdStr = currentLine.substr(2, 4); // skip the 0x hex specifier.
 			itemName = currentLine.substr(8, currentLine.size());
 
-			/*
-				Convert itemIdStr to a u16.
-			*/
+			/* Convert itemIdStr to a u16. */
 			u16 itemId = StringUtils::strToU16(itemIdStr);
 
-			/*
-				Add item to the database.
-			*/
+			/* Add item to the database. */
 			itemDB.push_back(std::make_tuple(itemId, itemName, categoryName));
 		}
 	}
@@ -143,28 +135,20 @@ void StringDB::LoadVillagerDatabase(SaveType save) {
 	std::string villagerName;
 
 	while (std::getline(villagerDatabase, currentLine)) {
-		/*
-			Push category.
-		*/
+		/* Push category. */
 		if (currentLine.find("//") == 0) {
 			categoryName = currentLine.substr(2);
 			villagerSpecies.push_back({categoryName});
 
-		/*
-			confirm we don't have any comments.
-		*/
+		/* confirm we don't have any comments. */
 		} else if (currentLine.size() > 8 && currentLine.find("//") == std::string::npos) {
 			villagerIdStr = currentLine.substr(2, 4); // skip the 0x hex specifier.
 			villagerName = currentLine.substr(8, currentLine.size());
 
-			/*
-				Convert villagerIdStr to a u16.
-			*/
+			/* Convert villagerIdStr to a u16. */
 			u16 villagerID = StringUtils::strToU16(villagerIdStr);
 
-			/*
-				Add villager to the database.
-			*/
+			/* Add villager to the database. */
 			villagerDB.push_back(std::make_tuple(villagerID, villagerName, categoryName));
 		}
 	}
@@ -190,9 +174,7 @@ std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std
 
 	if (search) {
 		for (int i = 0; i < (int)searchCategory.size(); i++) {
-			/*
-				Push categories first.
-			*/
+			/* Push categories first. */
 			if (searchCategory[i] != "") {
 
 				for (int i2 = 0; i2 < (int)searchType.size(); i2++) {
@@ -213,9 +195,7 @@ std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std
 	}
 
 
-	/*
-		Push search result.
-	*/
+	/* Push search result. */
 	if (temp.size() > 0) {
 		for (int i = 0; i < (int)temp.size(); i++) {
 			if (std::get<1>(temp[i]).find(searchResult) != std::string::npos) {

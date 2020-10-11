@@ -227,9 +227,7 @@ u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType t
 void Checksum::FixWACRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
-	/*
-		Rehash players.
-	*/
+	/* Rehash players. */
 	for (int i = 0; i < 4; i++) {
 		UpdateCRC32(data, 0xA0 + (0xA480 * i), 0x6B84); // Players Checksum1.
 		UpdateCRC32(data, 0xA0 + (0xA480 * i) + 0x6B88, 0x38F4); // Players Checksum2.
@@ -255,9 +253,7 @@ void Checksum::FixWACRC32s(u8 *data) {
 void Checksum::FixNLCRC32s(u8 *data) {
 	UpdateCRC32(data, 0x80, 0x1C); // Save Header.
 
-	/*
-		Rehash players.
-	*/
+	/* Rehash players. */
 	for (int i = 0; i < 4; i++) {
 		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i), 0x6B64); // Players Checksum1.
 		UpdateCRC32(data, 0xA0 + ((0x9E90 + 0x80) * i) + 0x6B68, 0x33A4); // Players Checksum2.
@@ -275,9 +271,9 @@ void Checksum::FixNLCRC32s(u8 *data) {
 
 	const u16 *buffer: The save buffer.
 	u64 size: The size which should be calculated.
-	uint checksumOffset: The offset of the checksum.
+	u16 checksumOffset: The offset of the checksum.
 */
-u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset) {
+u16 Checksum::CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset) {
 	if ((checksumOffset & 1) == 1) return 0; // checksumOffset must be 16-bit aligned!
 
 	u16 checksum = 0;
@@ -296,9 +292,9 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, uint checksumOffset) {
 	const u16 *buffer: The save buffer.
 	u64 size: The size which should be verified.
 	u16 currentChecksum: The current checksum.
-	uint checksumOffset: The offset of the checksum.
+	u16 checksumOffset: The offset of the checksum.
 */
-bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, uint checksumOffset) {
+bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, u16 checksumOffset) {
 	if (CalculateWW(buffer, size, checksumOffset) == currentChecksum) return true;
 	else return false;
 }

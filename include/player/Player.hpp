@@ -96,14 +96,14 @@ public:
 	virtual u32 coupons() const = 0;
 	virtual void coupons(u32 v) = 0;
 
-	virtual std::unique_ptr<Letter> letter(int slot) const = 0;
+	virtual std::unique_ptr<Letter> letter(u8 slot) const = 0;
 
-	virtual std::unique_ptr<Item> pocket(int slot) const = 0;
-	virtual std::unique_ptr<Item> dresser(int slot) const = 0;
-	virtual std::unique_ptr<Item> islandbox(int slot) const = 0;
-	virtual std::unique_ptr<Item> storage(int slot) const = 0;
+	virtual std::unique_ptr<Item> pocket(u8 slot) const = 0;
+	virtual std::unique_ptr<Item> dresser(u8 slot) const = 0;
+	virtual std::unique_ptr<Item> islandbox(u8 slot) const = 0;
+	virtual std::unique_ptr<Item> storage(u16 slot) const = 0;
 
-	virtual std::unique_ptr<Pattern> pattern(int slot) const = 0;
+	virtual std::unique_ptr<Pattern> pattern(u8 slot) const = 0;
 
 	virtual u8 *tpcImage() const = 0;
 	virtual bool hasTPC() const = 0;

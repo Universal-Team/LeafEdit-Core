@@ -49,22 +49,22 @@ public:
 	std::u16string name() const override;
 	void name(std::u16string v) override;
 
-	std::unique_ptr<Acre> acre(int Acre) const override;
+	std::unique_ptr<Acre> acre(u8 Acre) const override;
 
-	std::unique_ptr<Item> item(u32 index) const override;
+	std::unique_ptr<Item> item(u16 index) const override;
 
 	bool exist() const override;
 
-	u32 turnipPrices(bool isAM, int day) const override;
-	void turnipPrices(bool isAM, int day, u32 v) override;
+	u32 turnipPrices(bool isAM, u8 day) const override;
+	void turnipPrices(bool isAM, u8 day, u32 v) override;
 
 	std::unique_ptr<Pattern> townflag() const override;
 
-	bool itemBuried(int index) const override;
-	void itemBuried(int index, bool buried) override;
+	bool itemBuried(u16 index) const override;
+	void itemBuried(u16 index, bool buried) override;
 
-	std::unique_ptr<Item> recycleItem(int slot) const override { return nullptr; };
-	std::unique_ptr<Item> lostFoundItem(int slot) const override { return nullptr; };
+	std::unique_ptr<Item> recycleItem(u8 slot) const override { return nullptr; };
+	std::unique_ptr<Item> lostFoundItem(u8 slot) const override { return nullptr; };
 private:
 	u8 *townPointer() const { return this->TownData.get(); };
 

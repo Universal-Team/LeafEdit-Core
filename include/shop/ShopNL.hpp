@@ -41,7 +41,7 @@ public:
 	ShopNL(std::shared_ptr<u8[]> shopData, u32 offset) :
 		Shop(shopData, offset), ShopData(shopData), Offset(offset) { };
 
-	std::unique_ptr<Pattern> ableSisterPattern(int pattern) const override;
+	std::unique_ptr<Pattern> ableSisterPattern(u8 pattern) const override;
 private:
 	u8 *shopPointer() const { return this->ShopData.get() + this->Offset; };
 };

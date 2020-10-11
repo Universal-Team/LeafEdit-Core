@@ -54,7 +54,7 @@ public:
 	HouseWW(std::shared_ptr<u8[]> houseData, u32 offset, WWRegion region) :
 		House(houseData, offset), HouseData(houseData), Offset(offset), SaveRegion(region) { };
 
-	std::unique_ptr<Room> room(int room) const override;
+	std::unique_ptr<Room> room(u8 room) const override;
 private:
 	u8 *housePointer() const { return this->HouseData.get() + this->Offset; };
 };

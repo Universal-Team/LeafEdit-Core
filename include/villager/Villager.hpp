@@ -75,7 +75,7 @@ public:
 	virtual u8 umbrellaWW() const = 0;
 	virtual void umbrellaWW(u8 umbr) = 0;
 
-	virtual std::unique_ptr<Item> furniture(int slot) const = 0;
+	virtual std::unique_ptr<Item> furniture(u8 slot) const = 0;
 };
 
 #endif

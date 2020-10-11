@@ -153,9 +153,9 @@ void PlayerHHD::name(std::u16string v) { StringUtils::WriteUTF16String(this->pla
 /*
 	Return the Player Pattern.
 
-	u32 slot: The slot of the Pattern.
+	u8 slot: The slot of the Pattern.
 */
-std::unique_ptr<Pattern> PlayerHHD::pattern(u32 slot) const {
+std::unique_ptr<Pattern> PlayerHHD::pattern(u8 slot) const {
 	if (slot > 119) return nullptr;
 
 	return std::make_unique<PatternHHD>(this->PlayerData, (0x1A0 + 0x1BFA88) + 0x30 + (0x870 * slot));

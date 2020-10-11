@@ -47,9 +47,9 @@ public:
 
 	void setPaletteColor(u8 index, u8 color) override;
 
-	pixel getPixel(int pixel) const override;
+	pixel getPixel(u16 pixel) const override;
 
-	void setPixel(int index, u8 color) override;
+	void setPixel(u16 index, u8 color) override;
 
 	void setPixel(u8 x, u8 y, u8 color) override;
 private:
