@@ -10,7 +10,7 @@
 
 For a list of all currently implemented features, please take a look [here](https://github.com/Universal-Team/LeafEdit-Core/blob/master/core-features.md).
 
-If you notice a bug, which might be related to the core, feel free to create an issue at the issues section or let us know on the Universal-Team's discord server [here](https://universal-team.net/discord). Just let us know at the `#leafedit-wildedit` channel, that's where all of the LeafEdit-Core and LeafEdit | WildEdit app stuff gets discussed.
+If you notice a bug, which might be related to the core, feel free to create an issue at the issues section or let us know on the Universal-Team's discord server [here](https://universal-team.net/discord). Just let us know at the `#animal-crossing` channel, that's where all of the LeafEdit-Core and LeafEdit | WildEdit app stuff gets discussed.
 
 ## Credits
 - [Cuyler](https://github.com/Cuyler36), [Slattz](https://github.com/Slattz), [NLTK](https://github.com/Slattz/NLTK), [ACSE](https://github.com/Cuyler36/ACSE): For some core work from NLTK, ACSE and research.
