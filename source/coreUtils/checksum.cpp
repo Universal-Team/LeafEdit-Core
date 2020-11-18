@@ -278,7 +278,7 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset) {
 
 	u16 checksum = 0;
 
-	for (uint i = 0; i < size; i++) {
+	for (u64 i = 0; i < size; i++) {
 		if (i == checksumOffset) continue;
 		checksum += buffer[i];
 	}

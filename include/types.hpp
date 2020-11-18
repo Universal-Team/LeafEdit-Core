@@ -27,7 +27,6 @@
 #ifndef _LEAFEDIT_CORE_TYPES_HPP
 #define _LEAFEDIT_CORE_TYPES_HPP
 
-#include <3ds.h>
 #include <stdint.h>
 
 typedef uint8_t u8;

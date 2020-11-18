@@ -50,9 +50,11 @@ void LetterWW::playerid(u16 v, bool sender) {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x22 : 0xA, v);
+			break;
 
 		case WWRegion::JPN:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x1C : 0x8, v);
+			break;
 
 		case WWRegion::KOR:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x2E : 0xE, v);
@@ -118,9 +120,11 @@ void LetterWW::townid(u16 v, bool sender) {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x18 : 0x0, v);
+			break;
 
 		case WWRegion::JPN:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x14 : 0x0, v);
+			break;
 
 		case WWRegion::KOR:
 			SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x20 : 0x0, v);
@@ -295,9 +299,11 @@ void LetterWW::paperid(u8 v) {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			SaveUtils::Write<u8>(this->letterPointer(), 0xE9, v);
+			break;
 
 		case WWRegion::JPN:
 			SaveUtils::Write<u8>(this->letterPointer(), 0x83, v);
+			break;
 
 		case WWRegion::KOR:
 			SaveUtils::Write<u8>(this->letterPointer(), 0xF5, v);
@@ -326,9 +332,11 @@ void LetterWW::flag(u8 v) {
 	switch(this->SaveRegion) {
 		case WWRegion::EUR_USA:
 			SaveUtils::Write<u8>(this->letterPointer(), 0xEA, v);
+			break;
 
 		case WWRegion::JPN:
 			SaveUtils::Write<u8>(this->letterPointer(), 0x84, v);
+			break;
 
 		case WWRegion::KOR:
 			SaveUtils::Write<u8>(this->letterPointer(), 0xF6, v);
