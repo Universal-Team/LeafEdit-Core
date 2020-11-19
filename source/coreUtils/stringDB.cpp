@@ -24,6 +24,10 @@
 *         reasonable ways as different from the original version.
 */
 
+#ifndef _CORE_CONFIGURED
+	#include "leafedit_core.hpp"
+#endif
+
 #include "stringDB.hpp"
 #include "stringUtils.hpp"
 #include <fstream>
@@ -34,14 +38,6 @@ std::vector<std::tuple<u16, std::string, std::string>> itemDB;
 std::vector<std::string> itemCategories;
 std::vector<std::tuple<u16, std::string, std::string>> villagerDB;
 std::vector<std::string> villagerSpecies;
-
-#define WW_ITEM_PATH "romfs:/lang/strings/ww/items.txt"
-#define NL_ITEM_PATH "romfs:/lang/strings/nl/items.txt"
-#define WA_ITEM_PATH "romfs:/lang/strings/wa/items.txt"
-
-#define WW_VILLAGER_PATH "romfs:/lang/strings/ww/villager.txt"
-#define NL_VILLAGER_PATH "romfs:/lang/strings/nl/villager.txt"
-#define WA_VILLAGER_PATH "romfs:/lang/strings/wa/villager.txt"
 
 /*
 	Load the Item Database.
@@ -55,15 +51,15 @@ void StringDB::LoadItemDatabase(SaveType save) {
 	std::string path; // Path.
 	switch(save) {
 		case SaveType::WW:
-			path = WW_ITEM_PATH;
+			path = _LANG_PATH "/ww/en/items.txt";
 			break;
 
 		case SaveType::NL:
-			path = NL_ITEM_PATH;
+			path = _LANG_PATH "/nl/en/items.txt";
 			break;
 
 		case SaveType::WA:
-			path = WA_ITEM_PATH;
+			path = _LANG_PATH "/wa/en/items.txt";
 			break;
 
 		case SaveType::HHD:
@@ -111,15 +107,15 @@ void StringDB::LoadVillagerDatabase(SaveType save) {
 	std::string path; // Path.
 	switch(save) {
 		case SaveType::WW:
-			path = WW_VILLAGER_PATH;
+			path =  _LANG_PATH "/ww/en/villager.txt";
 			break;
 
 		case SaveType::NL:
-			path = NL_VILLAGER_PATH;
+			path =  _LANG_PATH "/nl/en/villager.txt";
 			break;
 
 		case SaveType::WA:
-			path = WA_VILLAGER_PATH;
+			path =  _LANG_PATH "/wa/en/villager.txt";
 			break;
 
 		case SaveType::HHD:

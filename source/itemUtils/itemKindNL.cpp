@@ -25,6 +25,9 @@
 */
 
 #include "itemKindNL.hpp"
+#ifndef _CORE_CONFIGURED
+	#include "leafedit_core.hpp"
+#endif
 
 ItemKindNL::ItemKindNL() { this->loadItemBins(); }
 ItemKindNL::~ItemKindNL() { this->closeItemBins(); }
@@ -33,8 +36,8 @@ ItemKindNL::~ItemKindNL() { this->closeItemBins(); }
 	Load the Item Bin's.
 */
 void ItemKindNL::loadItemBins() {
-	this->ItemBin = fopen("romfs:/ItemBins/ItemNL.bin", "rb");
-	this->ItemKindBin = fopen("romfs:/ItemBins/KindNL.bin", "rb");
+	this->ItemBin = fopen(_ITEM_BIN_PATH "/ItemNL.bin", "rb");
+	this->ItemKindBin = fopen(_ITEM_BIN_PATH "/KindNL.bin", "rb");
 }
 
 /*
@@ -79,7 +82,7 @@ ItemKindNL::ItemBin_s *ItemKindNL::GetItemBinSlot(u16 ItemID) {
 		*/
 		fseek(this->GetItemBin(), sizeof(ItemKindNL::ItemBin_s) * chk, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindNL::ItemBin_s), this->GetItemBin())) >= 0) {
+		if ((int)(fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindNL::ItemBin_s), this->GetItemBin())) >= 0) {
 			return ItemSlot;
 		}
 	}
@@ -112,7 +115,7 @@ ItemKind_s *ItemKindNL::GetItemKindSlot(u16 ItemID) {
 	} else if (this->GetItemKind()) {
 		fseek(this->GetItemKind(), sizeof(ItemKind_s) * ItemCategory, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void *>(KindSlot), 1, sizeof(ItemKind_s), this->GetItemKind())) >= 0) {
+		if ((int)(fread(reinterpret_cast<void *>(KindSlot), 1, sizeof(ItemKind_s), this->GetItemKind())) >= 0) {
 			return KindSlot;
 		}
 	}

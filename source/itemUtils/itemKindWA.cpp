@@ -25,6 +25,9 @@
 */
 
 #include "itemKindWA.hpp"
+#ifndef _CORE_CONFIGURED
+	#include "leafedit_core.hpp"
+#endif
 
 ItemKindWA::ItemKindWA() { this->loadItemBins(); }
 ItemKindWA::~ItemKindWA() { this->closeItemBins(); }
@@ -33,8 +36,8 @@ ItemKindWA::~ItemKindWA() { this->closeItemBins(); }
 	Load the Item Bin's.
 */
 void ItemKindWA::loadItemBins() {
-	this->ItemBin = fopen("romfs:/ItemBins/ItemWA.bin", "rb");
-	this->ItemKindBin = fopen("romfs:/ItemBins/KindWA.bin", "rb");
+	this->ItemBin = fopen(_ITEM_BIN_PATH "/ItemWA.bin", "rb");
+	this->ItemKindBin = fopen(_ITEM_BIN_PATH "/KindWA.bin", "rb");
 }
 
 /*
@@ -76,7 +79,7 @@ ItemKindWA::ItemBin_s *ItemKindWA::GetItemBinSlot(u16 ItemID) {
 		/* chk <= maxID. */
 		fseek(this->GetItemBin(), sizeof(ItemKindWA::ItemBin_s) * chk, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindWA::ItemBin_s), this->GetItemBin())) >= 0) {
+		if ((int)(fread(reinterpret_cast<void *>(ItemSlot), 1, sizeof(ItemKindWA::ItemBin_s), this->GetItemBin())) >= 0) {
 			return ItemSlot;
 		}
 	}
@@ -109,7 +112,7 @@ ItemKind_s *ItemKindWA::GetItemKindSlot(u16 ItemID) {
 	} else if (this->GetItemKind()) {
 		fseek(this->GetItemKind(), sizeof(ItemKind_s) * ItemCategory, SEEK_SET);
 
-		if ((fread(reinterpret_cast<void *>(KindSlot), 1, sizeof(ItemKind_s), this->GetItemKind())) >= 0) {
+		if ((int)(fread(reinterpret_cast<void *>(KindSlot), 1, sizeof(ItemKind_s), this->GetItemKind())) >= 0) {
 			return KindSlot;
 		}
 	}

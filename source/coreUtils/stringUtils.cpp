@@ -295,3 +295,15 @@ u16 StringUtils::strToU16(const std::string &str) {
 
 	return out;
 }
+
+/*
+	Convert Decimal Value to HexString.
+
+	int decimalVal: The Decimal value.
+*/
+std::string StringUtils::DecimalToHex(int decimalVal) {
+	std::stringstream ss;
+	ss << std::hex << decimalVal;
+
+	return "0x" + ss.str(); // Return the string as 0xX.
+}

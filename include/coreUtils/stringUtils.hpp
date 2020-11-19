@@ -42,6 +42,7 @@ namespace StringUtils {
 	*/
 	std::u16string& toFullWidth(std::u16string &in);
 	u16 strToU16(const std::string &str);
+	std::string DecimalToHex(int decimalVal);
 
 	/*
 		For New Leaf | Welcome Amiibo and Korean AC:WW.
