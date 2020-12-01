@@ -35,14 +35,13 @@
 u8 PatternImageWW::getPaletteColor(u8 plt) const {
 	if (plt > 15) return 0;
 
-	u8 paletteIndex = (u8)(((this->paletteData()[0]) & 0xF0) >> 4);
-	return (u8)((paletteIndex * 15) + plt);
+	return ((reinterpret_cast<Byte *>(this->paletteData())->Nibble2) * 15) + plt;
 }
 
 /*
 	Return the Palette Index.
 */
-u8 PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()[0]) & 0xF0) >> 4); }
+u8 PatternImageWW::getWWPaletteIndex() const { return reinterpret_cast<Byte *>(this->paletteData())->Nibble2; };
 
 /*
 	Set the Palette Index instead of color for the palette.
@@ -53,7 +52,7 @@ u8 PatternImageWW::getWWPaletteIndex() const { return (u8)(((this->paletteData()
 void PatternImageWW::setPaletteColor(u8 index, u8 color) {
 	if (index > 14) return;
 
-	this->paletteData()[0] = (u8)(((index) << 4) & 0xF0);
+	SaveUtils::WriteNibble(this->paletteData(), 0x0, false, index);
 }
 
 /*
@@ -63,9 +62,7 @@ void PatternImageWW::setPaletteColor(u8 index, u8 color) {
 */
 pixel PatternImageWW::getPixel(u16 index) const {
 	if (this->Valid) {
-		if (this->pixelPointer()) {
-			return this->pixelPointer()[index];
-		}
+		if (this->pixelPointer()) return this->pixelPointer()[index];
 	}
 
 	return { 0, 0 };
@@ -91,4 +88,4 @@ void PatternImageWW::setPixel(u16 index, u8 color) {
 /*
 	Same as above, just with X & Y position instead of index.
 */
-void PatternImageWW::setPixel(u8 x, u8 y, u8 color) { this->setPixel((x + (y * 32)), color); }
+void PatternImageWW::setPixel(u8 x, u8 y, u8 color) { this->setPixel((x + (y * 32)), color); };

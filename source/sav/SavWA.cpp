@@ -52,19 +52,19 @@ std::unique_ptr<Villager> SavWA::villager(u8 villager) const {
 /*
 	Return the Town.
 */
-std::unique_ptr<Town> SavWA::town() const { return std::make_unique<TownWA>(this->SaveData); }
+std::unique_ptr<Town> SavWA::town() const { return std::make_unique<TownWA>(this->SaveData); };
 
 /*
 	Return the Island.
 */
-std::unique_ptr<Island> SavWA::island() const { return std::make_unique<IslandWA>(this->SaveData); }
+std::unique_ptr<Island> SavWA::island() const { return std::make_unique<IslandWA>(this->SaveData); };
 
 /*
 	Return the Shops.
 */
-std::unique_ptr<Shop> SavWA::shop() const { return std::make_unique<ShopWA>(this->SaveData, 0); }
+std::unique_ptr<Shop> SavWA::shop() const { return std::make_unique<ShopWA>(this->SaveData, 0); };
 
 /*
 	Last call before writing to file. Update Checksum.
 */
-void SavWA::Finish(void) { Checksum::FixWACRC32s(this->savePointer()); }
+void SavWA::Finish(void) { Checksum::FixWACRC32s(this->savePointer()); };

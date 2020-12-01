@@ -47,7 +47,8 @@ public:
 
 	u32 getPlayerSize() const override {
 		switch(this->SaveRegion) {
-			case WWRegion::EUR_USA:
+			case WWRegion::EUR:
+			case WWRegion::USA:
 				return 0x228C;
 
 			case WWRegion::JPN:

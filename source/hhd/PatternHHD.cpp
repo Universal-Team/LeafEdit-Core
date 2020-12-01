@@ -34,50 +34,50 @@
 /*
 	Get and Set for the Pattern Name.
 */
-std::u16string PatternHHD::name() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0, 20); }
-void PatternHHD::name(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0, 20); }
+std::u16string PatternHHD::name() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0, 20); };
+void PatternHHD::name(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0, 20); };
 
 /*
 	Get and Set for the Creator ID.
 */
-u16 PatternHHD::creatorid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x2A); }
-void PatternHHD::creatorid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x2A, v); }
+u16 PatternHHD::creatorid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x2A); };
+void PatternHHD::creatorid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x2A, v); };
 
 /*
 	Get and Set for the Creator Name.
 */
-std::u16string PatternHHD::creatorname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x2C, 8); }
-void PatternHHD::creatorname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x2C, 8); }
+std::u16string PatternHHD::creatorname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x2C, 8); };
+void PatternHHD::creatorname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x2C, 8); };
 
 /*
 	Get and Set for the Creator Gender.
 */
-u8 PatternHHD::creatorGender() const { return this->patternPointer()[0x3E]; }
-void PatternHHD::creatorGender(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v); }
+u8 PatternHHD::creatorGender() const { return this->patternPointer()[0x3E]; };
+void PatternHHD::creatorGender(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v); };
 
 /*
 	Get and Set for the Town ID.
 */
-u16 PatternHHD::origtownid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x40); }
-void PatternHHD::origtownid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x40, v); }
+u16 PatternHHD::origtownid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x40); };
+void PatternHHD::origtownid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x40, v); };
 
 /*
 	Get and Set for the Town Name.
 */
-std::u16string PatternHHD::origtownname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x42, 8); }
-void PatternHHD::origtownname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x42, 8); }
+std::u16string PatternHHD::origtownname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x42, 8); };
+void PatternHHD::origtownname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x42, 8); };
 
 /*
 	Get and Set for the Design Type.
 */
-u8 PatternHHD::designtype() const { return (this->patternPointer()[0x69] & 9); }
-void PatternHHD::designtype(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x69, (this->patternPointer()[0x69] & 0xF0) | (v & 0x9)); }
+u8 PatternHHD::designtype() const { return (this->patternPointer()[0x69] & 9); };
+void PatternHHD::designtype(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x69, (this->patternPointer()[0x69] & 0xF0) | (v & 0x9)); };
 
 /*
 	Overwrite player info to pattern.
 	Cannot be used this way.
 */
-void PatternHHD::ownPattern(std::unique_ptr<Player> player) { return; }
+void PatternHHD::ownPattern(std::unique_ptr<Player> player) { return; };
 
 /*
 	Dump a Pattern to file.

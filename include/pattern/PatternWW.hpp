@@ -79,7 +79,8 @@ private:
 
 	u32 getPatternSize() const {
 		switch(this->SaveRegion) {
-			case WWRegion::EUR_USA:
+			case WWRegion::EUR:
+			case WWRegion::USA:
 				return 0x228;
 
 			case WWRegion::JPN:

@@ -191,9 +191,7 @@ u32 Checksum::CalculateCRC32Normal(u8 *buf, u32 size) {
 	ChecksumType type: The type of the checksum.
 */
 bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, ChecksumType type) {
-	if (type == ChecksumType::CRC_NORMAL) {
-		return CalculateCRC32Normal(buf + startOffset + 4, size) == crc;
-	}
+	if (type == ChecksumType::CRC_NORMAL) return CalculateCRC32Normal(buf + startOffset + 4, size) == crc;
 
 	return CalculateCRC32Reflected(buf + startOffset + 4, size) == crc;
 }
@@ -208,12 +206,9 @@ bool Checksum::VerifyCRC32(u32 crc, u8 *buf, u32 startOffset, u32 size, Checksum
 */
 u32 Checksum::UpdateCRC32(u8 *rawData, u32 startOffset, u32 size, ChecksumType type) {
 	u32 crc32 = 0;
-	if (type == ChecksumType::CRC_NORMAL) {
-		crc32 = CalculateCRC32Normal(rawData + startOffset + 4, size);
+	if (type == ChecksumType::CRC_NORMAL) crc32 = CalculateCRC32Normal(rawData + startOffset + 4, size);
 
-	} else {
-		crc32 = CalculateCRC32Reflected(rawData + startOffset + 4, size);
-	}
+	else crc32 = CalculateCRC32Reflected(rawData + startOffset + 4, size);
 
 	SaveUtils::Write<u32>(rawData, startOffset, crc32); // Write calculated crc32.
 	return crc32;
@@ -278,8 +273,9 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset) {
 
 	u16 checksum = 0;
 
-	for (u64 i = 0; i < size; i++) {
+	for (u16 i = 0; i < size; i++) {
 		if (i == checksumOffset) continue;
+
 		checksum += buffer[i];
 	}
 
@@ -295,8 +291,7 @@ u16 Checksum::CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset) {
 	u16 checksumOffset: The offset of the checksum.
 */
 bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, u16 checksumOffset) {
-	if (CalculateWW(buffer, size, checksumOffset) == currentChecksum) return true;
-	else return false;
+	return (Checksum::CalculateWW(buffer, size, checksumOffset) == currentChecksum);
 }
 
 /*
@@ -304,21 +299,21 @@ bool Checksum::VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, u16 ch
 
 	WWRegion region: The save region.
 	u8 *saveBuffer: The save buffer.
-	u16 *buffer: The save buffer again(?) (I forgot exactly for what it was..)
 	u64 size: The size which should be updated.
 */
-void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size) {
+void Checksum::UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u64 size) {
 	switch(region) {
-		case WWRegion::EUR_USA:
-			SaveUtils::Write<u16>(saveBuffer, 0x15FDC, CalculateWW(buffer, size, 0xAFEE));
+		case WWRegion::EUR:
+		case WWRegion::USA:
+			SaveUtils::Write<u16>(saveBuffer, 0x15FDC, Checksum::CalculateWW(reinterpret_cast<u16 *>(saveBuffer), size, 0xAFEE));
 			break;
 
 		case WWRegion::JPN:
-			SaveUtils::Write<u16>(saveBuffer, 0x12220, CalculateWW(buffer, size, 0x9110));
+			SaveUtils::Write<u16>(saveBuffer, 0x12220, Checksum::CalculateWW(reinterpret_cast<u16 *>(saveBuffer), size, 0x9110));
 			break;
 
 		case WWRegion::KOR:
-			SaveUtils::Write<u16>(saveBuffer, 0x173F8, CalculateWW(buffer, size, 0xB9FC));
+			SaveUtils::Write<u16>(saveBuffer, 0x173F8, Checksum::CalculateWW(reinterpret_cast<u16 *>(saveBuffer), size, 0xB9FC));
 			break;
 	}
 }

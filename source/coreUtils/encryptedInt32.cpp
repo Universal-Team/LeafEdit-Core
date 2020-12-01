@@ -53,14 +53,14 @@
 
 #include <random>
 
-EncryptedInt32::EncryptedInt32() { }
+EncryptedInt32::EncryptedInt32() { };
 
-EncryptedInt32::EncryptedInt32(u32 unencryptedValue) { this->value = unencryptedValue; }
+EncryptedInt32::EncryptedInt32(u32 unencryptedValue) { this->value = unencryptedValue; };
 
-EncryptedInt32::EncryptedInt32(u32 intLow, u32 intHigh) { this->decrypt(intLow, intHigh); }
+EncryptedInt32::EncryptedInt32(u32 intLow, u32 intHigh) { this->decrypt(intLow, intHigh); };
 
 EncryptedInt32::EncryptedInt32(u64 encryptedInt)
-	: EncryptedInt32(static_cast<u32>(encryptedInt & 0xFFFFFFFF), static_cast<u32>((encryptedInt >> 32) & 0xFFFFFFFF)) { }
+	: EncryptedInt32(static_cast<u32>(encryptedInt & 0xFFFFFFFF), static_cast<u32>((encryptedInt >> 32) & 0xFFFFFFFF)) { };
 
 u8 EncryptedInt32::calculateChecksum(u32 intLow) const {
 	return static_cast<u8>(((intLow & 0xFF) + ((intLow >> 8) & 0xFF) + ((intLow >> 16) & 0xFF) + ((intLow >> 24) & 0xFF) + 0xBA) & 0xFF);

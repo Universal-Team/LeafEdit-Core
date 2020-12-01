@@ -34,38 +34,38 @@
 /*
 	Get and Set for the Pattern Name.
 */
-std::u16string PatternNL::name() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0, 20); }
-void PatternNL::name(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0, 20); }
+std::u16string PatternNL::name() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0, 20); };
+void PatternNL::name(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0, 20); };
 
 /*
 	Get and Set for the Creator ID.
 */
-u16 PatternNL::creatorid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x2A); }
-void PatternNL::creatorid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x2A, v); }
+u16 PatternNL::creatorid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x2A); };
+void PatternNL::creatorid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x2A, v); };
 
 /*
 	Get and Set for the Creator Name.
 */
-std::u16string PatternNL::creatorname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x2C, 8); }
-void PatternNL::creatorname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x2C, 8); }
+std::u16string PatternNL::creatorname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x2C, 8); };
+void PatternNL::creatorname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x2C, 8); };
 
 /*
 	Get and Set for the Creator Gender.
 */
-u8 PatternNL::creatorGender() const { return this->patternPointer()[0x3E]; }
-void PatternNL::creatorGender(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v); }
+u8 PatternNL::creatorGender() const { return this->patternPointer()[0x3E]; };
+void PatternNL::creatorGender(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x3E, v); };
 
 /*
 	Get and Set for the Town ID.
 */
-u16 PatternNL::origtownid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x40); }
-void PatternNL::origtownid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x40, v); }
+u16 PatternNL::origtownid() const { return SaveUtils::Read<u16>(this->patternPointer(), 0x40); };
+void PatternNL::origtownid(u16 v) { return SaveUtils::Write<u16>(this->patternPointer(), 0x40, v); };
 
 /*
 	Get and Set for the Town Name.
 */
-std::u16string PatternNL::origtownname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x42, 8); }
-void PatternNL::origtownname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x42, 8); }
+std::u16string PatternNL::origtownname() const { return StringUtils::ReadUTF16String(this->patternPointer(), 0x42, 8); };
+void PatternNL::origtownname(std::u16string v) { StringUtils::WriteUTF16String(this->patternPointer(), v, 0x42, 8); };
 
 /*
 	Overwrite player info to the pattern.
@@ -86,8 +86,8 @@ void PatternNL::ownPattern(std::unique_ptr<Player> player) {
 /*
 	Get and Set for the Design type.
 */
-u8 PatternNL::designtype() const { return (this->patternPointer()[0x69] & 9); }
-void PatternNL::designtype(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x69, (this->patternPointer()[0x69] & 0xF0) | (v & 0x9)); }
+u8 PatternNL::designtype() const { return (this->patternPointer()[0x69] & 9); };
+void PatternNL::designtype(u8 v) { SaveUtils::Write<u8>(this->patternPointer(), 0x69, (this->patternPointer()[0x69] & 0xF0) | (v & 0x9)); };
 
 /*
 	Dump a Pattern to file.

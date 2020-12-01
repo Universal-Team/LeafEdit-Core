@@ -37,7 +37,8 @@ std::unique_ptr<Player> SavWW::player(u8 player) const {
 	if (player > 3) return nullptr; // Player goes out of scope.
 
 	switch (this->SaveRegion) {
-		case WWRegion::EUR_USA:
+		case WWRegion::EUR:
+		case WWRegion::USA:
 			return std::make_unique<PlayerWW>(this->SaveData, 0x000C + (player * 0x228C), this->SaveRegion, player);
 
 		case WWRegion::JPN:
@@ -59,14 +60,15 @@ std::unique_ptr<Villager> SavWW::villager(u8 villager) const {
 	if (villager > 7) return nullptr; // Villager goes out of scope.
 
 	switch (this->SaveRegion) {
-		case WWRegion::EUR_USA:
+		case WWRegion::EUR:
+		case WWRegion::USA:
 			return std::make_unique<VillagerWW>(this->SaveData, 0x8A3C + (villager * 0x700), this->SaveRegion);
 
 		case WWRegion::JPN:
 			return std::make_unique<VillagerWW>(this->SaveData, 0x744C + (villager * 0x5C0), this->SaveRegion);
 
 		case WWRegion::KOR:
-			return std::make_unique<VillagerWW>(this->SaveData, 0x928C + (villager * 0x7EC), this->SaveRegion);
+			return std::make_unique<VillagerWW>(this->SaveData, 0x9284 + (villager * 0x7EC), this->SaveRegion);
 	}
 
 	return nullptr; // Unknown region.
@@ -75,36 +77,37 @@ std::unique_ptr<Villager> SavWW::villager(u8 villager) const {
 /*
 	Return the Town.
 */
-std::unique_ptr<Town> SavWW::town() const { return std::make_unique<TownWW>(this->SaveData, this->SaveRegion); }
+std::unique_ptr<Town> SavWW::town() const { return std::make_unique<TownWW>(this->SaveData, this->SaveRegion); };
 
 /*
 	Return the Island.
 	Does not exist on Wild World.
 */
-std::unique_ptr<Island> SavWW::island() const { return nullptr; }
+std::unique_ptr<Island> SavWW::island() const { return nullptr; };
 
 /*
 	Return the Shops.
 */
-std::unique_ptr<Shop> SavWW::shop() const { return std::make_unique<ShopWW>(this->SaveData, 0, this->SaveRegion); }
+std::unique_ptr<Shop> SavWW::shop() const { return std::make_unique<ShopWW>(this->SaveData, 0, this->SaveRegion); };
 
 /*
 	Last call before writing to file. Update Checksum.
 */
 void SavWW::Finish(void) {
 	switch (this->SaveRegion) {
-		case WWRegion::EUR_USA:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x15FE0 / sizeof(u16));
+		case WWRegion::EUR:
+		case WWRegion::USA:
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), 0x15FE0 / sizeof(u16));
 			memcpy(this->savePointer() + 0x15FE0, this->savePointer(), 0x15FE0); // Copy SaveData to the second save copy.
 			break;
 
 		case WWRegion::JPN:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x12224 / sizeof(u16));
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), 0x12224 / sizeof(u16));
 			memcpy(this->savePointer() + 0x12224, this->savePointer(), 0x12224); // Copy SaveData to the second save copy.
 			break;
 
 		case WWRegion::KOR:
-			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), reinterpret_cast<u16 *>(this->savePointer()), 0x173FC / sizeof(u16));
+			Checksum::UpdateWWChecksum(this->SaveRegion, this->savePointer(), 0x173FC / sizeof(u16));
 			memcpy(this->savePointer() + 0x173FC, this->savePointer(), 0x173FC); // Copy SaveData to the second save copy.
 			break;
 	}

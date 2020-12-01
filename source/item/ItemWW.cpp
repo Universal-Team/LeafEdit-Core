@@ -31,40 +31,40 @@
 /*
 	Get and Set the Item's ID.
 */
-u16 ItemWW::id() const { return SaveUtils::Read<u16>(this->itemPointer(), 0); }
-void ItemWW::id(u16 v) { SaveUtils::Write<u16>(this->itemPointer(), 0, v); }
+u16 ItemWW::id() const { return SaveUtils::Read<u16>(this->itemPointer(), 0); };
+void ItemWW::id(u16 v) { SaveUtils::Write<u16>(this->itemPointer(), 0, v); };
 
 /*
 	Get and Set the Item's Flags.
 	Does not exist on Wild World?
 */
-u16 ItemWW::flags() const { return 0; }
-void ItemWW::flags(u16 v) { }
+u16 ItemWW::flags() const { return 0; };
+void ItemWW::flags(u16 v) { };
 
 /*
 	Get and Set the Item's first flag.
 	Does not exist on Wild World?
 */
-u8 ItemWW::flag1() const { return 0; }
-void ItemWW::flag1(u8 v) { }
+u8 ItemWW::flag1() const { return 0; };
+void ItemWW::flag1(u8 v) { };
 
 /*
 	Get and Set the Item's second flag.
 	Does not exist on Wild World?
 */
-u8 ItemWW::flag2() const { return 0; }
-void ItemWW::flag2(u8 v) { }
+u8 ItemWW::flag2() const { return 0; };
+void ItemWW::flag2(u8 v) { };
 
 /*
 	Get and Set the Item's Rotation. (Furniture / House)
 */
-FurnitureDirection ItemWW::rotation() const { return FurnitureDirection::None; }
-void ItemWW::rotation(FurnitureDirection Direction) { } // TODO.
+FurnitureDirection ItemWW::rotation() const { return FurnitureDirection::None; };
+void ItemWW::rotation(FurnitureDirection Direction) { }; // TODO.
 
 /*
 	Get the Item's name.
 */
-std::string ItemWW::name() const { return ItemUtils::getName(this->id()); }
+std::string ItemWW::name() const { return ItemUtils::getName(this->id()); };
 
 /*
 	Get the Item's category | type.

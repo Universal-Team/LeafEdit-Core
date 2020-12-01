@@ -45,12 +45,14 @@ namespace SaveUtils {
 	/* Write. */
 	template <typename T>
 	void Write(u8 *Buffer, u32 offset, T data, const bool saveWrite = true) {
-		*reinterpret_cast<T*>(Buffer + offset) = data;
+		*reinterpret_cast<T *>(Buffer + offset) = data;
 
 		if (saveWrite) {
 			if (save) save->setChangesMade(true);
 		}
 	};
+
+	void WriteNibble(u8 *Buffer, u32 offset, bool first, u8 data, const bool SaveWrite = true);
 };
 
 #endif

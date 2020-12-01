@@ -30,9 +30,9 @@
 /*
 	Return a player.
 */
-std::unique_ptr<PlayerHHD> SavHHD::playerhhd() const { return std::make_unique<PlayerHHD>(this->SaveData); }
+std::unique_ptr<PlayerHHD> SavHHD::playerhhd() const { return std::make_unique<PlayerHHD>(this->SaveData); };
 
 /*
 	Last call before writing to file. Update Checksum.
 */
-void SavHHD::Finish(void) { Checksum::FixHHDChecksum(this->savePointer()); }
+void SavHHD::Finish(void) { Checksum::FixHHDChecksum(this->savePointer()); };

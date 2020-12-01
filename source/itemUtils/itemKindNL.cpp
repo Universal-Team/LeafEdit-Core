@@ -29,8 +29,8 @@
 	#include "leafedit_core.hpp"
 #endif
 
-ItemKindNL::ItemKindNL() { this->loadItemBins(); }
-ItemKindNL::~ItemKindNL() { this->closeItemBins(); }
+ItemKindNL::ItemKindNL() { this->loadItemBins(); };
+ItemKindNL::~ItemKindNL() { this->closeItemBins(); };
 
 /*
 	Load the Item Bin's.

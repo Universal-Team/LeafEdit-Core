@@ -31,8 +31,8 @@
 /*
 	Get and Set the Grasstype.
 */
-u8 TownNL::grasstype() const { return this->townPointer()[0x80 + 0x04DA01]; }
-void TownNL::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x80 + 0x04DA01, v); }
+u8 TownNL::grasstype() const { return this->townPointer()[0x80 + 0x04DA01]; };
+void TownNL::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x80 + 0x04DA01, v); };
 
 /*
 	Get and Set the Town Name.
@@ -69,7 +69,7 @@ std::unique_ptr<Item> TownNL::item(u16 index) const {
 /*
 	Return if Town exist.
 */
-bool TownNL::exist() const { return true; }
+bool TownNL::exist() const { return true; };
 
 /*
 	Get and Set the Turnip prices.
@@ -97,7 +97,7 @@ void TownNL::turnipPrices(bool isAM, u8 day, u32 v) {
 /*
 	Return the Townflag pattern.
 */
-std::unique_ptr<Pattern> TownNL::townflag() const { return std::make_unique<PatternNL>(this->TownData, 0x6B4EC); }
+std::unique_ptr<Pattern> TownNL::townflag() const { return std::make_unique<PatternNL>(this->TownData, 0x6B4EC); };
 
 /*
 	Get and Set, if item is buried.

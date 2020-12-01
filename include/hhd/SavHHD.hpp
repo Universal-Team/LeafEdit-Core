@@ -63,7 +63,7 @@ public:
 	std::unique_ptr<PlayerHHD> playerhhd() const override;
 
 	SaveType getType() const override { return SaveType::HHD; };
-	WWRegion getRegion() const override { return WWRegion::EUR_USA; }; // Just return the first region from there, i guess.
+	WWRegion getRegion() const override { return WWRegion::EUR; }; // Just return the first region from there, i guess.
 
 	u8 maxVillager() const override { return 0; };
 private:

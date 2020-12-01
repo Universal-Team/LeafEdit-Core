@@ -50,7 +50,7 @@ namespace Checksum {
 	*/
 	u16 CalculateWW(const u16 *buffer, u64 size, u16 checksumOffset);
 	bool VerifyWW(const u16 *buffer, u64 size, u16 currentChecksum, u16 checksumOffset);
-	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u16 *buffer, u64 size);
+	void UpdateWWChecksum(WWRegion region, u8 *saveBuffer, u64 size);
 
 	/*
 		AC:HHD stuff.

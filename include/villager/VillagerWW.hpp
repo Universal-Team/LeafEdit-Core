@@ -44,7 +44,8 @@ public:
 
 	u32 getVillagerSize() const override {
 		switch(this->SaveRegion) {
-			case WWRegion::EUR_USA:
+			case WWRegion::EUR:
+			case WWRegion::USA:
 				return 0x700;
 
 			case WWRegion::JPN:

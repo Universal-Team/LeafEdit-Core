@@ -175,14 +175,11 @@ std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std
 
 				for (int i2 = 0; i2 < (int)searchType.size(); i2++) {
 					if (std::get<2>(searchType[i2]).find(searchCategory[i]) != std::string::npos) {
-
 						if (compare) {
-							if (std::get<2>(searchType[i2]) == searchCategory[i]) {
-								temp.push_back({searchType[i2]});
-							}
+							if (std::get<2>(searchType[i2]) == searchCategory[i]) temp.push_back({ searchType[i2] });
 
 						} else {
-							temp.push_back({searchType[i2]});
+							temp.push_back({ searchType[i2] });
 						}
 					}
 				}
@@ -194,9 +191,7 @@ std::vector<std::tuple<u16, std::string, std::string>> StringDB::searchTuple(std
 	/* Push search result. */
 	if (temp.size() > 0) {
 		for (int i = 0; i < (int)temp.size(); i++) {
-			if (std::get<1>(temp[i]).find(searchResult) != std::string::npos) {
-				tempEnd.push_back({temp[i]});
-			}
+			if (std::get<1>(temp[i]).find(searchResult) != std::string::npos) tempEnd.push_back({ temp[i] });
 		}
 
 	} else {

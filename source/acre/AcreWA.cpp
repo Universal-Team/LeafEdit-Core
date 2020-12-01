@@ -35,5 +35,5 @@
 /*
 	Get and Set for the Acre ID.
 */
-u8 AcreWA::id() const { return this->acrePointer()[0]; }
-void AcreWA::id(u8 v) { SaveUtils::Write<u8>(this->acrePointer(), 0x0, v); }
+u8 AcreWA::id() const { return this->acrePointer()[0]; };
+void AcreWA::id(u8 v) { SaveUtils::Write<u8>(this->acrePointer(), 0x0, v); };

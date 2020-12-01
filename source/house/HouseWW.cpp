@@ -32,4 +32,4 @@
 
 	int room: The room.
 */
-std::unique_ptr<Room> HouseWW::room(u8 room) const { return nullptr; }
+std::unique_ptr<Room> HouseWW::room(u8 room) const { return nullptr; };

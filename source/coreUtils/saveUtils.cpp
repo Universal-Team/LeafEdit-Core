@@ -55,3 +55,23 @@ void SaveUtils::SetBit(u8 *data, u32 offset, u8 bitIndex, bool bit) {
 
 	if (save) save->setChangesMade();
 }
+
+/*
+	Write a Nibble to the Savefile.
+
+	u8 *Buffer: The Buffer.
+	u32 offset: The offset where to write to.
+	bool first: If Nibble1 (0 - 3) or Nibble2 (4 - 7). (true is Nibble1, false is Nibble2).
+	u8 data: The data what to write.
+	const bool SaveWrite: If changesMade should be set to true.
+	*/
+void SaveUtils::WriteNibble(u8 *Buffer, u32 offset, bool first, u8 data, const bool SaveWrite) {
+	if (data > 0xF) return;
+
+	if (first) reinterpret_cast<Byte *>(Buffer + offset)->Nibble1 = data; // 0 - 3.
+	else reinterpret_cast<Byte *>(Buffer + offset)->Nibble2 = data; // 4 - 7.
+
+	if (SaveWrite) {
+		if (save) save->setChangesMade(true);
+	}
+}

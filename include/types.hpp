@@ -39,6 +39,11 @@ typedef int16_t s16;
 typedef int32_t s32;
 typedef int64_t s64;
 
+struct Byte {
+	u8 Nibble1: 4; // 0 - 3.
+	u8 Nibble2: 4; // 4 - 7.
+};
+
 /*
 	SaveTypes.
 */
@@ -54,7 +59,8 @@ enum class SaveType : u8 {
 	Save Regions. (Mainly for AC:WW)
 */
 enum class WWRegion : u8 {
-	EUR_USA, // EUR + USA are the same.
+	EUR,
+	USA,
 	JPN,
 	KOR
 };

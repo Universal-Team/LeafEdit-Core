@@ -36,7 +36,8 @@ std::unique_ptr<Pattern> ShopWW::ableSisterPattern(u8 pattern) const {
 	if (pattern > 7) return nullptr;
 
 	switch(this->SaveRegion) {
-		case WWRegion::EUR_USA:
+		case WWRegion::EUR:
+		case WWRegion::USA:
 			return std::make_unique<PatternWW>(this->ShopData, this->Offset + 0xFAFC + pattern * 0x228, this->SaveRegion);
 
 		case WWRegion::JPN:

@@ -32,8 +32,8 @@
 
 	bool sender: If sender (true) or receiver (false).
 */
-u16 LetterWA::playerid(bool sender) const { return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x34 : 0x0); }
-void LetterWA::playerid(u16 v, bool sender) { SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x34 : 0x0, v); }
+u16 LetterWA::playerid(bool sender) const { return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x34 : 0x0); };
+void LetterWA::playerid(u16 v, bool sender) { SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x34 : 0x0, v); };
 
 /*
 	Get and Set the Player Name.
@@ -52,8 +52,8 @@ void LetterWA::playername(std::u16string v, bool sender) {
 
 	bool sender: If sender (true) or receiver (false).
 */
-u16 LetterWA::townid(bool sender) const { return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x4A : 0x16); }
-void LetterWA::townid(u16 v, bool sender) { SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x4A : 0x16, v); }
+u16 LetterWA::townid(bool sender) const { return SaveUtils::Read<u16>(this->letterPointer(), sender ? 0x4A : 0x16); };
+void LetterWA::townid(u16 v, bool sender) { SaveUtils::Write<u16>(this->letterPointer(), sender ? 0x4A : 0x16, v); };
 
 /*
 	Get and Set the Town Name.
@@ -70,58 +70,58 @@ void LetterWA::townname(std::u16string v, bool sender) {
 /*
 	Get and Set the Player Index.
 */
-u8 LetterWA::playerindex() const { return this->letterPointer()[0x30]; }
-void LetterWA::playerindex(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x30, v); }
+u8 LetterWA::playerindex() const { return this->letterPointer()[0x30]; };
+void LetterWA::playerindex(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x30, v); };
 
 /*
 	Get and Set the Letter's intro part.
 */
-std::u16string LetterWA::intro() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0x68, 32); }
-void LetterWA::intro(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0x68, 32); }
+std::u16string LetterWA::intro() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0x68, 32); };
+void LetterWA::intro(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0x68, 32); };
 
 /*
 	Get and Set the Letter's body part.
 */
-std::u16string LetterWA::body() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0xAA, 192); }
-void LetterWA::body(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0xAA, 192); }
+std::u16string LetterWA::body() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0xAA, 192); };
+void LetterWA::body(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0xAA, 192); };
 
 /*
 	Get and Set the Letter's ending part.
 */
-std::u16string LetterWA::end() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0x22C, 32); }
-void LetterWA::end(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0x22C, 32); }
+std::u16string LetterWA::end() const { return StringUtils::ReadUTF16String(this->letterPointer(), 0x22C, 32); };
+void LetterWA::end(std::u16string v) { StringUtils::WriteUTF16String(this->letterPointer(), v, 0x22C, 32); };
 
 /*
 	Get and Set the Name index.
 */
-u8 LetterWA::nameindex() const { return this->letterPointer()[0x26E]; }
-void LetterWA::nameindex(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x26E, v); }
+u8 LetterWA::nameindex() const { return this->letterPointer()[0x26E]; };
+void LetterWA::nameindex(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x26E, v); };
 
 /*
 	Get and Set the Letter's Paper ID.
 */
-u8 LetterWA::paperid() const { return this->letterPointer()[0x26F]; }
-void LetterWA::paperid(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x26F, v); }
+u8 LetterWA::paperid() const { return this->letterPointer()[0x26F]; };
+void LetterWA::paperid(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x26F, v); };
 
 /*
 	Get and Set the Letter's flags.
 */
-u8 LetterWA::flag() const { return this->letterPointer()[0x270]; }
-void LetterWA::flag(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x270, v); }
+u8 LetterWA::flag() const { return this->letterPointer()[0x270]; };
+void LetterWA::flag(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x270, v); };
 
 /*
 	Get and Set the Sender ID.
 */
-u8 LetterWA::senderid() const { return this->letterPointer()[0x271]; }
-void LetterWA::senderid(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x271, v); }
+u8 LetterWA::senderid() const { return this->letterPointer()[0x271]; };
+void LetterWA::senderid(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x271, v); };
 
 /*
 	Get and Set the Letter's type.
 */
-u8 LetterWA::lettertype() const { return this->letterPointer()[0x272]; }
-void LetterWA::lettertype(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x272, v); }
+u8 LetterWA::lettertype() const { return this->letterPointer()[0x272]; };
+void LetterWA::lettertype(u8 v) { SaveUtils::Write<u8>(this->letterPointer(), 0x272, v); };
 
 /*
 	Return the Letter's Attachment item.
 */
-std::unique_ptr<Item> LetterWA::item() const { return std::make_unique<ItemWA>(this->LetterData, this->Offset + 0x274); }
+std::unique_ptr<Item> LetterWA::item() const { return std::make_unique<ItemWA>(this->LetterData, this->Offset + 0x274); };

@@ -31,14 +31,14 @@
 /*
 	Get and Set the Grasstype.
 */
-u8 TownWA::grasstype() const { return this->townPointer()[0x053481]; }
-void TownWA::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x053481, v); }
+u8 TownWA::grasstype() const { return this->townPointer()[0x053481]; };
+void TownWA::grasstype(u8 v) { SaveUtils::Write<u8>(this->townPointer(), 0x053481, v); };
 
 /*
 	Get and Set the Town Name.
 */
-std::u16string TownWA::name() const { return StringUtils::ReadUTF16String(this->townPointer(), 0x0621BA, 8); }
-void TownWA::name(std::u16string v) { StringUtils::WriteUTF16String(this->townPointer(), v, 0x0621BA, 8); }
+std::u16string TownWA::name() const { return StringUtils::ReadUTF16String(this->townPointer(), 0x0621BA, 8); };
+void TownWA::name(std::u16string v) { StringUtils::WriteUTF16String(this->townPointer(), v, 0x0621BA, 8); };
 
 /*
 	Return a Town Acre.
@@ -65,7 +65,7 @@ std::unique_ptr<Item> TownWA::item(u16 index) const {
 /*
 	Return if Town exist.
 */
-bool TownWA::exist() const { return true; }
+bool TownWA::exist() const { return true; };
 
 /*
 	Get and Set the Turnip prices.
@@ -93,7 +93,7 @@ void TownWA::turnipPrices(bool isAM, u8 day, u32 v) {
 /*
 	Return the Townflag pattern.
 */
-std::unique_ptr<Pattern> TownWA::townflag() const { return std::make_unique<PatternWA>(this->TownData, 0x70F1C); }
+std::unique_ptr<Pattern> TownWA::townflag() const { return std::make_unique<PatternWA>(this->TownData, 0x70F1C); };
 
 /*
 	Get and Set, if item is buried.

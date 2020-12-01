@@ -61,6 +61,9 @@ u8 ACWAArray[28] = {
 	0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00
 };
 
+const uint8_t GameCodes[4] = { 0xC5, 0x8A, 0x32, 0x32 }; // The Gamecodes.
+const int SavCopyOffsets[4] = { 0x15FE0, 0x15FE0, 0x12224, 0x173FC }; // The Savcopy offsets.
+
 /*
 	Return the SaveType from a Buffer and load.
 
@@ -73,19 +76,13 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 		case 0x4007A:
 		case 0x8007A:
 			/* Check for AC:WW Saves and check their region. */
-			if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
-
-			} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::EUR_USA, length);
-
-			} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
-				return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
-
-			} else {
-				return nullptr;
+			for (uint8_t i = 0; i < 4; i++) {
+				if (dt.get()[0] == GameCodes[i] && dt.get()[SavCopyOffsets[i]] == GameCodes[i]) {
+					return std::make_unique<SavWW>(dt, (WWRegion)i, length);
+				}
 			}
 
+			return nullptr;
 		case 0x7FA00:
 			/* Check if save header matches first! We don't want to edit a non-ac save. */
 			if (memcmp(dt.get() + 0x80, ACNLArray, 0x1C) == 0) {
@@ -122,24 +119,15 @@ std::unique_ptr<Sav> Sav::getSave(std::shared_ptr<u8[]> dt, u32 length) {
 	u32 length: The size of the buffer.
 */
 std::unique_ptr<Sav> Sav::check080000(std::shared_ptr<u8[]> dt, u32 length) {
-	/* Check for AC:WW Japanese. */
-	if (memcmp(dt.get(), dt.get() + 0x12224, 0x12224) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::JPN, length);
-
-		/* Check for AC:WW Europe | USA. */
-	} else if (memcmp(dt.get(), dt.get() + 0x15FE0, 0x15FE0) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::EUR_USA, length);
-
-		/* Check for AC:WW Korean. */
-	} else if (memcmp(dt.get(), dt.get() + 0x173FC, 0x173FC) == 0) {
-		return std::make_unique<SavWW>(dt, WWRegion::KOR, length);
+	for (uint8_t i = 0; i < 4; i++) {
+		if (dt.get()[0] == GameCodes[i] && dt.get()[SavCopyOffsets[i]] == GameCodes[i]) {
+			return std::make_unique<SavWW>(dt, (WWRegion)i, length);
+		}
+	}
 
 		/* Check for AC:NL. */
-	} else if (memcmp(dt.get() + 0x80, ACNLArray, 0x1C) == 0) {
-		return std::make_unique<SavNL>(dt, length);
+	if (memcmp(dt.get() + 0x80, ACNLArray, 0x1C) == 0) return std::make_unique<SavNL>(dt, length);
 
-	} else {
-		/* No save checks matches, return nullptr. */
-		return nullptr;
-	}
+	/* No save checks matches, return nullptr. */
+	return nullptr;
 }

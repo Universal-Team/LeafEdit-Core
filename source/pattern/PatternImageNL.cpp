@@ -43,7 +43,7 @@ u8 PatternImageNL::getPaletteColor(u8 plt) const {
 
 	This is not used in the NL format, cause they can be any color.
 */
-u8 PatternImageNL::getWWPaletteIndex() const { return 0; }
+u8 PatternImageNL::getWWPaletteIndex() const { return 0; };
 
 /*
 	Set the Palette color for an index.
@@ -64,9 +64,7 @@ void PatternImageNL::setPaletteColor(u8 index, u8 color) {
 */
 pixel PatternImageNL::getPixel(u16 index) const {
 	if (this->Valid) {
-		if (this->pixelPointer()) {
-			return this->pixelPointer()[index];
-		}
+		if (this->pixelPointer()) return this->pixelPointer()[index];
 	}
 
 	return { 0, 0 };
@@ -92,4 +90,4 @@ void PatternImageNL::setPixel(u16 index, u8 color) {
 /*
 	Same as above, just with X & Y position instead of index.
 */
-void PatternImageNL::setPixel(u8 x, u8 y, u8 color) { this->setPixel((x + (y * 32)), color); }
+void PatternImageNL::setPixel(u8 x, u8 y, u8 color) { this->setPixel((x + (y * 32)), color); };

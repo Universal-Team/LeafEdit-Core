@@ -89,7 +89,7 @@ std::u16string StringUtils::wwToUnicode(const std::string &input, WWRegion regio
 	if (region == WWRegion::KOR) return StringUtils::UTF8toUTF16("?"); // Korean should not be supported there.
 	std::u16string output;
 
-	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
+	const std::array<char16_t, 256> *characters = (region == WWRegion::JPN ? &wwCharacterDictionaryJapanese : &wwCharacterDictionary);
 
 	for (char16_t character : input) {
 		if ((*characters)[character] == '\0') break;
@@ -114,14 +114,12 @@ std::string StringUtils::unicodeToWW(const std::u16string &input, WWRegion regio
 	if (region == WWRegion::KOR) return "?"; // Korean should not be supported there.
 
 	std::string output;
-	const std::array<char16_t, 256> *characters = region == WWRegion::EUR_USA ? &wwCharacterDictionary : &wwCharacterDictionaryJapanese;
+	const std::array<char16_t, 256> *characters = (region == WWRegion::JPN ? &wwCharacterDictionaryJapanese : &wwCharacterDictionary);
 
 	for(char16_t character : input) {
 		auto it = std::find(characters->begin(), characters->end(), character);
 
-		if (it != characters->end()) {
-			output += std::distance(characters->begin(), it);
-		}
+		if (it != characters->end()) output += std::distance(characters->begin(), it);
 	}
 
 	return output;
@@ -170,6 +168,7 @@ std::u16string StringUtils::UTF8toUTF16(const std::string &src) {
 	for (size_t i = 0; i < src.size(); i++) {
 		u16 codepoint	= 0xFFFD;
 		int iMod		= 0;
+
 		if (src[i] & 0x80 && src[i] & 0x40 && src[i] & 0x20 && !(src[i] & 0x10) && i + 2 < src.size()) {
 			codepoint	= src[i] & 0x0F;
 			codepoint	= codepoint << 6 | (src[i + 1] & 0x3F);
@@ -197,7 +196,7 @@ std::u16string StringUtils::UTF8toUTF16(const std::string &src) {
 
 	const std::u16string &src: The UTF-16 Text.
 */
-std::string StringUtils::UTF16toUTF8(const std::u16string &src) { return utf16DataToUtf8(src.data(), src.size()); }
+std::string StringUtils::UTF16toUTF8(const std::u16string &src) { return utf16DataToUtf8(src.data(), src.size()); };
 
 /*
 	Read an UTF-8 String from a save buffer.

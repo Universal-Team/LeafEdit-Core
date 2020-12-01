@@ -29,8 +29,8 @@
 	#include "leafedit_core.hpp"
 #endif
 
-ItemKindWA::ItemKindWA() { this->loadItemBins(); }
-ItemKindWA::~ItemKindWA() { this->closeItemBins(); }
+ItemKindWA::ItemKindWA() { this->loadItemBins(); };
+ItemKindWA::~ItemKindWA() { this->closeItemBins(); };
 
 /*
 	Load the Item Bin's.
