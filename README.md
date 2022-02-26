@@ -1,5 +1,9 @@
 # LeafEdit-Core
 
+## Note
+
+***With the discontinue of LeafEdit, the core is now discontinued as well.***
+
 ## This is the core which LeafEdit uses for save editing.
 
 ### LeafEdit-Core is going to support the following games:
